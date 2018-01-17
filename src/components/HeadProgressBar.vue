@@ -27,8 +27,11 @@ $step: 1;
 }
 
 .head-progress-bar {
-  height: 0.2rem;
-  background: #ffe36e;
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 0.1rem;
+  background: linear-gradient(left, rgb(255, 241, 153), rgb(254, 222, 96));
 }
 .step1 {
   width: width(1);

@@ -1,20 +1,25 @@
 <template>
-    <div>
+    <div class="questionnaire">
       <head-progress-bar :step="progress"></head-progress-bar>
-      123132121
+      <start></start>
     </div>
 </template>
 
 <script>
 import HeadProgressBar from '@/components/HeadProgressBar'
+import Question from '@/components/Question'
+import Start from '@/components/start'
+
 export default {
   name: 'questionnaire',
   components: {
-    HeadProgressBar
+    HeadProgressBar,
+    Question,
+    Start
   },
   data () {
     return {
-      progress: 2
+      progress: 1
     }
   },
   created () {
