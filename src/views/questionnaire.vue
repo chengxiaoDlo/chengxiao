@@ -6,44 +6,10 @@
         <!--<transition name="start" enter-active-class="animated fadeInRight">-->
           <!--<answer text="开始" v-if="goToStart"></answer>-->
         <!--</transition>-->
-        <first-ques></first-ques>
-        <!--<question question="但愿人长久，家里有几口" sub="我们会基于您的家庭结构和成员情况，考虑每个人的保障~">-->
-          <!--<div slot="options" class="options que2">-->
-            <!--<div class="option">-->
-              <!--<div class="family"></div>-->
-              <!--<p class="member">本人</p>-->
-            <!--</div>-->
-            <!--<div class="option">-->
-              <!--<div class="family"></div>-->
-              <!--<p class="member">配偶</p>-->
-            <!--</div>-->
-            <!--<div class="option">-->
-              <!--<div class="family"></div>-->
-              <!--<p class="member">儿子</p>-->
-            <!--</div>-->
-            <!--<div class="option">-->
-              <!--<div class="family"></div>-->
-              <!--<p class="member">女儿</p>-->
-            <!--</div>-->
-            <!--<div class="option">-->
-              <!--<div class="family"></div>-->
-              <!--<p class="member">爸爸</p>-->
-            <!--</div>-->
-            <!--<div class="option">-->
-              <!--<div class="family"></div>-->
-              <!--<p class="member">妈妈</p>-->
-            <!--</div>-->
-            <!--<div class="option">-->
-              <!--<div class="family"></div>-->
-              <!--<p class="member">宠物狗</p>-->
-            <!--</div>-->
-            <!--<div class="option">-->
-              <!--<div class="family"></div>-->
-              <!--<p class="member">添加</p>-->
-            <!--</div>-->
-          <!--</div>-->
-        <!--</question>-->
-
+        <!--<first-ques></first-ques>-->
+        <!--<second-ques></second-ques>-->
+        <third-ques></third-ques>
+        <!--<fourth-ques></fourth-ques>-->
       </scroller>
     </div>
 </template>
@@ -54,6 +20,12 @@ import Question from '@/components/Question'
 import Start from '@/components/Start'
 import Answer from '@/components/Answer'
 import FirstQues from '@/components/FirstQues'
+import SecondQues from '@/components/SecondQues'
+import ThirdQues from '@/components/ThirdQues'
+import FourthQues from '@/components/FourthQues'
+import FifthQues from '@/components/FifthQues'
+import SixthQues from '@/components/SixthQues'
+import SeventhQues from '@/components/SeventhQues'
 import { mapState, mapMutations } from 'vuex'
 
 export default {
@@ -63,7 +35,13 @@ export default {
     Question,
     Start,
     Answer,
-    FirstQues
+    FirstQues,
+    SecondQues,
+    ThirdQues,
+    FourthQues,
+    FifthQues,
+    SixthQues,
+    SeventhQues
   },
   data () {
     return {
@@ -105,30 +83,4 @@ export default {
 </script>
 
 <style type="text/scss" lang="scss" scoped>
-.options {
-  display: flex;
-  background: #fff;
-  box-sizing: border-box;
-  padding-bottom: 1rem;
-}
-
-.que2 {
-  flex-wrap: wrap;
-  width: 8.5rem;
-  margin-left: 2.02rem;
-  .option {
-    flex-basis: 33.3%;
-    .family {
-      width: 2rem;
-      height: 2rem;
-      background: blueviolet;
-      border-radius: 50%;
-      margin: 0.1rem auto;
-    }
-    .member {
-      text-align: center;
-      font-size: 0.5rem;
-    }
-  }
-}
 </style>

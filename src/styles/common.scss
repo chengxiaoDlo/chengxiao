@@ -4,9 +4,4 @@
   box-sizing: border-box;
   padding-bottom: 1rem;
 }
-.slideUp-enter-active, .slideUp-leave-active {
-  transition: opacity 2s;
-}
-.slideUp-enter, .slideUp-leave-to {
-  opacity: 0;
-}
+
