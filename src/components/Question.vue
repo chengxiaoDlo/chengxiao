@@ -2,11 +2,12 @@
     <div class="question">
       <div class="first-line">
         <div class="avatar"></div>
-        <div class="dialogue">{{question}}</div>
+        <div class="dialogue">
+          <p class="title">{{question}}</p>
+          <p class="subtitle">{{sub}}</p>
+        </div>
       </div>
-      <transition name="slideUp">
-        <slot v-if="!next" name="options"></slot>
-      </transition>
+      <slot name="options"></slot>
     </div>
 </template>
 
@@ -28,6 +29,10 @@
       ]),
       props: {
         question: {
+          type: String,
+          default: ''
+        },
+        sub: {
           type: String,
           default: ''
         }
@@ -76,13 +81,12 @@
       word-wrap: break-word;
       box-sizing: border-box;
       width: 9rem;
+
+      .subtitle {
+        font-size: 0.4rem;
+        color: #c3c3c3;
+      }
     }
-  }
-  .slideUp-enter-active, .slideUp-leave-active {
-    transition: opacity 2s;
-  }
-  .slideUp-enter, .slideUp-leave-to {
-    opacity: 0;
   }
 }
 </style>

@@ -22,7 +22,7 @@
   import { mapState, mapMutations } from 'vuex'
 
     export default {
-      name: 'start',
+      name: 'Start',
       data () {
         return {
           showStartBtn: true

@@ -1,9 +1,7 @@
 <template>
-  <transition name="start" enter-active-class="animated fadeInRight">
-    <div class="answer" v-if="next">
-      {{text}}
-    </div>
-  </transition>
+  <div class="answer">
+    {{text}}
+  </div>
 </template>
 
 <script>
