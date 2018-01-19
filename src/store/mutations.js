@@ -4,7 +4,7 @@ export default {
   [types.GET_START] (state) {
     state.goToStart = true
   },
-  [types.TOGGLE_NEXT] (state) {
-    state.next = !state.next
+  [types.TOGGLE_DONE] (state) {
+    state.done = !state.done
   }
 }

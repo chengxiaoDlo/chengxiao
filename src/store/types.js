@@ -1,4 +1,4 @@
 export default {
-  TOGGLE_NEXT: 'toggleNext',
+  TOGGLE_DONE: 'toggleDone',
   GET_START: 'getStart'
 }

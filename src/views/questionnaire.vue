@@ -8,8 +8,10 @@
         <!--</transition>-->
         <!--<first-ques></first-ques>-->
         <!--<second-ques></second-ques>-->
-        <third-ques></third-ques>
+        <!--<third-ques></third-ques>-->
         <!--<fourth-ques></fourth-ques>-->
+        <!--<fifth-ques></fifth-ques>-->
+        <sixth-ques></sixth-ques>
       </scroller>
     </div>
 </template>

@@ -1,7 +1,16 @@
 .options {
-  display: flex;
   background: #fff;
   box-sizing: border-box;
   padding-bottom: 1rem;
+  width: 10.34rem;
+  margin-left: 1.5rem;
 }
 
+.confirm {
+  background: url("../assets/images/confirm-btn.png") no-repeat;
+  background-size: 100%;
+  width: 5rem;
+  height: 3rem;
+  margin-top: -2rem;
+  margin-left: 4.5rem;
+}

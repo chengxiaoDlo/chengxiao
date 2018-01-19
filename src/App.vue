@@ -23,5 +23,7 @@ html {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  color: rgb(65, 65, 65);
+  font-size: 0.53rem;
 }
 </style>

@@ -26,7 +26,7 @@
         </div>
       </question>
       <transition enter-active-class="animated fadeInRight" leave-active-class="animated fadeOutRight">
-        <answer :text="answerText" v-if="done" @modify="modify"></answer>
+        <answer :text="answerText" v-if="done" @modify="modify" modifiable></answer>
       </transition>
     </div>
 </template>
@@ -105,9 +105,8 @@
 <style type="text/scss" lang="scss" scoped>
 @import "../styles/common";
 .que2 {
+  display: flex;
   flex-wrap: wrap;
-  width: 8.5rem;
-  margin-left: 2.02rem;
   padding-bottom: 2.5rem;
   .option {
     flex-basis: 33.3%;
@@ -164,6 +163,6 @@
   width: 5rem;
   height: 3rem;
   margin-top: -2rem;
-  margin-left: 4rem;
+  margin-left: 4.5rem;
 }
 </style>

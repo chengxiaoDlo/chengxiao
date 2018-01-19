@@ -54,9 +54,11 @@
 <style type="text/scss" lang="scss" scoped>
   @import "../styles/common";
   .que1 {
+    display: flex;
     justify-content: center;
-    width: 8.57rem;
-    margin-left: 1.92rem;
+    width: 10.34rem;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
     .sex {
       width: 2rem;
       height: 2rem;

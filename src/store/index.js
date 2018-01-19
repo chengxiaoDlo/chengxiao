@@ -8,7 +8,7 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     goToStart: false,
-    next: false
+    done: false
   },
   actions,
   mutations

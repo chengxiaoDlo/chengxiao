@@ -3,6 +3,7 @@
       <div class="first-line">
         <div class="avatar"></div>
         <div class="dialogue">
+          <div class="angle"></div>
           <p class="title">{{question}}</p>
           <p class="subtitle">{{sub}}</p>
         </div>
@@ -63,29 +64,39 @@
   .first-line {
     display: flex;
     .avatar {
-      height: 1.8rem;
-      width: 1.8rem;
+      height: 1.5rem;
+      width: 1.5rem;
       background: url("../assets/images/avatar.png") no-repeat;
       background-size: 100%;
       margin-top: 0.1rem;
     }
     .dialogue {
-      background: url("../assets/images/dialogue.png") no-repeat;
-      background-size: cover;
+      width: 10.34rem;
+      box-sizing: border-box;
       position: relative;
-      left: -0.3rem;
-      font-size: 0.5rem;
+      background: #ffffff;
       padding: 0.3rem 1rem;
       padding-right: 0.5rem;
-      overflow: hidden;
       word-wrap: break-word;
-      box-sizing: border-box;
-      width: 9rem;
-
+      border-radius: 0;
+      border-top-right-radius: 5px;
+      .angle {
+        background: url("../assets/images/ques-angle.png") no-repeat;
+        background-size: 100%;
+        width: 0.4rem;
+        height: 1rem;
+        position: absolute;
+        top: 0;
+        left: -0.4rem;
+      }
       .subtitle {
-        font-size: 0.4rem;
+        font-size: 0.47rem;
         color: #c3c3c3;
       }
+    }
+    .done {
+      border-bottom-left-radius: 5px;
+      border-bottom-right-radius: 5px;
     }
   }
 }

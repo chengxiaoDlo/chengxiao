@@ -3,11 +3,19 @@
       <div class="row-with-avatar animated fadeInLeft">
         <div class="first-line  ">
           <div class="avatar"></div>
-          <div class="dialogue">Hi，{微信昵称} 我是薄荷博士，您的智能保险顾问。</div>
+          <div class="dialogue">
+            <div class="angle"></div>
+            <p>
+              Hi，{微信昵称} 我是薄荷博士，您的智能保险顾问。
+            </p>
+          </div>
         </div>
       </div>
       <div class="row-without-avatar animated fadeInLeft">
-        <div class="dialogue">我会基于您的动态风险，为您规划全家庭的保险方案。让我们开始吧~</div>
+        <div class="dialogue" :class="{'done': goToStart}">
+          <div class="angle"></div>
+          <p>我会基于您的动态风险，为您规划全家庭的保险方案。让我们开始吧~</p>
+        </div>
         <transition name="slideUp">
           <div v-if="!goToStart">
             <div class="content"></div>
@@ -59,25 +67,31 @@
       display: flex;
 
       .avatar {
-        height: 1.8rem;
-        width: 1.8rem;
+        height: 1.5rem;
+        width: 1.5rem;
         background: url("../assets/images/avatar.png") no-repeat;
         background-size: 100%;
         margin-top: 0.1rem;
+        margin-right: 0.1rem;
       }
 
       .dialogue {
         width: 10.34rem;
         box-sizing: border-box;
-        background: url("../assets/images/dialogue.png") no-repeat;
-        background-size: cover;
         position: relative;
-        left: -0.3rem;
-        font-size: 0.5rem;
+        background: #ffffff;
         padding: 0.3rem 1rem;
         padding-right: 0.5rem;
-        overflow: hidden;
         word-wrap: break-word;
+        .angle {
+          background: url("../assets/images/ques-angle.png") no-repeat;
+          background-size: 100%;
+          width: 0.4rem;
+          height: 1rem;
+          position: absolute;
+          top: 0;
+          left: -0.4rem;
+        }
       }
     }
   }
@@ -86,21 +100,35 @@
     margin-left: 1.5rem;
     animation-delay: 2s;
     .dialogue {
-      background: url("../assets/images/dialogue.png") no-repeat;
+      background: #ffffff;
       width: 10.34rem;
       box-sizing: border-box;
-      background-size: 100%;
-      font-size: 0.5rem;
       padding: 0.3rem 1rem;
       padding-right: 0.5rem;
       word-wrap: break-word;
       position: relative;
+      border-radius: 0;
+      border-top-right-radius: 5px;
+      .angle {
+        background: url("../assets/images/ques-angle.png") no-repeat;
+        background-size: 100%;
+        width: 0.4rem;
+        height: 1rem;
+        position: absolute;
+        top: 0;
+        left: -0.4rem;
+      }
+    }
+    .done {
+      border-bottom-left-radius: 5px;
+      border-bottom-right-radius: 5px;
     }
     .content {
       height: 2rem;
       background: #fff;
-      width: 9.83rem;
-      margin-left: 0.5rem;
+      width: 10.34rem;
+      border-bottom-left-radius: 5px;
+      border-bottom-right-radius: 5px;
     }
     .start-btn {
       width: 5rem;
