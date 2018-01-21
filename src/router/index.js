@@ -9,6 +9,11 @@ export default new Router({
       path: '/',
       name: 'Questionnaire',
       component: resolve => require(['@/views/questionnaire'], resolve)
+    },
+    {
+      path: '/result',
+      name: 'result',
+      component: resolve => require(['@/views/result'], resolve)
     }
   ]
 })

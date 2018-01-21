@@ -100,8 +100,14 @@ export default {
 }
 </script>
 
-<style type="text/scss" lang="scss" scoped>
+<style type="text/scss" lang="scss">
   .questionnaire {
     height: 100%;
+  }
+  .questionnaire .vux-slider {
+    overflow: inherit;
+  }
+  .questionnaire .vux-slider .vux-swiper {
+    overflow: inherit;
   }
 </style>

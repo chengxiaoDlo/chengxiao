@@ -1,5 +1,5 @@
 <template>
-    <div style="height: 100%;">
+    <div style="height: 100%;" class="second-ques">
       <div v-transfer-dom>
         <x-dialog v-model="showAdd" hide-on-blur>
           <div class="card">
@@ -428,4 +428,5 @@
     margin-left: 2.3rem;
   }
 }
+
 </style>

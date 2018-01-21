@@ -38,6 +38,11 @@ html {
       font-size: 28.5px;
     }
   }
+  @media screen and (min-width: 370px) {
+    html {
+      font-size: 30px;
+    }
+  }
   @media screen and (min-width: 410px) {
     html {
       font-size: 33.1px;
