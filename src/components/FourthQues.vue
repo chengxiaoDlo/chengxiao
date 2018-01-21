@@ -1,42 +1,97 @@
 <template>
     <div>
-      <question question="青春作伴好还乡，而今哪里是家乡？" sub="我们会考虑当地的社保政策、产品区域限制、消费水平等因素哒~">
+      <question question="青春作伴好还乡，而今哪里是家乡？" sub="我们会考虑当地的社保政策、产品区域限制、消费水平等因素哒~" class="animated fadeInLeft">
         <div slot="options">
-          <div class="options que4" >
-              <div class="location" >
-                <div>
-                  <div class="member me"></div>
-                  <p class="member-text">本人</p>
+          <transition name="options">
+            <div v-if="showOption">
+              <div class="options que4" >
+                <div class="location" >
+                  <div>
+                    <div class="member me"></div>
+                    <p class="member-text">本人</p>
+                  </div>
+                  <div class="member-city" @click="selectCity">{{city}}</div>
                 </div>
-                <div class="member-city">{{city}}</div>
               </div>
-          </div>
-          <div class="confirm" @click="confirm"></div>
+              <div class="confirm" @click="confirm"></div>
+            </div>
+          </transition>
         </div>
       </question>
+      <div class="picker" v-if="chooseCity">
+        <slide-picker :list="cityList" :col="2" @quit="cancel" @confirm="selected" ></slide-picker>
+      </div>
+      <transition enter-active-class="animated fadeInRight" leave-active-class="animated fadeOutRight">
+        <answer v-if="showAnswer" :text="city" @modify="modify"></answer>
+      </transition>
     </div>
 </template>
 
 <script>
   import Question from '@/components/Question'
+  import SlidePicker from '@/components/SlidePicker'
+  import utils from '@/utils/consts'
+  import Answer from '@/components/Answer'
+  import { mapState, mapMutations } from 'vuex'
+
     export default {
       name: "fourth-ques",
       components: {
-        Question
+        Question,
+        SlidePicker,
+        Answer
       },
       data () {
         return {
-          city: '河北省石家庄市'
+          chooseCity: false,
+          showOption: true,
+          showAnswer: false,
+          city: '河北省石家庄市',
+          cityList: utils.cityList
         }
       },
+      computed: mapState([
+        'index'
+      ]),
       methods: {
-        confirm () {}
+        ...mapMutations({
+          next: 'next',
+          setIndex: 'setIndex'
+        }),
+        confirm () {
+          this.showOption = false
+          this.showAnswer = true
+          setTimeout(() => {
+            this.next()
+          }, 3000)
+          setTimeout(() => {
+            this.setIndex({data: this.index + 1})
+          }, 3500)
+        },
+        cancel () {
+          this.chooseCity = false
+        },
+        selected (val) {
+          console.log(333, val)
+          this.city = val.label
+          this.chooseCity = false
+        },
+        selectCity () {
+          this.chooseCity = true
+        },
+        modify () {
+          this.showAnswer = false
+          setTimeout(() => {
+            this.showOption = true
+          }, 1000)
+        }
       }
     }
 </script>
 
 <style type="text/scss" lang="scss" scoped>
   @import "../styles/common";
+  @import "../styles/animation";
 .que4{
   padding-top: 0.5rem;
   padding-bottom: 2.5rem;
@@ -66,6 +121,10 @@
       text-align: center;
       line-height: 1rem;
       margin-top: 0.15rem;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      padding: 0 0.2rem;
+      white-space: nowrap;
       color: rgb(126, 126, 126);
     }
   }

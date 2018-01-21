@@ -14,3 +14,43 @@
   margin-top: -2rem;
   margin-left: 4.5rem;
 }
+.male {
+  background: url("../assets/images/dad.png") no-repeat;
+  background-size: 100%;
+}
+.female {
+  background: url("../assets/images/mom.png") no-repeat;
+  background-size: 100%;
+}
+.son {
+  background: url("../assets/images/son.png") no-repeat;
+  background-size: 100%;
+}
+.daughter {
+  background: url("../assets/images/daughter.png") no-repeat;
+  background-size: 100%;
+}
+.old-woman {
+  background: url("../assets/images/grandma.png") no-repeat;
+  background-size: 100%;
+}
+.old-man {
+  background: url("../assets/images/grandpa.png") no-repeat;
+  background-size: 100%;
+}
+.fadeInLeft {
+  animation-delay: 2s;
+}
+.fadeInRight {
+  animation-delay: 2s;
+}
+.options-enter-active {
+  -webkit-animation: fade 2s reverse;
+  -o-animation: fade 2s reverse;
+  animation: fade 2s reverse;
+}
+.options-leave-active {
+  -webkit-animation: fade 2s;
+  -o-animation: fade 2s;
+  animation: fade 2s;
+}

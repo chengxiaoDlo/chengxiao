@@ -2,8 +2,8 @@
     <div>
       <question question="江上往来人，敢问是何人？" class="animated fadeInLeft">
           <div slot="options" >
-            <transition name="fade" enter-active-class="animated fadeIn" leave-active-class="animated fadeOut">
-              <div v-if="!done" class="options que1">
+            <transition name="fade" >
+              <div v-if="showOption" class="options que1">
                 <div @click="selectSex('壮士')">
                   <div class="sex male" ></div>
                   <p class="sex-name">壮士</p>
@@ -16,8 +16,8 @@
             </transition>
           </div>
       </question>
-      <transition name="start" enter-active-class="animated fadeInRight" leave-active-class="animated fadeOutRight">
-        <answer :text="sex" v-if="done" @modify="modify"></answer>
+      <transition enter-active-class="animated fadeInRight" leave-active-class="animated fadeOutRight">
+        <answer :text="sex" v-if="showAnswer" @modify="modify"></answer>
       </transition>
     </div>
 </template>
@@ -30,7 +30,8 @@
       name: 'firstQues',
       data () {
         return {
-          done: false,
+          showOption: true,
+          showAnswer: false,
           sex: ''
         }
       },
@@ -38,14 +39,33 @@
         Question,
         Answer
       },
+      computed: mapState([
+        'index'
+      ]),
       methods: {
+        ...mapMutations({
+          next: 'next',
+          setIndex: 'setIndex',
+          chooseSex: 'chooseSex'
+        }),
         selectSex (sex) {
           this.sex = sex
-          this.done = true
+          this.chooseSex({data: sex})
+          this.showOption = false
+          this.showAnswer = true
+          setTimeout(() => {
+            this.next()
+          }, 3000)
+          setTimeout(() => {
+            this.setIndex({data: this.index + 1})
+          }, 3500)
         },
         modify () {
           console.log(333)
-          this.done = false
+          this.showAnswer = false
+          setTimeout(() => {
+            this.showOption = true
+          }, 1000)
         }
       }
     }
@@ -53,33 +73,35 @@
 
 <style type="text/scss" lang="scss" scoped>
   @import "../styles/common";
+  @import "../styles/animation";
   .que1 {
     display: flex;
     justify-content: center;
     width: 10.34rem;
     border-bottom-left-radius: 5px;
     border-bottom-right-radius: 5px;
+    overflow: hidden;
     .sex {
       width: 2rem;
       height: 2rem;
       border-radius: 50%;
       margin: 0 0.6rem;
     }
-    .male {
-      background: url("../assets/images/dad.png") no-repeat;
-      background-size: 100%;
-    }
-    .female {
-      background: url("../assets/images/mom.png") no-repeat;
-      background-size: 100%;
-    }
     .sex-name {
       text-align: center;
       font-size: 0.5rem;
     }
   }
-  .fadeIn {
-    animation-delay: 2s;
+  .fadeInLeft {
+    animation-delay: 1s;
   }
-
+  .fade-enter-active {
+    animation: fade 2s reverse;
+    -webkit-animation: fade 2s reverse;
+  }
+  .fade-leave-active {
+    -webkit-animation: fade 2s;
+    -o-animation: fade 2s;
+    animation: fade 2s;
+  }
 </style>

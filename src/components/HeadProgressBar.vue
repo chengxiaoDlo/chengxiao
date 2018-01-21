@@ -23,7 +23,7 @@
 <style type="text/scss" lang="scss" scoped>
 $step: 1;
 @function width($step) {
-  @return $step * 14.29%;
+  @return $step * 12.5%;
 }
 
 .head-progress-bar {
@@ -53,5 +53,8 @@ $step: 1;
 }
 .step7 {
   width: width(7);
+}
+.step8 {
+  width: width(8);
 }
 </style>

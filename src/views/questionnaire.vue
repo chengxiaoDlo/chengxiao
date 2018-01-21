@@ -1,18 +1,35 @@
 <template>
     <div class="questionnaire">
       <head-progress-bar :step="progress"></head-progress-bar>
-      <scroller ref="myscroller">
-        <!--<start></start>-->
-        <!--<transition name="start" enter-active-class="animated fadeInRight">-->
-          <!--<answer text="开始" v-if="goToStart"></answer>-->
-        <!--</transition>-->
-        <!--<first-ques></first-ques>-->
-        <!--<second-ques></second-ques>-->
-        <!--<third-ques></third-ques>-->
-        <!--<fourth-ques></fourth-ques>-->
-        <!--<fifth-ques></fifth-ques>-->
-        <sixth-ques></sixth-ques>
-      </scroller>
+      <swiper :height="height" direction="vertical" class="text-scroll" :show-dots="false" v-model="swiperIndex" @on-index-change="indexChange">
+        <swiper-item>
+          <start></start>
+        </swiper-item>
+        <swiper-item v-if="progress > 0">
+          <first-ques></first-ques>
+        </swiper-item>
+        <swiper-item v-if="progress > 1">
+          <second-ques></second-ques>
+        </swiper-item>
+        <swiper-item v-if="progress > 2">
+          <third-ques></third-ques>
+        </swiper-item>
+        <swiper-item v-if="progress > 3">
+          <fourth-ques></fourth-ques>
+        </swiper-item>
+        <swiper-item v-if="progress > 4">
+          <fifth-ques></fifth-ques>
+        </swiper-item>
+        <swiper-item v-if="progress > 5">
+          <sixth-ques></sixth-ques>
+        </swiper-item>
+        <swiper-item v-if="progress > 6">
+          <seventh-ques></seventh-ques>
+        </swiper-item>
+        <swiper-item v-if="progress > 7">
+          <generate-report></generate-report>
+        </swiper-item>
+      </swiper>
     </div>
 </template>
 
@@ -20,7 +37,6 @@
 import HeadProgressBar from '@/components/HeadProgressBar'
 import Question from '@/components/Question'
 import Start from '@/components/Start'
-import Answer from '@/components/Answer'
 import FirstQues from '@/components/FirstQues'
 import SecondQues from '@/components/SecondQues'
 import ThirdQues from '@/components/ThirdQues'
@@ -28,6 +44,8 @@ import FourthQues from '@/components/FourthQues'
 import FifthQues from '@/components/FifthQues'
 import SixthQues from '@/components/SixthQues'
 import SeventhQues from '@/components/SeventhQues'
+import GenerateReport from '@/components/GenerateReport'
+import { Swiper, SwiperItem } from 'vux'
 import { mapState, mapMutations } from 'vuex'
 
 export default {
@@ -36,48 +54,46 @@ export default {
     HeadProgressBar,
     Question,
     Start,
-    Answer,
     FirstQues,
     SecondQues,
     ThirdQues,
     FourthQues,
     FifthQues,
     SixthQues,
-    SeventhQues
+    SeventhQues,
+    GenerateReport,
+    Swiper,
+    SwiperItem
   },
   data () {
     return {
-      progress: 1,
       answer: {
         sex: ''
-      }
+      },
+      height: '',
+      swiperIndex: 0
     }
   },
-  computed: mapState([
-    'next',
-    'goToStart'
-  ]),
+  computed: mapState({
+    progress: 'progress',
+    index: 'index'
+  }),
   methods: {
     ...mapMutations({
-      toggleNext: 'toggleNext'
+      setIndex: 'setIndex'
     }),
-    selectSex (sex) {
-      this.toggleNext()
-      this.answer.sex = sex
+    indexChange (index) {
+      this.setIndex({data: index})
     }
   },
-  mounted () {
-    console.log(88, this.$refs.myscroller.getPosition())
+  created () {
+    this.height = window.screen.height + 'px'
   },
   watch: {
-    'next': {
+    'index': {
       handler (newVal) {
-        if (newVal) {
-          setTimeout(() => {
-            console.log('next!!!')
-            this.$refs.myscroller.scrollTo(0, 500, true)
-          }, 2000)
-        }
+        console.log(111, newVal)
+        this.swiperIndex = newVal
       }
     }
   }
@@ -85,4 +101,7 @@ export default {
 </script>
 
 <style type="text/scss" lang="scss" scoped>
+  .questionnaire {
+    height: 100%;
+  }
 </style>

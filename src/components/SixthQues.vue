@@ -1,34 +1,54 @@
 <template>
     <div>
-      <question question="玉盘珍馐值万钱，你家收支多少钱？" sub="我们会基于家庭收入及贷款来为您规划合理的保额及保费预">
-        <div slot="options">
-          <div class="options que3" >
-            <div v-for="member in memberList">
-              <div class="age" >
-                <div class="avatar">
-                  <div class="member" :class="member.class"></div>
-                  <p class="member-text">{{member.text}}</p>
+      <div @click="cancel">
+        <question question="玉盘珍馐值万钱，你家收支多少钱？" sub="我们会基于家庭收入及贷款来为您规划合理的保额及保费预" class="animated fadeInLeft">
+          <div slot="options">
+            <transition name="options">
+              <div v-if="showOption">
+                <div class="options que3" >
+                  <div v-for="member in memberList">
+                    <div class="age" >
+                      <div class="avatar">
+                        <div class="member" :class="member.class"></div>
+                        <p class="member-text">{{member.text}}</p>
+                      </div>
+                      <div class="member-age" @click="input(member)">{{member.value}}</div>
+                      <div class="unit">{{member.unit}}</div>
+                    </div>
+                  </div>
                 </div>
-                <div class="member-age">{{member.value}}</div>
-                <div class="unit">{{member.unit}}</div>
+                <div class="confirm" @click="confirm"></div>
               </div>
-            </div>
+            </transition>
           </div>
-          <div class="confirm" @click="confirm"></div>
-        </div>
-      </question>
+        </question>
+        <transition enter-active-class="animated fadeInRight" leave-active-class="animated fadeOutRight">
+          <answer v-if="showAnswer" :textList="answerText" @modify="modify" wrap></answer>
+        </transition>
+      </div>
+      <keyboard v-if="inputMoney" @on-change="change" @ok="ok"></keyboard>
     </div>
 </template>
 
 <script>
   import Question from '@/components/Question'
+  import Keyboard from '@/components/Keyboard'
+  import Answer from '@/components/Answer'
+  import { mapState, mapMutations } from 'vuex'
+
     export default {
       name: "sixth-ques",
       components: {
-        Question
+        Question,
+        Keyboard,
+        Answer
       },
       data () {
         return {
+          inputMoney: false,
+          showOption: true,
+          showAnswer: false,
+          current: '',
           memberList: [
             {
               class: 'me',
@@ -51,14 +71,121 @@
           ]
         }
       },
+      computed: {
+        answerText () {
+          return this.memberList.map(item => {
+            if (item.value === '房贷、车贷等' || item.value === '0') {
+              return item.text + ': 无'
+            } else {
+              return item.text + ': ' + item.value + item.unit
+            }
+          })
+        },
+        ...mapState([
+          'index',
+          'info'
+        ])
+      },
       methods: {
-        confirm () {}
+        ...mapMutations({
+          next: 'next',
+          setIndex: 'setIndex'
+        }),
+        input (member) {
+          this.current = member.text
+          setTimeout(() => {
+            this.inputMoney = true
+          }, 100)
+        },
+        change (val) {
+          this.memberList.forEach(item => {
+            if (item.text === this.current) {
+              item.value = val
+            }
+          })
+        },
+        ok () {
+          this.inputMoney = false
+        },
+        confirm () {
+          this.showAnswer = true
+          this.showOption = false
+          setTimeout(() => {
+            this.next()
+          }, 3000)
+          setTimeout(() => {
+            this.setIndex({data: this.index + 1})
+          }, 3500)
+        },
+        modify () {
+          this.showAnswer = false
+          setTimeout(() => {
+            this.showOption = true
+          }, 1000)
+        },
+        cancel () {
+          if (this.inputMoney) {
+            this.inputMoney = false
+            this.memberList.forEach(item => {
+              if (item.text === this.current) {
+                if (this.current === '家庭贷款') {
+                  item.value = '房贷、车贷等'
+                } else {
+                  item.value = '税前收入'
+                }
+              }
+            })
+          }
+        }
+      },
+      created () {
+        let arr = this.info.family.filter(item => {
+          return item.text === '配偶'
+        })
+        if (arr.length > 0) {
+          this.memberList = [
+            {
+              class: this.info.sex === '壮士' ? 'male' : 'female',
+              text: this.info.sex === '壮士' ? '爸爸收入' : '妈妈收入',
+              value: '税前收入',
+              unit: '万元/年'
+            },
+            {
+              class: this.info.sex === '壮士' ? 'male' : 'female',
+              text: this.info.sex === '壮士' ? '妈妈收入' : '爸爸收入',
+              value: '税前收入',
+              unit: '万元/年'
+            },
+            {
+              class: 'son',
+              text: '家庭贷款',
+              value: '房贷、车贷等',
+              unit: '万元'
+            }
+          ]
+        } else {
+          this.memberList = [
+            {
+              class: this.info.sex === '壮士' ? 'male' : 'female',
+              text: '本人收入',
+              value: '税前收入',
+              unit: '万元/年'
+            },
+            {
+              class: 'son',
+              text: '家庭贷款',
+              value: '房贷、车贷等',
+              unit: '万元'
+            }
+          ]
+        }
       }
     }
 </script>
 
 <style type="text/scss" lang="scss" scoped>
   @import "../styles/common";
+  @import "../styles/animation";
   .que3 {
     padding-top: 0.5rem;
     padding-bottom: 2.5rem;

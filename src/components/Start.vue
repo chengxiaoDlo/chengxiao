@@ -16,37 +16,50 @@
           <div class="angle"></div>
           <p>我会基于您的动态风险，为您规划全家庭的保险方案。让我们开始吧~</p>
         </div>
-        <transition name="slideUp">
+        <transition name="start">
           <div v-if="!goToStart">
             <div class="content"></div>
             <div class="start-btn" @click="start"></div>
           </div>
+        </transition>
+        <transition name="start" enter-active-class="animated fadeInRight">
+          <answer text="开始" v-if="goToStart" :modifiable="false"></answer>
         </transition>
       </div>
     </div>
 </template>
 
 <script>
+  import Answer from '@/components/Answer'
   import { mapState, mapMutations } from 'vuex'
 
     export default {
       name: 'Start',
+      components: {
+        Answer
+      },
       data () {
         return {
+          goToStart: false,
           showStartBtn: true
         }
       },
       computed: mapState([
-        'goToStart'
+        'index'
       ]),
       methods: {
         ...mapMutations({
-          toggleNext: 'toggleNext',
-          getStart: 'getStart'
+          next: 'next',
+          setIndex: 'setIndex'
         }),
         start () {
-          this.getStart()
-          this.toggleNext()
+          this.goToStart = true
+          setTimeout(() => {
+            this.next()
+          }, 3000)
+          setTimeout(() => {
+            this.setIndex({data: this.index + 1})
+          }, 3500)
         }
       },
       created () {
@@ -139,11 +152,11 @@
       margin-top: -1.8rem;
     }
   }
-  .slideUp-enter-active, .slideUp-leave-active {
-    transition: opacity 2s;
+  .start-leave-active {
+    animation: fade 2s;
   }
-  .slideUp-enter, .slideUp-leave-to {
-    opacity: 0;
+  .fadeInRight {
+    animation-delay: 2s;
   }
 }
 

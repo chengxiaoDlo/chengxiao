@@ -1,7 +1,10 @@
 <template>
   <div class="answer">
     <div class="modify" @click="modify" v-if="modifiable"></div>
-    {{text}}
+    <p v-if="!wrap">{{text}}</p>
+    <div v-if="wrap" v-for="row in textList">
+      <p>{{row}}</p>
+    </div>
     <div class="angle"></div>
   </div>
 </template>
@@ -16,7 +19,14 @@
         },
         modifiable: {
           type: Boolean,
+          default: true
+        },
+        wrap: {
+          type: Boolean,
           default: false
+        },
+        textList: {
+          type: Array,
         }
       },
       methods: {
@@ -31,14 +41,12 @@
 .answer {
   background: linear-gradient(left, rgb(246, 225, 90), rgb(244, 208, 70));
   float: right;
-  height: 1.6rem;
   line-height: 1.6rem;
-  text-align: center;
+  max-width: 6rem;
   padding: 0 0.67rem;
   margin-right: 0.82rem;
   color: rgb(122, 103, 90);
   margin-top: 1rem;
-  animation-delay: 2s;
   position: relative;
   border-radius: 5px;
   border-top-right-radius: 0;

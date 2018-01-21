@@ -1,61 +1,183 @@
 <template>
   <div>
-    <question question="对酒当歌，芳龄几何？" sub="年龄会关乎到保险方案和价格的准确性哦~">
+    <question question="对酒当歌，芳龄几何？" sub="年龄会关乎到保险方案和价格的准确性哦~" class="animated fadeInLeft">
       <div slot="options">
-        <div class="options que3" >
-          <div v-for="member in memberList">
-            <div class="age" >
-              <div>
-                <div class="member" :class="member.class"></div>
-                <p class="member-text">{{member.text}}</p>
+        <transition name="options">
+          <div v-if="showOption">
+            <div class="options que3" >
+              <div v-for="member in memberList">
+                <div class="age" >
+                  <div>
+                    <div class="member" :class="member.class"></div>
+                    <p class="member-text">{{member.text}}</p>
+                  </div>
+                  <div class="member-age" @click="selectAge(member)">{{member.value}}</div>
+                  <div class="unit">岁</div>
+                </div>
               </div>
-              <div class="member-age">{{member.value}}</div>
-              <div class="unit">岁</div>
             </div>
+            <div class="confirm" @click="confirm"></div>
           </div>
-        </div>
-        <div class="confirm" @click="confirm"></div>
+        </transition>
       </div>
     </question>
+    <div class="picker" v-if="chooseAge">
+      <slide-picker :list="chooseList" :col="1" @quit="cancel" @confirm="selected" :default="defaultAge"></slide-picker>
+    </div>
+    <transition enter-active-class="animated fadeInRight" leave-active-class="animated fadeOutRight">
+      <answer v-if="showAnswer" :textList="answerText" @modify="modify" wrap></answer>
+    </transition>
   </div>
 </template>
 
 <script>
 import Question from '@/components/Question'
+import SlidePicker from '@/components/SlidePicker'
+import Answer from '@/components/Answer'
+import { mapState, mapMutations } from 'vuex'
+
 export default {
   name: "third-ques",
   components: {
-    Question
+    Question,
+    SlidePicker,
+    Answer
   },
   data () {
     return {
-      memberList: [
-        {
-          class: 'me',
-          text: '本人',
-          value: '选择年龄'
-        },
-        {
-          class: 'wife',
-          text: '配偶',
-          value: '选择年龄'
-        },
-        {
-          class: 'son',
-          text: '儿子',
-          value: '选择年龄'
-        }
-      ]
+      chooseAge: false,
+      showOption: true,
+      showAnswer: false,
+      who: '',
+      memberList: [],
+      defaultAge: '30',
+      ageList: [],
+      chooseList: [],
+      age: ['']
     }
   },
+  computed: {
+    youngList () {
+      return this.ageList.slice(18, 61)
+    },
+    childList () {
+      return this.ageList.slice(0, 31)
+    },
+    oldList () {
+      return this.ageList.slice(40, 81)
+    },
+    answerText () {
+     return this.memberList.map(item => {
+       return item.text + ': ' + item.value + '岁'
+     })
+    },
+    ...mapState([
+      'index',
+      'info'
+    ])
+  },
   methods: {
-    confirm () {}
-  }
+    ...mapMutations({
+      next: 'next',
+      setIndex: 'setIndex'
+    }),
+    confirm () {
+      this.showOption = false
+      this.showAnswer = true
+      setTimeout(() => {
+        this.next()
+      }, 3000)
+      setTimeout(() => {
+        this.setIndex({data: this.index + 1})
+      }, 3500)
+    },
+    change (val) {
+      console.log(val)
+    },
+    selectAge (member) {
+      switch (member.text) {
+        case '本人': case '配偶':
+          this.chooseList = this.youngList
+          this.defaultAge = '30'
+          break
+        case '儿子': case '女儿': case '小儿子': case '小女儿': case '大儿子': case '大女儿': case '二儿子': case '二女儿':
+          this.chooseList = this.childList
+          this.defaultAge = '5'
+          break
+        case '爸爸': case '妈妈': case '配偶爸爸': case '配偶妈妈':
+          this.chooseList = this.oldList
+          this.defaultAge = '60'
+      }
+      this.who = member.text
+      this.chooseAge = true
+    },
+    cancel () {
+      this.chooseAge = false
+    },
+    selected (val) {
+      console.log(999, val)
+      this.memberList.forEach(item => {
+        if (item.text === this.who) {
+          item.value = val.value[0]
+        }
+      })
+      this.chooseAge = false
+    },
+    modify () {
+      this.showAnswer = false
+      setTimeout(() => {
+        this.showOption = true
+      }, 1000)
+    },
+    getList (origin) {
+      if (origin instanceof Array) {
+        let members = origin.map(item => {
+          return item.text
+        })
+        if ((members.indexOf('爸爸') !== -1 || members.indexOf('妈妈') !== -1 || members.indexOf('配偶妈妈') !== -1 || members.indexOf('配偶爸爸') !== -1) &&
+          (members.indexOf('儿子') !== -1 || members.indexOf('女儿') !== -1)) {
+          let arr = origin.filter(item => {
+            return (item.text !== '爸爸' && item.text !== '妈妈' && item.text !== '配偶爸爸' && item.text !== '配偶妈妈')
+          })
+          return arr.map(item => {
+            return {
+              class: item.class,
+              text: item.text,
+              value: '选择年龄'
+            }
+          })
+        } else {
+          return origin.map(item => {
+            return {
+              class: item.class,
+              text: item.text,
+              value: '选择年龄'
+            }
+          })
+        }
+      }
+    }
+  },
+  created () {
+    for (let i = 0; i < 81; i++) {
+      this.ageList.push({
+        name: i,
+        value: i
+      })
+    }
+    this.memberList = [{
+      class: this.info.sex === '壮士' ? 'male' : 'female',
+      text: '本人',
+      value: '选择年龄'
+    }, ...this.getList(this.info.family)]
+  },
+
 }
 </script>
 
 <style type="text/scss" lang="scss" scoped>
 @import "../styles/common";
+@import "../styles/animation";
 .que3 {
   padding-top: 0.5rem;
   padding-bottom: 2.5rem;
@@ -104,12 +226,5 @@ export default {
     }
   }
 }
-.confirm {
-  background: url("../assets/images/confirm-btn.png") no-repeat;
-  background-size: 100%;
-  width: 5rem;
-  height: 3rem;
-  margin-top: -2rem;
-  margin-left: 4.5rem;
-}
+
 </style>
