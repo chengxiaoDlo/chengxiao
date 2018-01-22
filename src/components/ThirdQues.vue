@@ -7,9 +7,9 @@
             <div class="options que3" >
               <div v-for="member in memberList">
                 <div class="age" >
-                  <div>
+                  <div class="avatar">
                     <div class="member" :class="member.class"></div>
-                    <p class="member-text">{{member.text}}</p>
+                    <p class="member-text">{{member.labelName}}</p>
                   </div>
                   <div class="member-age" @click="selectAge(member)">{{member.value}}</div>
                   <div class="unit">岁</div>
@@ -68,7 +68,7 @@ export default {
     },
     answerText () {
      return this.memberList.map(item => {
-       return item.text + ': ' + item.value + '岁'
+       return item.labelName + ': ' + item.value + '岁'
      })
     },
     btnAbled () {
@@ -87,12 +87,14 @@ export default {
       next: 'next',
       setIndex: 'setIndex',
       stopSwiper: 'stopSwiper',
-      useSwiper: 'useSwiper'
+      useSwiper: 'useSwiper',
+      addAge: 'addAge'
     }),
     confirm () {
       if (this.btnAbled) {
         this.showOption = false
         this.showAnswer = true
+        this.addAge({data: this.memberList})
         setTimeout(() => {
           this.next({data: this.progress + 1})
         }, 3000)
@@ -105,7 +107,7 @@ export default {
       console.log(val)
     },
     selectAge (member) {
-      switch (member.text) {
+      switch (member.labelName) {
         case '本人': case '配偶':
           this.chooseList = this.youngList
           this.defaultAge = '30'
@@ -118,7 +120,7 @@ export default {
           this.chooseList = this.oldList
           this.defaultAge = '60'
       }
-      this.who = member.text
+      this.who = member.labelName
       this.chooseAge = true
       this.stopSwiper()
     },
@@ -129,7 +131,7 @@ export default {
     selected (val) {
       console.log(999, val)
       this.memberList.forEach(item => {
-        if (item.text === this.who) {
+        if (item.labelName === this.who) {
           item.value = val.value[0]
         }
       })
@@ -145,17 +147,17 @@ export default {
     getList (origin) {
       if (origin instanceof Array) {
         let members = origin.map(item => {
-          return item.text
+          return item.labelName
         })
         if ((members.indexOf('爸爸') !== -1 || members.indexOf('妈妈') !== -1 || members.indexOf('配偶妈妈') !== -1 || members.indexOf('配偶爸爸') !== -1) &&
           (members.indexOf('儿子') !== -1 || members.indexOf('女儿') !== -1)) {
           let arr = origin.filter(item => {
-            return (item.text !== '爸爸' && item.text !== '妈妈' && item.text !== '配偶爸爸' && item.text !== '配偶妈妈')
+            return (item.labelName !== '爸爸' && item.labelName !== '妈妈' && item.labelName !== '配偶爸爸' && item.labelName !== '配偶妈妈')
           })
           return arr.map(item => {
             return {
               class: item.class,
-              text: item.text,
+              labelName: item.labelName,
               value: '选择年龄'
             }
           })
@@ -163,7 +165,7 @@ export default {
           return origin.map(item => {
             return {
               class: item.class,
-              text: item.text,
+              labelName: item.labelName,
               value: '选择年龄'
             }
           })
@@ -179,14 +181,15 @@ export default {
       })
     }
     let family = this.info.family.filter(item => {
-      return item.text.indexOf('狗') === -1
+      return item.labelName.indexOf('狗') === -1
     })
     this.memberList = [{
-      class: this.info.sex === '壮士' ? 'male' : 'female',
-      text: '本人',
+      class: this.info.sex === 'M' ? 'male' : 'female',
+      labelName: '本人',
       value: '选择年龄'
     }, ...this.getList(family)]
-  },
+   console.log(444, this.memberList)
+  }
 
 }
 </script>
@@ -203,22 +206,15 @@ export default {
     align-content: center;
     width: 100%;
     margin-bottom: 0.6rem;
+    .avatar {
+      text-align: center;
+      flex-basis: 2.5rem;
+      margin-right: 0.5rem;
+    }
     .member {
       width: 1.53rem;
       height: 1.53rem;
-      margin-right: 0.8rem;
-    }
-    .me {
-      background: url("../assets/images/dad.png") no-repeat;
-      background-size: 100%;
-    }
-    .wife {
-      background: url("../assets/images/mom.png") no-repeat;
-      background-size: 100%;
-    }
-    .son {
-      background: url("../assets/images/son.png") no-repeat;
-      background-size: 100%;
+      margin: 0 auto;
     }
     .member-age {
       width: 4.73rem;
@@ -233,7 +229,6 @@ export default {
     }
     .member-text {
       font-size: 0.5rem;
-      padding-left: 0.25rem;
     }
     .unit {
       font-size: 0.47rem;

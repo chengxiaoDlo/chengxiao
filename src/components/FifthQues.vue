@@ -9,7 +9,7 @@
                   <div class="age" >
                     <div>
                       <div class="member" :class="member.class"></div>
-                      <p class="member-text">{{member.text}}</p>
+                      <p class="member-labelName">{{member.labelName}}</p>
                     </div>
                     <div class="member-security" :class="{'qicked': member.socialSecurity === true}" @click="hasSecurity('y', member)">有社保</div>
                     <div class="member-security" :class="{'qicked': member.socialSecurity === false}" @click="hasSecurity('n', member)">无社保</div>
@@ -22,7 +22,7 @@
         </div>
       </question>
       <transition enter-active-class="animated fadeInRight" leave-active-class="animated fadeOutRight">
-        <answer v-if="showAnswer" :textList="answerText" @modify="modify" wrap></answer>
+        <answer v-if="showAnswer" :textList="answerlabelName" @modify="modify" wrap></answer>
       </transition>
     </div>
 </template>
@@ -46,9 +46,9 @@
         Answer
       },
       computed: {
-        answerText () {
+        answerlabelName () {
           return this.memberList.map(item => {
-            return item.socialSecurity ? item.text + ': 有社保' : item.text + ': 无社保'
+            return item.socialSecurity ? item.labelName + ': 有社保' : item.labelName + ': 无社保'
           })
         },
         ...mapState([
@@ -60,11 +60,13 @@
       methods: {
         ...mapMutations({
           next: 'next',
-          setIndex: 'setIndex'
+          setIndex: 'setIndex',
+          addSocial: 'addSocial'
         }),
         confirm () {
           this.showOption = false
           this.showAnswer = true
+          this.addSocial({data: this.memberList})
           setTimeout(() => {
             this.next({data: this.progress + 1})
           }, 3000)
@@ -88,17 +90,17 @@
         getList (origin) {
           if (origin instanceof Array) {
             let members = origin.map(item => {
-              return item.text
+              return item.labelName
             })
             if ((members.indexOf('爸爸') !== -1 || members.indexOf('妈妈') !== -1 || members.indexOf('配偶妈妈') !== -1 || members.indexOf('配偶爸爸') !== -1) &&
               (members.indexOf('儿子') !== -1 || members.indexOf('女儿') !== -1)) {
               let arr = origin.filter(item => {
-                return (item.text !== '爸爸' && item.text !== '妈妈' && item.text !== '配偶爸爸' && item.text !== '配偶妈妈')
+                return (item.labelName !== '爸爸' && item.labelName !== '妈妈' && item.labelName !== '配偶爸爸' && item.labelName !== '配偶妈妈')
               })
               return arr.map(item => {
                 return {
                   class: item.class,
-                  text: item.text,
+                  labelName: item.labelName,
                   socialSecurity: true
                 }
               })
@@ -106,7 +108,7 @@
               return origin.map(item => {
                 return {
                   class: item.class,
-                  text: item.text,
+                  labelName: item.labelName,
                   socialSecurity: true
                 }
               })
@@ -116,11 +118,11 @@
       },
       created () {
         let family = this.info.family.filter(item => {
-          return item.text.indexOf('狗') === -1
+          return item.labelName.indexOf('狗') === -1
         })
         this.memberList = [{
-          class: this.info.sex === '壮士' ? 'male' : 'female',
-          text: '本人',
+          class: this.info.sex === 'M' ? 'male' : 'female',
+          labelName: '本人',
           socialSecurity: true
         }, ...this.getList(family)]
       }
@@ -172,7 +174,7 @@
         border-color: rgb(252, 216, 75);
         color: rgb(252, 216, 75);
       }
-      .member-text {
+      .member-labelName {
         font-size: 0.5rem;
         padding-left: 0.25rem;
       }

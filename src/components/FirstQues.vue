@@ -4,11 +4,11 @@
           <div slot="options" >
             <transition name="fade" >
               <div v-if="showOption" class="options que1">
-                <div @click="selectSex('壮士')">
+                <div @click="selectSex('M')">
                   <div class="sex male" ></div>
                   <p class="sex-name">壮士</p>
                 </div>
-                <div @click="selectSex('女子')">
+                <div @click="selectSex('F')">
                   <div class="sex female" ></div>
                   <p class="sex-name">女子</p>
                 </div>
@@ -50,7 +50,7 @@
           chooseSex: 'chooseSex'
         }),
         selectSex (sex) {
-          this.sex = sex
+          this.sex = sex === 'M' ? '壮士' : '女子'
           this.chooseSex({data: sex})
           this.showOption = false
           this.showAnswer = true

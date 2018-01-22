@@ -9,7 +9,7 @@
                 <div class="family" :class="member.class">
                   <div class="pick" v-if="member.picked"></div>
                 </div>
-                <p class="member">{{member.text}}</p>
+                <p class="member">{{member.labelName}}</p>
               </div>
             </div>
             <div class="btn" @click="confirmAdd()"></div>
@@ -22,7 +22,7 @@
             <div v-if="showOption">
               <div class="options que2">
                 <div class="option">
-                  <div class="family" :class="info.sex === '壮士' ? 'male' : 'female'">
+                  <div class="family" :class="info.sex === 'M' ? 'male' : 'female'">
                     <div class="pick"></div>
                   </div>
                   <p class="member">本人</p>
@@ -31,7 +31,7 @@
                   <div class="family" :class="member.class">
                     <div class="pick" v-if="member.picked"></div>
                   </div>
-                  <p class="member">{{member.text}}</p>
+                  <p class="member">{{member.labelName}}</p>
                 </div>
                 <div class="option" @click="addMembers">
                   <div class="family add"></div>
@@ -63,54 +63,83 @@
         return {
           memberList: [
             {
-              text: '配偶',
+              labelName: '配偶',
+              label: 'spouse',
+              gender: '',
+              memberType: 2,
               picked: false,
               class: 'female'
             },
             {
-              text: '儿子',
+              labelName: '儿子',
+              label: 'boy',
+              gender: 'M',
+              memberType: 4,
               picked: false,
               class: 'son'
             },
             {
-              text: '女儿',
+              labelName: '女儿',
+              label: 'girl',
+              gender: 'F',
+              memberType: 4,
               picked: false,
               class: 'daughter'
             },
             {
-              text: '爸爸',
+              labelName: '爸爸',
+              label: 'father',
+              gender: 'M',
+              memberType: 3,
               picked: false,
               class: 'old-man'
             },
             {
-              text: '妈妈',
+              labelName: '妈妈',
+              label: 'mother',
+              gender: 'F',
+              memberType: 4,
               picked: false,
               class: 'old-woman'
             },
             {
-              text: '宠物狗',
+              labelName: '宠物狗',
+              label: 'dog',
+              memberType: 10,
               picked: false,
               class: 'dog'
             }
           ],
           addList: [
             {
-              text: '女儿',
+              labelName: '女儿',
+              label: 'girl',
+              gender: 'F',
+              memberType: 4,
               picked: false,
               class: 'daughter'
             },
             {
-              text: '儿子',
+              labelName: '儿子',
+              label: 'boy',
+              gender: 'M',
+              memberType: 4,
               picked: false,
               class: 'son'
             },
             {
-              text: '配偶爸爸',
+              labelName: '配偶爸爸',
+              label: 'spouse-father',
+              gender: 'M',
+              memberType: 3,
               picked: false,
               class: 'old-man'
             },
             {
-              text: '配偶妈妈',
+              labelName: '配偶妈妈',
+              label: 'spouse-mother',
+              gender: 'F',
+              memberType: 3,
               picked: false,
               class: 'old-woman'
             }
@@ -124,14 +153,14 @@
       },
       computed: {
         answerText () {
-          let text = '本人'
+          let labelName = '本人'
           let choosed = this.memberList.filter(item => {
             return item.picked === true
           })
           choosed.forEach(item => {
-              text += '、' + item.text
+              labelName += '、' + item.labelName
           })
-          return text
+          return labelName
         },
         ...mapState([
           'index',
@@ -152,9 +181,9 @@
         }),
         chooseMember (member) {
           let pickedChild = this.memberList.filter(item => {
-            return (/\w*[儿子|女儿]/.test(item.text)) && (item.picked === true)
+            return (/\w*[儿子|女儿]/.test(item.labelName)) && (item.picked === true)
           })
-          if (/\w*[儿子|女儿]/.test(member.text)) {
+          if (/\w*[儿子|女儿]/.test(member.labelName)) {
             if (!member.picked) {
               if (pickedChild.length < 3) {
                 member.picked = true
@@ -207,56 +236,68 @@
             return item.class === 'daughter'
           })
           let pickedChild = this.memberList.filter(item => {
-            return (/\w*[儿子|女儿]/.test(item.text)) && (item.picked === true)
+            return (/\w*[儿子|女儿]/.test(item.labelName)) && (item.picked === true)
           })
           this.addMem.forEach(item => {
-            if (item.text === '儿子') {
+            if (item.labelName === '儿子') {
               if (pickedChild.length < 3) {
                 if (sons.length === 1) {
                   this.memberList.forEach(item2 => {
-                    if (item2.text === '儿子') {
-                      item2.text = '大儿子'
+                    if (item2.labelName === '儿子') {
+                      item2.labelName = '大儿子'
                     }
                   })
                   this.memberList.push({
-                    text: '小儿子',
+                    labelName: '小儿子',
+                    label: 'boy',
+                    gender: 'M',
+                    memberType: 4,
                     picked: true,
                     class: 'son'
                   })
                 } else if (sons.length === 2) {
                   this.memberList.forEach(item2 => {
-                    if (item2.text === '小儿子') {
-                      item2.text = '二儿子'
+                    if (item2.labelName === '小儿子') {
+                      item2.labelName = '二儿子'
                     }
                   })
                   this.memberList.push({
-                    text: '小儿子',
+                    labelName: '小儿子',
+                    label: 'boy',
+                    gender: 'M',
+                    memberType: 4,
                     picked: true,
                     class: 'son'
                   })
                 }
               }
-            } else if (item.text === '女儿') {
+            } else if (item.labelName === '女儿') {
               if (pickedChild.length < 3) {
                 if (daugthers.length === 1) {
                   this.memberList.forEach(item2 => {
-                    if (item2.text === '女儿') {
-                      item2.text = '大女儿'
+                    if (item2.labelName === '女儿') {
+                      item2.labelName = '大女儿'
                     }
                   })
                   this.memberList.push({
-                    text: '小女儿',
+                    labelName: '小女儿',
+                    label: 'girl',
+                    gender: 'F',
+                    memberType: 4,
                     picked: true,
                     class: 'daughter'
                   })
                 } else if (daugthers.length === 2) {
                   this.memberList.forEach(item2 => {
-                    if (item2.text === '小女儿') {
-                      item2.text = '二女儿'
+                    if (item2.labelName === '小女儿') {
+                      item2.labelName = '二女儿'
                     }
                   })
                   this.memberList.push({
-                    text: '小女儿',
+                    labelName: '小女儿',
+                    label: 'girl',
+                    gender: 'F',
+                    memberType: 4,
                     picked: true,
                     class: 'daughter'
                   })
@@ -264,10 +305,10 @@
               }
             } else {
               if (this.memberList.every(item3 => {
-                return item3.text !== item.text
+                return item3.labelName !== item.labelName
                 })) {
                 this.memberList.push({
-                  text: item.text,
+                  labelName: item.labelName,
                   picked: true,
                   class: item.class
                 })
@@ -280,15 +321,17 @@
       },
       created () {
         console.log(511, this.info)
-        if (this.info.sex === '壮士') {
+        if (this.info.sex === 'M') {
           this.memberList.forEach(item => {
-            if (item.text === '配偶') {
+            if (item.labelName === '配偶') {
+              item.gender = 'F'
               item.class = 'female'
             }
           })
         } else {
           this.memberList.forEach(item => {
-            if (item.text === '配偶') {
+            if (item.labelName === '配偶') {
+              item.gender = 'M'
               item.class = 'male'
             }
           })
@@ -301,7 +344,7 @@
               console.log(111)
               this.addList.forEach(item => {
                 item.picked = false
-                item.text = item.text.replace(/[小二]/, '')
+                item.labelName = item.labelName.replace(/[小二]/, '')
               })
             }
           }

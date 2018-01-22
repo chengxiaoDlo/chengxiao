@@ -18,3 +18,7 @@ new Vue({
   components: { App },
   template: '<App/>'
 })
+
+document.querySelector('body').addEventListener('touchmove', function (ev) {
+  ev.preventDefault()
+})

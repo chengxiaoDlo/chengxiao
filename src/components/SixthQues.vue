@@ -142,14 +142,14 @@
         if (arr.length > 0) {
           this.memberList = [
             {
-              class: this.info.sex === '壮士' ? 'male' : 'female',
-              text: this.info.sex === '壮士' ? '爸爸收入' : '妈妈收入',
+              class: this.info.sex === 'M' ? 'male' : 'female',
+              text: this.info.sex === 'M' ? '爸爸收入' : '妈妈收入',
               value: '税前收入',
               unit: '万元/年'
             },
             {
-              class: this.info.sex === '壮士' ? 'male' : 'female',
-              text: this.info.sex === '壮士' ? '妈妈收入' : '爸爸收入',
+              class: this.info.sex === 'M' ? 'male' : 'female',
+              text: this.info.sex === 'M' ? '妈妈收入' : '爸爸收入',
               value: '税前收入',
               unit: '万元/年'
             },
@@ -163,7 +163,7 @@
         } else {
           this.memberList = [
             {
-              class: this.info.sex === '壮士' ? 'male' : 'female',
+              class: this.info.sex === 'M' ? 'male' : 'female',
               text: '本人收入',
               value: '税前收入',
               unit: '万元/年'

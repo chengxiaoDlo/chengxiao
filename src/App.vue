@@ -20,6 +20,9 @@ html {
   font-size: 30px;
   background: rgb(246, 246, 246);
 }
+div {
+  -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
+}
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;

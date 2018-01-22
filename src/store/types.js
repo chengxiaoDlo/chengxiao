@@ -6,5 +6,7 @@ export default {
   CHOOSE_SEX: 'chooseSex',
   SELECT_MEMBERS: 'selectMembers',
   STOP_SWIPER: 'stopSwiper',
-  USE_SWIPER: 'useSwiper'
+  USE_SWIPER: 'useSwiper',
+  ADD_AGE: 'addAge',
+  ADD_SOCIAL: 'addSocial'
 }

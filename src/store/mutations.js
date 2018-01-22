@@ -24,6 +24,31 @@ export default {
   },
   [types.USE_SWIPER] (state) {
     state.stopScroll = false
+  },
+  [types.ADD_AGE] (state, payload) {
+    payload.data.forEach(item1 => {
+      if (item1.labelName === '本人') {
+        state.info.age = item1.value
+      }
+      state.info.family.forEach(item2 => {
+        if (item2.labelName === item1.labelName) {
+          item2.age = item1.value
+        }
+      })
+    })
+  },
+  [types.ADD_SOCIAL] (state, payload) {
+    payload.data.forEach(item1 => {
+      if (item1.labelName === '本人') {
+        state.info.socialSecurity = item1.socialSecurity
+      }
+      state.info.family.forEach(item2 => {
+        if (item2.labelName === item1.labelName) {
+          item2.hasSocialInsurance = item1.socialSecurity
+        }
+      })
+    })
+    console.log(999, state.info.family)
   }
 }
 

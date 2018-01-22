@@ -82,10 +82,12 @@ export default {
   }),
   methods: {
     ...mapMutations({
-      setIndex: 'setIndex'
+      setIndex: 'setIndex',
+      next: 'next'
     }),
     indexChange (index) {
       this.setIndex({data: index})
+      this.next({data: index})
     }
   },
   created () {

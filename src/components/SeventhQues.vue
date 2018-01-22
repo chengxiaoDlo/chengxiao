@@ -104,12 +104,12 @@
           this.memberList = [
             {
               text: '本人',
-              class: this.info.sex === '壮士' ? 'male' : 'female',
+              class: this.info.sex === 'M' ? 'male' : 'female',
               smoke: false
             },
             {
               text: '配偶',
-              class: this.info.sex === '壮士' ? 'female' : 'male',
+              class: this.info.sex === 'M' ? 'female' : 'male',
               smoke: false
             }
           ]
@@ -117,7 +117,7 @@
           this.memberList = [
             {
               text: '本人',
-              class: this.info.sex === '壮士' ? 'male' : 'female',
+              class: this.info.sex === 'M' ? 'male' : 'female',
               smoke: false
             }
           ]

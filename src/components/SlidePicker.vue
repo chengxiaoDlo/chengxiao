@@ -57,6 +57,7 @@
     background: #ffffff;
     bottom: 0;
     overflow: hidden;
+    z-index: 100;
     header {
       height: 1.5rem;
       line-height: 1.5rem;
