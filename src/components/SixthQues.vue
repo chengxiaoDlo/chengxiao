@@ -17,7 +17,7 @@
                     </div>
                   </div>
                 </div>
-                <div class="confirm" @click="confirm"></div>
+                <div class="confirm" :class="btnAbled ? 'btn-able' : 'btn-disable' " @click="confirm"></div>
               </div>
             </transition>
           </div>
@@ -49,26 +49,7 @@
           showOption: true,
           showAnswer: false,
           current: '',
-          memberList: [
-            {
-              class: 'me',
-              text: '爸爸收入',
-              value: '税前收入',
-              unit: '万元/年'
-            },
-            {
-              class: 'wife',
-              text: '妈妈收入',
-              value: '税前收入',
-              unit: '万元/年'
-            },
-            {
-              class: 'son',
-              text: '家庭贷款',
-              value: '房贷、车贷等',
-              unit: '万元'
-            }
-          ]
+          memberList: []
         }
       },
       computed: {
@@ -81,20 +62,32 @@
             }
           })
         },
+        btnAbled () {
+          let arr = this.memberList.filter(item => {
+            return item.text !== '家庭贷款'
+          })
+          return arr.every(item => {
+            return item.value !== '税前收入'
+          })
+        },
         ...mapState([
           'index',
+          'progress',
           'info'
         ])
       },
       methods: {
         ...mapMutations({
           next: 'next',
-          setIndex: 'setIndex'
+          setIndex: 'setIndex',
+          stopSwiper: 'stopSwiper',
+          useSwiper: 'useSwiper'
         }),
         input (member) {
           this.current = member.text
           setTimeout(() => {
             this.inputMoney = true
+            this.stopSwiper()
           }, 100)
         },
         change (val) {
@@ -106,16 +99,19 @@
         },
         ok () {
           this.inputMoney = false
+          this.useSwiper()
         },
         confirm () {
-          this.showAnswer = true
-          this.showOption = false
-          setTimeout(() => {
-            this.next()
-          }, 3000)
-          setTimeout(() => {
-            this.setIndex({data: this.index + 1})
-          }, 3500)
+          if (this.btnAbled) {
+            this.showAnswer = true
+            this.showOption = false
+            setTimeout(() => {
+              this.next({data: this.progress + 1})
+            }, 3000)
+            setTimeout(() => {
+              this.setIndex({data: this.index + 1})
+            }, 3500)
+          }
         },
         modify () {
           this.showAnswer = false
@@ -126,6 +122,7 @@
         cancel () {
           if (this.inputMoney) {
             this.inputMoney = false
+            this.useSwiper()
             this.memberList.forEach(item => {
               if (item.text === this.current) {
                 if (this.current === '家庭贷款') {

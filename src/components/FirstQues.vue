@@ -40,7 +40,8 @@
         Answer
       },
       computed: mapState([
-        'index'
+        'index',
+        'progress'
       ]),
       methods: {
         ...mapMutations({
@@ -54,7 +55,7 @@
           this.showOption = false
           this.showAnswer = true
           setTimeout(() => {
-            this.next()
+            this.next({data: this.progress + 1})
           }, 3000)
           setTimeout(() => {
             this.setIndex({data: this.index + 1})

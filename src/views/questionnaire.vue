@@ -1,9 +1,9 @@
 <template>
     <div class="questionnaire">
       <head-progress-bar :step="progress"></head-progress-bar>
-      <swiper :height="height" direction="vertical" class="text-scroll" :show-dots="false" v-model="swiperIndex" @on-index-change="indexChange">
+      <swiper :height="height" direction="vertical" class="text-scroll" :show-dots="false" :threshold="200" :min-moving-distance="moving" v-model="swiperIndex" @on-index-change="indexChange">
         <swiper-item>
-          <start></start>
+          <start v-if="progress === 0"></start>
         </swiper-item>
         <swiper-item v-if="progress > 0">
           <first-ques></first-ques>
@@ -71,12 +71,14 @@ export default {
         sex: ''
       },
       height: '',
-      swiperIndex: 0
+      swiperIndex: 0,
+      moving: 0
     }
   },
   computed: mapState({
     progress: 'progress',
-    index: 'index'
+    index: 'index',
+    stopScroll: 'stopScroll'
   }),
   methods: {
     ...mapMutations({
@@ -87,13 +89,22 @@ export default {
     }
   },
   created () {
-    this.height = window.screen.height + 'px'
+    this.height = document.documentElement.clientHeight + 'px'
   },
   watch: {
     'index': {
       handler (newVal) {
         console.log(111, newVal)
         this.swiperIndex = newVal
+      }
+    },
+    'stopScroll': {
+      handler (newVal) {
+        if (newVal) {
+          this.moving = 1000
+        } else {
+          this.moving = 0
+        }
       }
     }
   }

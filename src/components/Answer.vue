@@ -40,6 +40,7 @@
 <style type="text/scss" lang="scss" scoped>
 .answer {
   background: linear-gradient(left, rgb(246, 225, 90), rgb(244, 208, 70));
+  background: -webkit-gradient(linear, left top, right top, from(#f6e15a), to(#f4d046));
   float: right;
   line-height: 1.6rem;
   max-width: 6rem;

@@ -16,7 +16,7 @@
                   </div>
                 </div>
               </div>
-              <div class="confirm" @click="confirm"></div>
+              <div class="confirm btn-able" @click="confirm"></div>
             </div>
           </transition>
         </div>
@@ -53,6 +53,7 @@
         },
         ...mapState([
           'index',
+          'progress',
           'info'
         ])
       },
@@ -65,7 +66,7 @@
           this.showOption = false
           this.showAnswer = true
           setTimeout(() => {
-            this.next()
+            this.next({data: this.progress + 1})
           }, 3000)
           setTimeout(() => {
             this.setIndex({data: this.index + 1})
@@ -114,11 +115,14 @@
         }
       },
       created () {
+        let family = this.info.family.filter(item => {
+          return item.text.indexOf('狗') === -1
+        })
         this.memberList = [{
           class: this.info.sex === '壮士' ? 'male' : 'female',
           text: '本人',
           socialSecurity: true
-        }, ...this.getList(this.info.family)]
+        }, ...this.getList(family)]
       }
     }
 </script>

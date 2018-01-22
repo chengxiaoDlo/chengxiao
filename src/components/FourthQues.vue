@@ -13,7 +13,7 @@
                   <div class="member-city" @click="selectCity">{{city}}</div>
                 </div>
               </div>
-              <div class="confirm" @click="confirm"></div>
+              <div class="confirm btn-able" @click="confirm"></div>
             </div>
           </transition>
         </div>
@@ -51,18 +51,21 @@
         }
       },
       computed: mapState([
-        'index'
+        'index',
+        'progress'
       ]),
       methods: {
         ...mapMutations({
           next: 'next',
-          setIndex: 'setIndex'
+          setIndex: 'setIndex',
+          stopSwiper: 'stopSwiper',
+          useSwiper: 'useSwiper'
         }),
         confirm () {
           this.showOption = false
           this.showAnswer = true
           setTimeout(() => {
-            this.next()
+            this.next({data: this.progress + 1})
           }, 3000)
           setTimeout(() => {
             this.setIndex({data: this.index + 1})
@@ -70,14 +73,17 @@
         },
         cancel () {
           this.chooseCity = false
+          this.useSwiper()
         },
         selected (val) {
           console.log(333, val)
           this.city = val.label
           this.chooseCity = false
+          this.useSwiper()
         },
         selectCity () {
           this.chooseCity = true
+          this.stopSwiper()
         },
         modify () {
           this.showAnswer = false

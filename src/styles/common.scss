@@ -7,12 +7,18 @@
 }
 
 .confirm {
-  background: url("../assets/images/confirm-btn.png") no-repeat;
-  background-size: 100%;
   width: 5rem;
   height: 3rem;
   margin-top: -2rem;
   margin-left: 4.5rem;
+}
+.btn-able {
+  background: url("../assets/images/confirm-btn.png") no-repeat;
+  background-size: 100%;
+}
+.btn-disable {
+  background: url("../assets/images/btn-disabled.png") no-repeat;
+  background-size: 100%;
 }
 .male {
   background: url("../assets/images/dad.png") no-repeat;
@@ -39,7 +45,7 @@
   background-size: 100%;
 }
 .fadeInLeft {
-  animation-delay: 2s;
+  animation-delay: 1.5s;
 }
 .fadeInRight {
   animation-delay: 2s;

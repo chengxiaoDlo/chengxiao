@@ -16,7 +16,7 @@
                   </div>
                 </div>
               </div>
-              <div class="confirm" @click="confirm"></div>
+              <div class="confirm btn-able" @click="confirm"></div>
             </div>
           </transition>
         </div>
@@ -64,6 +64,7 @@
         },
         ...mapState([
           'index',
+          'progress',
           'info'
         ])
       },
@@ -83,7 +84,7 @@
           this.showAnswer = true
           this.showOption = false
           setTimeout(() => {
-            this.next()
+            this.next({data: this.progress + 1})
           }, 3000)
           setTimeout(() => {
             this.setIndex({data: this.index + 1})

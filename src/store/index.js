@@ -8,6 +8,7 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     goToStart: false,
+    stopScroll: false,
     done: false,
     index: 0,
     progress: 0,

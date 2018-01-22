@@ -34,11 +34,11 @@
                   <p class="member">{{member.text}}</p>
                 </div>
                 <div class="option" @click="addMembers">
-                  <div class="family"></div>
+                  <div class="family add"></div>
                   <p class="member">添加</p>
                 </div>
               </div>
-              <div class="confirm" @click="confirm"></div>
+              <div class="confirm btn-able" @click="confirm"></div>
             </div>
           </transition>
         </div>
@@ -135,6 +135,7 @@
         },
         ...mapState([
           'index',
+          'progress',
           'info'
         ])
       },
@@ -173,7 +174,7 @@
           this.showOption = false
           this.showAnswer = true
           setTimeout(() => {
-            this.next()
+            this.next({data: this.progress + 1})
           }, 3000)
           setTimeout(() => {
             this.setIndex({data: this.index + 1})
@@ -333,6 +334,10 @@
         bottom: 0;
         right: -0.4rem;
       }
+    }
+    .add {
+      background: url("../assets/images/add.png") no-repeat;
+      background-size: 100%;
     }
     .confirm {
       background: url("../assets/images/confirm-btn.png") no-repeat;

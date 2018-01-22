@@ -67,6 +67,7 @@
     display: flex;
     justify-content: space-between;
     background: linear-gradient(left, rgb(250, 234, 124), rgb(244, 208, 70));
+    background: -webkit-gradient(linear, left top, right top, from(#f6e15a), to(#f4d046));
     span {
       font-size: 0.5rem;
       color: rgb(122, 103, 90)

@@ -27,6 +27,10 @@ html {
   color: rgb(65, 65, 65);
   font-size: 0.53rem;
   height: 100%;
+  width: 100%;
+  background: url("./assets/images/bg.png") no-repeat;
+  background-size: 5rem 5.6rem;
+  background-position-y: 3rem;
 }
   @media screen and (min-width: 320px) {
     html {
@@ -45,7 +49,7 @@ html {
   }
   @media screen and (min-width: 410px) {
     html {
-      font-size: 33.1px;
+      font-size: 32px;
     }
   }
   @media screen and (min-width: 480px) {

@@ -16,7 +16,7 @@
                 </div>
               </div>
             </div>
-            <div class="confirm" @click="confirm"></div>
+            <div class="confirm" :class="btnAbled ? 'btn-able' : 'btn-disable' " @click="confirm"></div>
           </div>
         </transition>
       </div>
@@ -71,25 +71,35 @@ export default {
        return item.text + ': ' + item.value + '岁'
      })
     },
+    btnAbled () {
+      return this.memberList.every(item => {
+        return item.value !== '选择年龄'
+      })
+    },
     ...mapState([
       'index',
+      'progress',
       'info'
     ])
   },
   methods: {
     ...mapMutations({
       next: 'next',
-      setIndex: 'setIndex'
+      setIndex: 'setIndex',
+      stopSwiper: 'stopSwiper',
+      useSwiper: 'useSwiper'
     }),
     confirm () {
-      this.showOption = false
-      this.showAnswer = true
-      setTimeout(() => {
-        this.next()
-      }, 3000)
-      setTimeout(() => {
-        this.setIndex({data: this.index + 1})
-      }, 3500)
+      if (this.btnAbled) {
+        this.showOption = false
+        this.showAnswer = true
+        setTimeout(() => {
+          this.next({data: this.progress + 1})
+        }, 3000)
+        setTimeout(() => {
+          this.setIndex({data: this.index + 1})
+        }, 3500)
+      }
     },
     change (val) {
       console.log(val)
@@ -110,9 +120,11 @@ export default {
       }
       this.who = member.text
       this.chooseAge = true
+      this.stopSwiper()
     },
     cancel () {
       this.chooseAge = false
+      this.useSwiper()
     },
     selected (val) {
       console.log(999, val)
@@ -122,6 +134,7 @@ export default {
         }
       })
       this.chooseAge = false
+      this.useSwiper()
     },
     modify () {
       this.showAnswer = false
@@ -165,11 +178,14 @@ export default {
         value: i
       })
     }
+    let family = this.info.family.filter(item => {
+      return item.text.indexOf('狗') === -1
+    })
     this.memberList = [{
       class: this.info.sex === '壮士' ? 'male' : 'female',
       text: '本人',
       value: '选择年龄'
-    }, ...this.getList(this.info.family)]
+    }, ...this.getList(family)]
   },
 
 }
