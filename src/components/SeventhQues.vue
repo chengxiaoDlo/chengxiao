@@ -71,7 +71,8 @@
       methods: {
         ...mapMutations({
           next: 'next',
-          setIndex: 'setIndex'
+          setIndex: 'setIndex',
+          addSmoke: 'addSmoke'
         }),
         isSomker (is, member) {
           if (is === 'y') {
@@ -83,9 +84,17 @@
         confirm () {
           this.showAnswer = true
           this.showOption = false
+          this.addSmoke({data: this.memberList})
           setTimeout(() => {
-            this.next({data: this.progress + 1})
+            if (this.progress === 7) {
+              this.next({data: 8})
+            } else {
+              this.next({data: 7})
+            }
           }, 3000)
+          setTimeout(() => {
+            this.next({data: 8})
+          }, 3200)
           setTimeout(() => {
             this.setIndex({data: this.index + 1})
             window.scrollTo(0, document.getElementById('que7').offsetTop + document.getElementById('que7').offsetHeight)

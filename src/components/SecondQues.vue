@@ -203,8 +203,15 @@
           this.showOption = false
           this.showAnswer = true
           setTimeout(() => {
-            this.next({data: this.progress + 1})
+            if (this.progress === 2) {
+              this.next({data: 3})
+            } else {
+              this.next({data: 2})
+            }
           }, 3000)
+          setTimeout(() => {
+            this.next({data: 3})
+          }, 3200)
           setTimeout(() => {
             window.scrollTo(0, document.getElementById('que2').offsetTop + document.getElementById('que2').offsetHeight)
             this.setIndex({data: this.index + 1})

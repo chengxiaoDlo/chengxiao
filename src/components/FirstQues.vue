@@ -55,8 +55,15 @@
           this.showOption = false
           this.showAnswer = true
           setTimeout(() => {
-            this.next({data: this.progress + 1})
+            if (this.progress === 1) {
+              this.next({data: 2})
+            } else {
+              this.next({data: 1})
+            }
           }, 3000)
+          setTimeout(() => {
+            this.next({data: 2})
+          }, 3200)
           setTimeout(() => {
             this.setIndex({data: this.index + 1})
             window.scrollTo(0, document.getElementById('que1').offsetTop + document.getElementById('que1').offsetHeight)

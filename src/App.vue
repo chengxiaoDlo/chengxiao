@@ -37,6 +37,7 @@ div {
   background: url("./assets/images/bg.png") no-repeat;
   background-size: 5rem 5.6rem;
   background-position-y: 3rem;
+  background-attachment: fixed;
   overflow: scroll;
 }
   @media screen and (min-width: 320px) {

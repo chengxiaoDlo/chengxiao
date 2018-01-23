@@ -60,14 +60,23 @@
           next: 'next',
           setIndex: 'setIndex',
           stopSwiper: 'stopSwiper',
-          useSwiper: 'useSwiper'
+          useSwiper: 'useSwiper',
+          addResidence: 'addResidence'
         }),
         confirm () {
           this.showOption = false
           this.showAnswer = true
+          this.addResidence({data: this.residence})
           setTimeout(() => {
-            this.next({data: this.progress + 1})
+            if (this.progress === 4) {
+              this.next({data: 5})
+            } else {
+              this.next({data: 4})
+            }
           }, 3000)
+          setTimeout(() => {
+            this.next({data: 5})
+          }, 3200)
           setTimeout(() => {
             this.setIndex({data: this.index + 1})
             window.scrollTo(0, document.getElementById('que4').offsetTop + document.getElementById('que4').offsetHeight)
@@ -80,7 +89,7 @@
         selected (val) {
           console.log(333, val)
           this.city = val.label
-          this.residence = ''
+          this.residence = val.value[1]
           this.chooseCity = false
           this.useSwiper()
         },

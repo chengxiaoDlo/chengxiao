@@ -57,8 +57,9 @@
           console.log(44454, document.getElementById('questionnaire'))
           this.goToStart = true
           setTimeout(() => {
-            console.log(999990, document.getElementsByClassName('start')[0].offsetTop + document.getElementsByClassName('start')[0].offsetHeight)
-            this.next({data: this.progress + 1})
+            if (this.progress === 0) {
+              this.next({data: 1})
+            }
           }, 3000)
           setTimeout(() => {
             window.scrollTo(0, document.getElementsByClassName('start')[0].offsetTop + document.getElementsByClassName('start')[0].offsetHeight)

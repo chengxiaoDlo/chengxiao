@@ -68,8 +68,15 @@
           this.showAnswer = true
           this.addSocial({data: this.memberList})
           setTimeout(() => {
-            this.next({data: this.progress + 1})
+            if (this.progress === 5) {
+              this.next({data: 6})
+            } else {
+              this.next({data: 5})
+            }
           }, 3000)
+          setTimeout(() => {
+            this.next({data: 6})
+          }, 3200)
           setTimeout(() => {
             this.setIndex({data: this.index + 1})
             window.scrollTo(0, document.getElementById('que5').offsetTop + document.getElementById('que5').offsetHeight)

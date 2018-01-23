@@ -96,8 +96,15 @@ export default {
         this.showAnswer = true
         this.addAge({data: this.memberList})
         setTimeout(() => {
-          this.next({data: this.progress + 1})
+          if (this.progress === 3) {
+            this.next({data: 4})
+          } else {
+            this.next({data: 3})
+          }
         }, 3000)
+        setTimeout(() => {
+          this.next({data: 4})
+        }, 3200)
         setTimeout(() => {
           this.setIndex({data: this.index + 1})
           window.scrollTo(0, document.getElementById('que3').offsetTop + document.getElementById('que3').offsetHeight)

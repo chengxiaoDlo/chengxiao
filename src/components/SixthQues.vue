@@ -108,8 +108,15 @@
             this.showOption = false
             this.addIncome({data: this.memberList})
             setTimeout(() => {
-              this.next({data: this.progress + 1})
+              if (this.progress === 6) {
+                this.next({data: 7})
+              } else {
+                this.next({data: 6})
+              }
             }, 3000)
+            setTimeout(() => {
+              this.next({data: 7})
+            }, 3200)
             setTimeout(() => {
               this.setIndex({data: this.index + 1})
               window.scrollTo(0, document.getElementById('que6').offsetTop + document.getElementById('que6').offsetHeight)
@@ -143,7 +150,7 @@
       },
       created () {
         let arr = this.info.family.filter(item => {
-          return item.text === '配偶'
+          return item.labelName === '配偶'
         })
         if (arr.length > 0) {
           this.memberList = [
@@ -155,7 +162,7 @@
               unit: '万元/年'
             },
             {
-              class: this.info.sex === 'M' ? 'male' : 'female',
+              class: this.info.sex === 'M' ? 'female' : 'male',
               text: this.info.sex === 'M' ? '妈妈收入' : '爸爸收入',
               value: '税前收入',
               tag: 'spouse',
