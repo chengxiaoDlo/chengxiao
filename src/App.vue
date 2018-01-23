@@ -20,6 +20,9 @@ html {
   font-size: 30px;
   background: rgb(246, 246, 246);
 }
+html, body {
+  width: 100%;
+}
 div {
   -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
 }
@@ -29,11 +32,12 @@ div {
   -moz-osx-font-smoothing: grayscale;
   color: rgb(65, 65, 65);
   font-size: 0.53rem;
-  height: 100%;
+  min-height: 100%;
   width: 100%;
   background: url("./assets/images/bg.png") no-repeat;
   background-size: 5rem 5.6rem;
   background-position-y: 3rem;
+  overflow: scroll;
 }
   @media screen and (min-width: 320px) {
     html {

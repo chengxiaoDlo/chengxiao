@@ -49,6 +49,21 @@ export default {
       })
     })
     console.log(999, state.info.family)
+  },
+  [types.ADD_INCOME] (state, payload) {
+    payload.data.forEach(item1 => {
+      if (item1.tag === 'debt') {
+        state.info.familyDebt = item1.value === '房贷、车贷等' ? 0 : item1.value
+      } else if (item1.tag === 'me') {
+        state.info.income = item1.value
+      } else if (item1.tag === 'spouse') {
+        state.info.family.forEach(item2 => {
+          if (item2.labelName === '配偶') {
+            item2.income = item1.value
+          }
+        })
+      }
+    })
   }
 }
 

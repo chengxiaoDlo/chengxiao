@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div style="overflow: hidden">
       <question question="青春作伴好还乡，而今哪里是家乡？" sub="我们会考虑当地的社保政策、产品区域限制、消费水平等因素哒~" class="animated fadeInLeft">
         <div slot="options">
           <transition name="options">
@@ -47,6 +47,7 @@
           showOption: true,
           showAnswer: false,
           city: '河北省石家庄市',
+          residence: '',
           cityList: utils.cityList
         }
       },
@@ -78,6 +79,7 @@
         selected (val) {
           console.log(333, val)
           this.city = val.label
+          this.residence = ''
           this.chooseCity = false
           this.useSwiper()
         },
@@ -91,6 +93,9 @@
             this.showOption = true
           }, 1000)
         }
+      },
+      created () {
+        this.$emit('initHeight')
       }
     }
 </script>

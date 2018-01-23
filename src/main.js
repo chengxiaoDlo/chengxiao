@@ -19,6 +19,8 @@ new Vue({
   template: '<App/>'
 })
 
-document.querySelector('body').addEventListener('touchmove', function (ev) {
-  ev.preventDefault()
-})
+console.log(5555, document.querySelector('.scroll'))
+// document.querySelector('body').addEventListener('touchmove', function (ev) {
+//   ev.preventDefault()
+//   ev.stopPropagation()
+// })

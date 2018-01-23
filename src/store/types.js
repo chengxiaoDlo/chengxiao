@@ -8,5 +8,6 @@ export default {
   STOP_SWIPER: 'stopSwiper',
   USE_SWIPER: 'useSwiper',
   ADD_AGE: 'addAge',
-  ADD_SOCIAL: 'addSocial'
+  ADD_SOCIAL: 'addSocial',
+  ADD_INCOME: 'addIncome'
 }

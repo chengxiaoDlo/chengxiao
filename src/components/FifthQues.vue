@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div style="overflow: hidden">
       <question question="劝君更尽一杯酒，全家社保上全否？" sub="这会关系到家人医疗险的配置" class="animated fadeInLeft">
         <div slot="options">
           <transition name="options">

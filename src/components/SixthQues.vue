@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div style="overflow: hidden;">
       <div @click="cancel">
         <question question="玉盘珍馐值万钱，你家收支多少钱？" sub="我们会基于家庭收入及贷款来为您规划合理的保额及保费预" class="animated fadeInLeft">
           <div slot="options">
@@ -81,7 +81,8 @@
           next: 'next',
           setIndex: 'setIndex',
           stopSwiper: 'stopSwiper',
-          useSwiper: 'useSwiper'
+          useSwiper: 'useSwiper',
+          addIncome: 'addIncome'
         }),
         input (member) {
           this.current = member.text
@@ -105,6 +106,7 @@
           if (this.btnAbled) {
             this.showAnswer = true
             this.showOption = false
+            this.addIncome({data: this.memberList})
             setTimeout(() => {
               this.next({data: this.progress + 1})
             }, 3000)
@@ -145,18 +147,21 @@
               class: this.info.sex === 'M' ? 'male' : 'female',
               text: this.info.sex === 'M' ? '爸爸收入' : '妈妈收入',
               value: '税前收入',
+              tag: 'me',
               unit: '万元/年'
             },
             {
               class: this.info.sex === 'M' ? 'male' : 'female',
               text: this.info.sex === 'M' ? '妈妈收入' : '爸爸收入',
               value: '税前收入',
+              tag: 'spouse',
               unit: '万元/年'
             },
             {
               class: 'son',
               text: '家庭贷款',
               value: '房贷、车贷等',
+              tag: 'debt',
               unit: '万元'
             }
           ]
@@ -166,12 +171,14 @@
               class: this.info.sex === 'M' ? 'male' : 'female',
               text: '本人收入',
               value: '税前收入',
+              tag: 'me',
               unit: '万元/年'
             },
             {
               class: 'son',
               text: '家庭贷款',
               value: '房贷、车贷等',
+              tag: 'debt',
               unit: '万元'
             }
           ]

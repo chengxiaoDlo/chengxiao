@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="ques" id="que1">
       <question question="江上往来人，敢问是何人？" class="animated fadeInLeft">
           <div slot="options" >
             <transition name="fade" >
@@ -59,6 +59,7 @@
           }, 3000)
           setTimeout(() => {
             this.setIndex({data: this.index + 1})
+            window.scrollTo(0, document.getElementById('que1').offsetTop + document.getElementById('que1').offsetHeight)
           }, 3500)
         },
         modify () {
@@ -68,6 +69,9 @@
             this.showOption = true
           }, 1000)
         }
+      },
+      mounted () {
+        document.getElementById('que1').style.minHeight = document.documentElement.clientHeight + 'px'
       }
     }
 </script>
@@ -75,6 +79,10 @@
 <style type="text/scss" lang="scss" scoped>
   @import "../styles/common";
   @import "../styles/animation";
+  .ques {
+    overflow: hidden;
+    min-height: 100%;
+  }
   .que1 {
     display: flex;
     justify-content: center;

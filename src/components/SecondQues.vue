@@ -1,5 +1,5 @@
 <template>
-    <div style="height: 100%;" class="second-ques">
+    <div class="second-ques" id="que2">
       <div v-transfer-dom>
         <x-dialog v-model="showAdd" hide-on-blur>
           <div class="card">
@@ -206,6 +206,7 @@
             this.next({data: this.progress + 1})
           }, 3000)
           setTimeout(() => {
+            window.scrollTo(0, document.getElementById('que2').offsetTop + document.getElementById('que2').offsetHeight)
             this.setIndex({data: this.index + 1})
           }, 4000)
         },
@@ -356,6 +357,10 @@
 <style type="text/scss" lang="scss" scoped>
 @import "../styles/common";
 @import "../styles/animation";
+.second-ques {
+  overflow: hidden;
+  height: 100%;
+}
 .que2 {
   display: flex;
   flex-wrap: wrap;

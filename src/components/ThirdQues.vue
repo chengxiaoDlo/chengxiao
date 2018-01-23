@@ -1,9 +1,9 @@
 <template>
-  <div>
+  <div id="ageOptions" style="overflow: hidden">
     <question question="对酒当歌，芳龄几何？" sub="年龄会关乎到保险方案和价格的准确性哦~" class="animated fadeInLeft">
       <div slot="options">
         <transition name="options">
-          <div v-if="showOption">
+          <div v-if="showOption" class="scroll">
             <div class="options que3" >
               <div v-for="member in memberList">
                 <div class="age" >
@@ -173,6 +173,11 @@ export default {
       }
     }
   },
+  mounted () {
+    let ele = document.getElementById('ageOptions')
+    console.log(444, ele.offsetHeight)
+    this.$emit('changeHeight', ele.offsetHeight)
+  },
   created () {
     for (let i = 0; i < 81; i++) {
       this.ageList.push({
@@ -188,7 +193,6 @@ export default {
       labelName: '本人',
       value: '选择年龄'
     }, ...this.getList(family)]
-   console.log(444, this.memberList)
   }
 
 }
