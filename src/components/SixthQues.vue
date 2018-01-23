@@ -1,5 +1,5 @@
 <template>
-    <div style="overflow: hidden;">
+    <div style="overflow: hidden;" id="que6">
       <div @click="cancel">
         <question question="玉盘珍馐值万钱，你家收支多少钱？" sub="我们会基于家庭收入及贷款来为您规划合理的保额及保费预" class="animated fadeInLeft">
           <div slot="options">
@@ -112,6 +112,7 @@
             }, 3000)
             setTimeout(() => {
               this.setIndex({data: this.index + 1})
+              window.scrollTo(0, document.getElementById('que6').offsetTop + document.getElementById('que6').offsetHeight)
             }, 3500)
           }
         },
@@ -136,6 +137,9 @@
             })
           }
         }
+      },
+      mounted () {
+        document.getElementById('que6').style.minHeight = document.documentElement.clientHeight + 'px'
       },
       created () {
         let arr = this.info.family.filter(item => {

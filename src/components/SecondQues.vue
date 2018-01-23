@@ -320,6 +320,9 @@
           this.addMem = []
         }
       },
+      mounted () {
+        document.getElementById('que2').style.minHeight = document.documentElement.clientHeight + 'px'
+      },
       created () {
         console.log(511, this.info)
         if (this.info.sex === 'M') {

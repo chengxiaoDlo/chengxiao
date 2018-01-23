@@ -53,7 +53,7 @@
   .picker {
     width: 100%;
     height: 8rem;
-    position: absolute;
+    position: fixed;
     background: #ffffff;
     bottom: 0;
     overflow: hidden;

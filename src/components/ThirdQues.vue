@@ -1,5 +1,5 @@
 <template>
-  <div id="ageOptions" style="overflow: hidden">
+  <div id="que3" style="overflow: hidden">
     <question question="对酒当歌，芳龄几何？" sub="年龄会关乎到保险方案和价格的准确性哦~" class="animated fadeInLeft">
       <div slot="options">
         <transition name="options">
@@ -100,6 +100,7 @@ export default {
         }, 3000)
         setTimeout(() => {
           this.setIndex({data: this.index + 1})
+          window.scrollTo(0, document.getElementById('que3').offsetTop + document.getElementById('que3').offsetHeight)
         }, 3500)
       }
     },
@@ -174,9 +175,7 @@ export default {
     }
   },
   mounted () {
-    let ele = document.getElementById('ageOptions')
-    console.log(444, ele.offsetHeight)
-    this.$emit('changeHeight', ele.offsetHeight)
+    document.getElementById('que3').style.minHeight = document.documentElement.clientHeight + 'px'
   },
   created () {
     for (let i = 0; i < 81; i++) {

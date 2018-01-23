@@ -1,5 +1,5 @@
 <template>
-    <div style="overflow: hidden">
+    <div style="overflow: hidden" id="que4">
       <question question="青春作伴好还乡，而今哪里是家乡？" sub="我们会考虑当地的社保政策、产品区域限制、消费水平等因素哒~" class="animated fadeInLeft">
         <div slot="options">
           <transition name="options">
@@ -70,6 +70,7 @@
           }, 3000)
           setTimeout(() => {
             this.setIndex({data: this.index + 1})
+            window.scrollTo(0, document.getElementById('que4').offsetTop + document.getElementById('que4').offsetHeight)
           }, 3500)
         },
         cancel () {
@@ -93,6 +94,9 @@
             this.showOption = true
           }, 1000)
         }
+      },
+      mounted () {
+        document.getElementById('que4').style.minHeight = document.documentElement.clientHeight + 'px'
       },
       created () {
         this.$emit('initHeight')

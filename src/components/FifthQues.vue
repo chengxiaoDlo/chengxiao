@@ -1,5 +1,5 @@
 <template>
-    <div style="overflow: hidden">
+    <div style="overflow: hidden" id="que5">
       <question question="劝君更尽一杯酒，全家社保上全否？" sub="这会关系到家人医疗险的配置" class="animated fadeInLeft">
         <div slot="options">
           <transition name="options">
@@ -72,6 +72,7 @@
           }, 3000)
           setTimeout(() => {
             this.setIndex({data: this.index + 1})
+            window.scrollTo(0, document.getElementById('que5').offsetTop + document.getElementById('que5').offsetHeight)
           }, 3500)
         },
         hasSecurity (has, member) {
@@ -115,6 +116,9 @@
             }
           }
         }
+      },
+      mounted () {
+        document.getElementById('que5').style.minHeight = document.documentElement.clientHeight + 'px'
       },
       created () {
         let family = this.info.family.filter(item => {

@@ -1,5 +1,5 @@
 <template>
-    <div class="generate">
+    <div class="generate" id="ge">
       <div class="card animated fadeInLeft">
         <div class="title">开始分析你的家庭数据</div>
         <div class="flow">
@@ -53,6 +53,9 @@
         percent () {
           return (this.percent1 + this.percent2 + this.percent3) / 3
         },
+      },
+      mounted () {
+        document.getElementById('ge').style.minHeight = document.documentElement.clientHeight + 'px'
       },
       created () {
         let t1 = setInterval(() => {

@@ -56,7 +56,7 @@
 .keyboard {
   width: 100%;
   height: 10rem;
-  position: absolute;
+  position: fixed;
   bottom: 0;
   background: #ffffff;
   overflow: hidden;

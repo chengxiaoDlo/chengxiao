@@ -34,6 +34,11 @@
       <first-ques v-if="progress > 0"></first-ques>
       <second-ques v-if="progress > 1"></second-ques>
       <third-ques v-if="progress > 2"></third-ques>
+      <fourth-ques v-if="progress > 3"></fourth-ques>
+      <fifth-ques v-if="progress > 4"></fifth-ques>
+      <sixth-ques v-if="progress > 5"></sixth-ques>
+      <seventh-ques v-if="progress > 6"></seventh-ques>
+      <generate-report v-if="progress > 7"></generate-report>
     </div>
 </template>
 
