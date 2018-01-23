@@ -3,7 +3,7 @@
       <question question="蓝田日暖玉生烟，日常能抽几支烟？" sub="部分寿险产品会为非吸烟体用户提供高性价比产品，我们也会全面考虑哦~" class="animated fadeInLeft">
         <div slot="options">
           <transition name="options">
-            <div v-if="showOption">
+            <div v-if="showOption" id="options">
               <div class="options que7" >
                 <div v-for="member in memberList">
                   <div class="age" >
@@ -85,6 +85,7 @@
           this.showAnswer = true
           this.showOption = false
           this.addSmoke({data: this.memberList})
+          this.$emit('fill-height', document.getElementById('options').offsetHeight)
           setTimeout(() => {
             if (this.progress === 7) {
               this.next({data: 8})
@@ -108,7 +109,8 @@
         }
       },
       mounted () {
-        document.getElementById('que7').style.minHeight = document.documentElement.clientHeight + 'px'
+        // document.getElementById('que7').style.minHeight = document.documentElement.clientHeight + 'px'
+        this.$emit('change-height', document.documentElement.clientHeight - document.getElementById('que7').offsetHeight)
       },
       created () {
         if (this.info.family.filter(item => {

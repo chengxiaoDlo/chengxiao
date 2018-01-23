@@ -19,7 +19,7 @@
       <question question="但愿人长久，家里有几口？" sub="我们会基于您的家庭结构和成员情况，考虑每个人的保障~" class="animated fadeInLeft">
         <div slot="options" >
           <transition name="options">
-            <div v-if="showOption">
+            <div v-if="showOption" id="options">
               <div class="options que2">
                 <div class="option">
                   <div class="family" :class="info.sex === 'M' ? 'male' : 'female'">
@@ -202,6 +202,7 @@
           this.selectMembers({data: chooseList})
           this.showOption = false
           this.showAnswer = true
+          this.$emit('fill-height', document.getElementById('options').offsetHeight)
           setTimeout(() => {
             if (this.progress === 2) {
               this.next({data: 3})
@@ -215,7 +216,7 @@
           setTimeout(() => {
             window.scrollTo(0, document.getElementById('que2').offsetTop + document.getElementById('que2').offsetHeight)
             this.setIndex({data: this.index + 1})
-          }, 4000)
+          }, 3500)
         },
         modify () {
           this.showAnswer = false
@@ -328,7 +329,8 @@
         }
       },
       mounted () {
-        document.getElementById('que2').style.minHeight = document.documentElement.clientHeight + 'px'
+        // document.getElementById('que2').style.minHeight = document.documentElement.clientHeight + 'px'
+        this.$emit('change-height', document.documentElement.clientHeight - document.getElementById('que2').offsetHeight)
       },
       created () {
         console.log(511, this.info)

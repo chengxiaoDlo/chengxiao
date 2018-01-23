@@ -3,7 +3,7 @@
       <question question="江上往来人，敢问是何人？" class="animated fadeInLeft">
           <div slot="options" >
             <transition name="fade" >
-              <div v-if="showOption" class="options que1">
+              <div v-if="showOption" class="options que1" id="options">
                 <div @click="selectSex('M')">
                   <div class="sex male" ></div>
                   <p class="sex-name">壮士</p>
@@ -54,6 +54,7 @@
           this.chooseSex({data: sex})
           this.showOption = false
           this.showAnswer = true
+          this.$emit('fill-height', document.getElementById('options').offsetHeight)
           setTimeout(() => {
             if (this.progress === 1) {
               this.next({data: 2})
@@ -78,7 +79,8 @@
         }
       },
       mounted () {
-        document.getElementById('que1').style.minHeight = document.documentElement.clientHeight + 'px'
+        this.$emit('change-height', document.documentElement.clientHeight - document.getElementById('que1').offsetHeight)
+        // document.getElementById('que1').style.minHeight = document.documentElement.clientHeight + 'px'
       }
     }
 </script>

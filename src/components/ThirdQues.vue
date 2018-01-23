@@ -3,7 +3,7 @@
     <question question="对酒当歌，芳龄几何？" sub="年龄会关乎到保险方案和价格的准确性哦~" class="animated fadeInLeft">
       <div slot="options">
         <transition name="options">
-          <div v-if="showOption" class="scroll">
+          <div v-if="showOption" id="options">
             <div class="options que3" >
               <div v-for="member in memberList">
                 <div class="age" >
@@ -95,6 +95,7 @@ export default {
         this.showOption = false
         this.showAnswer = true
         this.addAge({data: this.memberList})
+        this.$emit('fill-height', document.getElementById('options').offsetHeight)
         setTimeout(() => {
           if (this.progress === 3) {
             this.next({data: 4})
@@ -182,7 +183,12 @@ export default {
     }
   },
   mounted () {
-    document.getElementById('que3').style.minHeight = document.documentElement.clientHeight + 'px'
+    // document.getElementById('que3').style.minHeight = document.documentElement.clientHeight + 'px'
+    if (document.documentElement.clientHeight - document.getElementById('que3').offsetHeight > 0) {
+      this.$emit('change-height', document.documentElement.clientHeight - document.getElementById('que3').offsetHeight)
+    } else {
+      this.$emit('change-height', 0)
+    }
   },
   created () {
     for (let i = 0; i < 81; i++) {

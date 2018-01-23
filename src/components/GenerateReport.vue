@@ -55,7 +55,8 @@
         },
       },
       mounted () {
-        document.getElementById('ge').style.minHeight = document.documentElement.clientHeight + 'px'
+        // document.getElementById('ge').style.minHeight = document.documentElement.clientHeight + 'px'
+        this.$emit('change-height', document.documentElement.clientHeight - document.getElementById('que7').offsetHeight)
       },
       created () {
         let t1 = setInterval(() => {

@@ -3,7 +3,7 @@
       <question question="青春作伴好还乡，而今哪里是家乡？" sub="我们会考虑当地的社保政策、产品区域限制、消费水平等因素哒~" class="animated fadeInLeft">
         <div slot="options">
           <transition name="options">
-            <div v-if="showOption">
+            <div v-if="showOption" id="options">
               <div class="options que4" >
                 <div class="location" >
                   <div>
@@ -67,6 +67,7 @@
           this.showOption = false
           this.showAnswer = true
           this.addResidence({data: this.residence})
+          this.$emit('fill-height', document.getElementById('options').offsetHeight)
           setTimeout(() => {
             if (this.progress === 4) {
               this.next({data: 5})
@@ -105,7 +106,8 @@
         }
       },
       mounted () {
-        document.getElementById('que4').style.minHeight = document.documentElement.clientHeight + 'px'
+        // document.getElementById('que4').style.minHeight = document.documentElement.clientHeight + 'px'
+        this.$emit('change-height', document.documentElement.clientHeight - document.getElementById('que4').offsetHeight)
       },
       created () {
         this.$emit('initHeight')

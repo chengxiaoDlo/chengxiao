@@ -3,7 +3,7 @@
       <question question="劝君更尽一杯酒，全家社保上全否？" sub="这会关系到家人医疗险的配置" class="animated fadeInLeft">
         <div slot="options">
           <transition name="options">
-            <div v-if="showOption">
+            <div v-if="showOption" id="options">
               <div class="options que5" >
                 <div v-for="member in memberList">
                   <div class="age" >
@@ -67,6 +67,7 @@
           this.showOption = false
           this.showAnswer = true
           this.addSocial({data: this.memberList})
+          this.$emit('fill-height', document.getElementById('options').offsetHeight)
           setTimeout(() => {
             if (this.progress === 5) {
               this.next({data: 6})
@@ -125,7 +126,8 @@
         }
       },
       mounted () {
-        document.getElementById('que5').style.minHeight = document.documentElement.clientHeight + 'px'
+        this.$emit('change-height', document.documentElement.clientHeight - document.getElementById('que5').offsetHeight)
+        // document.getElementById('que5').style.minHeight = document.documentElement.clientHeight + 'px'
       },
       created () {
         let family = this.info.family.filter(item => {

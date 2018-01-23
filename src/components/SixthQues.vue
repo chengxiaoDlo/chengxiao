@@ -4,7 +4,7 @@
         <question question="玉盘珍馐值万钱，你家收支多少钱？" sub="我们会基于家庭收入及贷款来为您规划合理的保额及保费预" class="animated fadeInLeft">
           <div slot="options">
             <transition name="options">
-              <div v-if="showOption">
+              <div v-if="showOption" id="options">
                 <div class="options que3" >
                   <div v-for="member in memberList">
                     <div class="age" >
@@ -107,6 +107,7 @@
             this.showAnswer = true
             this.showOption = false
             this.addIncome({data: this.memberList})
+            this.$emit('fill-height', document.getElementById('options').offsetHeight)
             setTimeout(() => {
               if (this.progress === 6) {
                 this.next({data: 7})
@@ -146,7 +147,8 @@
         }
       },
       mounted () {
-        document.getElementById('que6').style.minHeight = document.documentElement.clientHeight + 'px'
+        // document.getElementById('que6').style.minHeight = document.documentElement.clientHeight + 'px'
+        this.$emit('change-height', document.documentElement.clientHeight - document.getElementById('que6').offsetHeight)
       },
       created () {
         let arr = this.info.family.filter(item => {
