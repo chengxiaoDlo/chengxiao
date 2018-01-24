@@ -87,12 +87,18 @@
           inputNumber: ''
         }
       },
+      props: {
+        value: {
+          type: String,
+          default: ''
+        }
+      },
       methods: {
         quit () {
           this.$emit('quit')
         },
         confirm () {
-          this.$emit('ok')
+          this.$emit('ok', this.inputNumber)
         },
         clickNum (num) {
           if (this.inputNumber.length < 3) {
@@ -103,6 +109,9 @@
           console.log(909, this.inputNumber)
           this.inputNumber = this.inputNumber.substr(0, this.inputNumber.length - 1)
         }
+      },
+      created () {
+        this.value && (this.inputNumber = this.value)
       },
       watch: {
         'inputNumber': {

@@ -84,6 +84,9 @@
         }),
         input (member) {
           this.current = member.text
+          if (member.value !== '税前收入' && member.value !== '房贷、车贷等') {
+            this.$emit('focus', member.value)
+          }
           this.toggleKeyboard()
         },
         confirm () {
