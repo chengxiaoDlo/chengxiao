@@ -19,5 +19,7 @@ export default {
   SET_CHOOSE_LIST: 'setChooseList',
   SET_DEFAULT_AGE: 'setDefaultAge',
   SET_AGE: 'setAge',
-  SET_INPUT_NUMBER: 'setInputNumber'
+  SET_INPUT_NUMBER: 'setInputNumber',
+  TOGGLE_MODIFY: 'toggleModify',
+  CLEAR: 'clear'
 }

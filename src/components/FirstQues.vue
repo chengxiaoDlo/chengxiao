@@ -40,14 +40,15 @@
         Answer
       },
       computed: mapState([
-        'index',
+        'isModify',
         'progress'
       ]),
       methods: {
         ...mapMutations({
           next: 'next',
-          setIndex: 'setIndex',
-          chooseSex: 'chooseSex'
+          chooseSex: 'chooseSex',
+          toggleModify: 'toggleModify',
+          clear: 'clear'
         }),
         selectSex (sex) {
           this.sex = sex === 'M' ? '壮士' : '女子'
@@ -55,20 +56,26 @@
           this.showOption = false
           this.showAnswer = true
           this.$emit('fill-height', document.getElementById('options').offsetHeight)
-          setTimeout(() => {
-            if (this.progress === 1) {
+          if (this.progress === 1) {
+            setTimeout(() => {
               this.next({data: 2})
-            } else {
-              this.next({data: 1})
-            }
-          }, 3000)
-          setTimeout(() => {
-            this.next({data: 2})
-          }, 3200)
-          setTimeout(() => {
-            this.$emit('scroll-to', document.getElementById('que1').offsetTop + document.getElementById('que1').offsetHeight)
-//            window.scrollTo(0, document.getElementById('que1').offsetTop + document.getElementById('que1').offsetHeight)
-          }, 3500)
+            }, 3000)
+            setTimeout(() => {
+              this.$emit('scroll-to', document.getElementById('que1').offsetTop + document.getElementById('que1').offsetHeight)
+            }, 3500)
+          } else {
+            this.clear()
+            this.next({data: 1})
+            setTimeout(() => {
+              this.next({data: 2})
+              this.toggleModify()
+            }, 3000)
+            setTimeout(() => {
+              this.toggleModify()
+              this.$emit('scroll-to', document.getElementById('que1').offsetTop + document.getElementById('que1').offsetHeight)
+            }, 3500)
+          }
+
         },
         modify () {
           console.log(333)

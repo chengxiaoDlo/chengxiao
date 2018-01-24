@@ -1,5 +1,5 @@
 <template>
-    <div style="overflow: hidden" id="que5">
+    <div style="overflow: hidden" id="que5" :class="{'hidden': isModify}">
       <question question="劝君更尽一杯酒，全家社保上全否？" sub="这会关系到家人医疗险的配置" class="animated fadeInLeft">
         <div slot="options">
           <transition name="options">
@@ -53,33 +53,39 @@
         },
         ...mapState([
           'progress',
-          'info'
+          'info',
+          'isModify'
         ])
       },
       methods: {
         ...mapMutations({
           next: 'next',
-          addSocial: 'addSocial'
+          addSocial: 'addSocial',
+          toggleModify: 'toggleModify'
         }),
         confirm () {
           this.showOption = false
           this.showAnswer = true
           this.addSocial({data: this.memberList})
           this.$emit('fill-height', document.getElementById('options').offsetHeight)
-          setTimeout(() => {
-            if (this.progress === 5) {
+          if (this.progress === 5) {
+            setTimeout(() => {
               this.next({data: 6})
-            } else {
-              this.next({data: 5})
-            }
-          }, 3000)
-          setTimeout(() => {
-            this.next({data: 6})
-          }, 3200)
-          setTimeout(() => {
-            this.$emit('scroll-to', document.getElementById('que5').offsetTop + document.getElementById('que5').offsetHeight)
-//            window.scrollTo(0, document.getElementById('que5').offsetTop + document.getElementById('que5').offsetHeight)
-          }, 3500)
+            }, 3000)
+            setTimeout(() => {
+              this.$emit('scroll-to', document.getElementById('que5').offsetTop + document.getElementById('que5').offsetHeight)
+            }, 3500)
+          } else {
+            this.next({data: 5})
+            setTimeout(() => {
+              this.next({data: 6})
+              this.toggleModify()
+            }, 3000)
+            setTimeout(() => {
+              this.toggleModify()
+              this.$emit('scroll-to', document.getElementById('que5').offsetTop + document.getElementById('que5').offsetHeight)
+            }, 3500)
+          }
         },
         hasSecurity (has, member) {
           if (has === 'y') {

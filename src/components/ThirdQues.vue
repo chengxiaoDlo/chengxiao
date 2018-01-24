@@ -1,5 +1,5 @@
 <template>
-  <div id="que3" style="overflow: hidden">
+  <div id="que3" style="overflow: hidden" :class="{'hidden': isModify}">
     <question question="对酒当歌，芳龄几何？" sub="年龄会关乎到保险方案和价格的准确性哦~" class="animated fadeInLeft">
       <div slot="options">
         <transition name="options">
@@ -70,7 +70,7 @@ export default {
       oldList: 'oldList'
     }),
     ...mapState([
-      'index',
+      'isModify',
       'progress',
       'info',
       'selectedAge'
@@ -82,7 +82,8 @@ export default {
       addAge: 'addAge',
       toggleAgePicker: 'toggleAgePicker',
       setChooseList: 'setChooseList',
-      setDefaultAge: 'setDefaultAge'
+      setDefaultAge: 'setDefaultAge',
+      toggleModify: 'toggleModify'
     }),
     confirm () {
       if (this.btnAbled) {
@@ -90,20 +91,24 @@ export default {
         this.showAnswer = true
         this.addAge({data: this.memberList})
         this.$emit('fill-height', document.getElementById('options').offsetHeight)
-        setTimeout(() => {
-          if (this.progress === 3) {
+        if (this.progress === 3) {
+          setTimeout(() => {
             this.next({data: 4})
-          } else {
-            this.next({data: 3})
-          }
-        }, 3000)
-        setTimeout(() => {
-          this.next({data: 4})
-        }, 3200)
-        setTimeout(() => {
-          this.$emit('scroll-to', document.getElementById('que3').offsetTop + document.getElementById('que3').offsetHeight)
-//          window.scrollTo(0, document.getElementById('que3').offsetTop + document.getElementById('que3').offsetHeight)
-        }, 3500)
+          }, 3000)
+          setTimeout(() => {
+            this.$emit('scroll-to', document.getElementById('que3').offsetTop + document.getElementById('que3').offsetHeight)
+          }, 3500)
+        } else {
+          this.next({data: 3})
+          setTimeout(() => {
+            this.next({data: 4})
+            this.toggleModify()
+          }, 3000)
+          setTimeout(() => {
+            this.toggleModify()
+            this.$emit('scroll-to', document.getElementById('que3').offsetTop + document.getElementById('que3').offsetHeight)
+          }, 3500)
+        }
       }
     },
     selectAge (member) {
@@ -188,11 +193,13 @@ export default {
     },
     'selectedAge': {
       handler (newVal) {
-        this.memberList.forEach(item => {
-          if (item.labelName === this.who) {
-            item.value = newVal
-          }
-        })
+        if (newVal) {
+          this.memberList.forEach(item => {
+            if (item.labelName === this.who) {
+              item.value = newVal
+            }
+          })
+        }
       }
     }
   }

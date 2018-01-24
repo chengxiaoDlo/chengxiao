@@ -1,5 +1,5 @@
 <template>
-    <div style="overflow: hidden;" id="que7">
+    <div style="overflow: hidden;" id="que7" :class="{'hidden': isModify}">
       <question question="蓝田日暖玉生烟，日常能抽几支烟？" sub="部分寿险产品会为非吸烟体用户提供高性价比产品，我们也会全面考虑哦~" class="animated fadeInLeft">
         <div slot="options">
           <transition name="options">
@@ -64,7 +64,8 @@
         },
         ...mapState([
           'progress',
-          'info'
+          'info',
+          'isModify'
         ])
       },
       methods: {

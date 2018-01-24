@@ -1,5 +1,5 @@
 <template>
-    <div class="second-ques" id="que2">
+    <div class="second-ques" :class="{'hidden': isModify}" id="que2">
       <div v-transfer-dom>
         <x-dialog v-model="showAdd" hide-on-blur>
           <div class="card">
@@ -163,8 +163,8 @@
           return labelName
         },
         ...mapState([
-          'index',
           'progress',
+          'isModify',
           'info'
         ])
       },
@@ -176,8 +176,9 @@
       methods: {
         ...mapMutations({
           next: 'next',
-          setIndex: 'setIndex',
-          selectMembers: 'selectMembers'
+          toggleModify: 'toggleModify',
+          selectMembers: 'selectMembers',
+          clear: 'clear'
         }),
         chooseMember (member) {
           let pickedChild = this.memberList.filter(item => {
@@ -203,21 +204,26 @@
           this.showOption = false
           this.showAnswer = true
           this.$emit('fill-height', document.getElementById('options').offsetHeight)
-          setTimeout(() => {
-            if (this.progress === 2) {
+          if (this.progress === 2) {
+            setTimeout(() => {
               this.next({data: 3})
-            } else {
-              this.next({data: 2})
-            }
-          }, 3000)
-          setTimeout(() => {
-            this.next({data: 3})
-          }, 3200)
-          setTimeout(() => {
-            this.$emit('scroll-to', document.getElementById('que2').offsetTop + document.getElementById('que2').offsetHeight)
-//            window.scrollTo(0, document.getElementById('que2').offsetTop + document.getElementById('que2').offsetHeight)
-            this.setIndex({data: this.index + 1})
-          }, 3500)
+            }, 3000)
+            setTimeout(() => {
+              this.$emit('scroll-to', document.getElementById('que2').offsetTop + document.getElementById('que2').offsetHeight)
+            }, 3500)
+          } else {
+            this.clear()
+            this.next({data: 2})
+            setTimeout(() => {
+              this.next({data: 3})
+              this.toggleModify()
+            }, 3000)
+            setTimeout(() => {
+              this.toggleModify()
+              this.$emit('scroll-to', document.getElementById('que2').offsetTop + document.getElementById('que2').offsetHeight)
+            }, 3500)
+          }
+
         },
         modify () {
           this.showAnswer = false

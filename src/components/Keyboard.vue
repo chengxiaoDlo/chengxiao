@@ -100,6 +100,7 @@
           }
         },
         del () {
+          console.log(909, this.inputNumber)
           this.inputNumber = this.inputNumber.substr(0, this.inputNumber.length - 1)
         }
       },

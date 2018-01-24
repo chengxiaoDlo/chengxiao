@@ -1,5 +1,5 @@
 <template>
-    <div style="overflow: hidden" id="que4">
+    <div style="overflow: hidden" id="que4" :class="{'hidden': isModify}">
       <question question="青春作伴好还乡，而今哪里是家乡？" sub="我们会考虑当地的社保政策、产品区域限制、消费水平等因素哒~" class="animated fadeInLeft">
         <div slot="options">
           <transition name="options">
@@ -55,34 +55,39 @@
         }
       },
       computed: mapState([
-        'index',
+        'isModify',
         'progress'
       ]),
       methods: {
         ...mapMutations({
           next: 'next',
           toggleCityPicker: 'toggleCityPicker',
-          addResidence: 'addResidence'
+          addResidence: 'addResidence',
+          toggleModify: 'toggleModify'
         }),
         confirm () {
           this.showOption = false
           this.showAnswer = true
           this.addResidence({data: this.residence})
           this.$emit('fill-height', document.getElementById('options').offsetHeight)
-          setTimeout(() => {
-            if (this.progress === 4) {
+          if (this.progress === 4) {
+            setTimeout(() => {
               this.next({data: 5})
-            } else {
-              this.next({data: 4})
-            }
-          }, 3000)
-          setTimeout(() => {
-            this.next({data: 5})
-          }, 3200)
-          setTimeout(() => {
-            this.$emit('scroll-to', document.getElementById('que4').offsetTop + document.getElementById('que4').offsetHeight)
-//            window.scrollTo(0, document.getElementById('que4').offsetTop + document.getElementById('que4').offsetHeight)
-          }, 3500)
+            }, 3000)
+            setTimeout(() => {
+              this.$emit('scroll-to', document.getElementById('que4').offsetTop + document.getElementById('que4').offsetHeight)
+            }, 3500)
+          } else {
+            this.next({data: 4})
+            setTimeout(() => {
+              this.next({data: 5})
+              this.toggleModify()
+            }, 3000)
+            setTimeout(() => {
+              this.toggleModify()
+              this.$emit('scroll-to', document.getElementById('que4').offsetTop + document.getElementById('que4').offsetHeight)
+            }, 3500)
+          }
         },
         selectCity () {
           this.toggleCityPicker()

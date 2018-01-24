@@ -114,6 +114,12 @@ export default {
   },
   [types.SET_INPUT_NUMBER] (state, payload) {
     state.inputNumber = payload.data
+  },
+  [types.TOGGLE_MODIFY] (state) {
+    state.isModify = !state.isModify
+  },
+  [types.CLEAR] (state) {
+    state.selectedAge = ''
   }
 }
 

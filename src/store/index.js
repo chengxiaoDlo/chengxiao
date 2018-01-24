@@ -14,6 +14,7 @@ export default new Vuex.Store({
     showAgePicker: false,
     showCityPicker: false,
     showKeyBoard: false,
+    isModify: false,
     chooseList: [],
     defaultAge: '',
     selectedAge: '',

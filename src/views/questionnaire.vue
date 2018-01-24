@@ -82,7 +82,8 @@ export default {
       toggleCityPicker: 'toggleCityPicker',
       toggleKeyboard: 'toggleKeyboard',
       setAge: 'setAge',
-      setInputNumber: 'setInputNumber'
+      setInputNumber: 'setInputNumber',
+      clear: 'clear'
     }),
     changeHeight (val) {
       this.blockHeight = val
@@ -107,6 +108,9 @@ export default {
     selectedAge (val) {
       console.log(val)
       this.setAge({data: val.value[0]})
+      setTimeout(() => {
+        this.clear()
+      }, 100)
       this.toggleAgePicker()
     },
     selectedCity (val) {
