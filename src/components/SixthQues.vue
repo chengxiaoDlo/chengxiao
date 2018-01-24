@@ -1,6 +1,6 @@
 <template>
     <div style="overflow: hidden;" id="que6">
-      <div @click="cancel">
+      <div>
         <question question="玉盘珍馐值万钱，你家收支多少钱？" sub="我们会基于家庭收入及贷款来为您规划合理的保额及保费预" class="animated fadeInLeft">
           <div slot="options">
             <transition name="options">
@@ -26,7 +26,9 @@
           <answer v-if="showAnswer" :textList="answerText" @modify="modify" wrap></answer>
         </transition>
       </div>
-      <keyboard v-if="inputMoney" @on-change="change" @ok="ok"></keyboard>
+      <transition enter-active-class="animated slideInUp" leave-active-class="animated slideOutDown">
+        <keyboard v-if="inputMoney" @quit="cancel" @on-change="change" @ok="ok"></keyboard>
+      </transition>
     </div>
 </template>
 
@@ -68,7 +70,7 @@
           })
           return arr.every(item => {
             return item.value !== '税前收入'
-          })
+          }) && !this.inputMoney
         },
         ...mapState([
           'index',
@@ -109,18 +111,12 @@
             this.addIncome({data: this.memberList})
             this.$emit('fill-height', document.getElementById('options').offsetHeight)
             setTimeout(() => {
-              if (this.progress === 6) {
                 this.next({data: 7})
-              } else {
-                this.next({data: 6})
-              }
             }, 3000)
             setTimeout(() => {
-              this.next({data: 7})
-            }, 3200)
-            setTimeout(() => {
               this.setIndex({data: this.index + 1})
-              window.scrollTo(0, document.getElementById('que6').offsetTop + document.getElementById('que6').offsetHeight)
+//              window.scrollTo(0, document.getElementById('que6').offsetTop + document.getElementById('que6').offsetHeight)
+              this.$emit('scroll-to', document.getElementById('que6').offsetTop + document.getElementById('que6').offsetHeight)
             }, 3500)
           }
         },
@@ -147,7 +143,6 @@
         }
       },
       mounted () {
-        // document.getElementById('que6').style.minHeight = document.documentElement.clientHeight + 'px'
         this.$emit('change-height', document.documentElement.clientHeight - document.getElementById('que6').offsetHeight)
       },
       created () {

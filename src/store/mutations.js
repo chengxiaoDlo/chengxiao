@@ -25,6 +25,12 @@ export default {
   [types.USE_SWIPER] (state) {
     state.stopScroll = false
   },
+  [types.TOGGLE_KEYBOARD] (state) {
+    state.showKeyBoard = !state.showKeyBoard
+  },
+  [types.TOGGLE_PICKER] (state) {
+    state.showPicker = !state.showPicker
+  },
   [types.ADD_AGE] (state, payload) {
     payload.data.forEach(item1 => {
       if (item1.labelName === '本人') {
@@ -85,6 +91,14 @@ export default {
         })
       }
     })
+  },
+  [types.INIT_AGE_LIST] (state) {
+    for (let i = 0; i < 81; i++) {
+      state.ageList.push({
+        name: i,
+        value: i
+      })
+    }
   }
 }
 

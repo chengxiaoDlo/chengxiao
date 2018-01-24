@@ -1,15 +1,18 @@
 <template>
     <div class="result">
       <header></header>
-      <div class="part">
-        <div class="family">
-          <div class="title">
-            <span class="name">愚公移山</span>
-            <span class="text">的家庭成员</span>
+      <scroller>
+        <div class="part">
+          <div class="family">
+            <div class="title">
+              <span class="name">愚公移山</span>
+              <span class="text">的家庭成员</span>
+            </div>
+            <div class="members"></div>
           </div>
-          <div class="members"></div>
         </div>
-      </div>
+      </scroller>
+
 
     </div>
 </template>

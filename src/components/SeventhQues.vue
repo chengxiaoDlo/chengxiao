@@ -87,22 +87,17 @@
           this.addSmoke({data: this.memberList})
           this.$emit('fill-height', document.getElementById('options').offsetHeight)
           setTimeout(() => {
-            if (this.progress === 7) {
-              this.next({data: 8})
-            } else {
-              this.next({data: 7})
-            }
+            this.next({data: 8})
           }, 3000)
           setTimeout(() => {
-            this.next({data: 8})
-          }, 3200)
-          setTimeout(() => {
             this.setIndex({data: this.index + 1})
-            window.scrollTo(0, document.getElementById('que7').offsetTop + document.getElementById('que7').offsetHeight)
+            this.$emit('scroll-to', document.getElementById('que7').offsetTop + document.getElementById('que7').offsetHeight)
+//            window.scrollTo(0, document.getElementById('que7').offsetTop + document.getElementById('que7').offsetHeight)
           }, 3500)
         },
         modify () {
           this.showAnswer = false
+          this.next({data: 7})
           setTimeout(() => {
             this.showOption = true
           }, 1000)

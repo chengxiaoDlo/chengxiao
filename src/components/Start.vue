@@ -62,7 +62,8 @@
             }
           }, 3000)
           setTimeout(() => {
-            window.scrollTo(0, document.getElementsByClassName('start')[0].offsetTop + document.getElementsByClassName('start')[0].offsetHeight)
+            this.$emit('scroll-to', document.getElementsByClassName('start')[0].offsetTop + document.getElementsByClassName('start')[0].offsetHeight)
+//            window.scrollTo(0, document.getElementsByClassName('start')[0].offsetTop + document.getElementsByClassName('start')[0].offsetHeight)
             this.setIndex({data: this.index + 1})
           }, 3500)
         }
@@ -73,7 +74,6 @@
 <style type="text/scss" lang="scss" scoped>
 @import "../styles/animation";
 .start {
-  margin-top: 1rem;
   margin-left: 0.27rem;
   .row-with-avatar {
     position: relative;

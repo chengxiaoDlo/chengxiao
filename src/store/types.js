@@ -1,4 +1,5 @@
 export default {
+  INIT_AGE_LIST: 'initAgeList',
   TOGGLE_DONE: 'toggleDone',
   GET_START: 'getStart',
   NEXT: 'next',
@@ -11,5 +12,7 @@ export default {
   ADD_RESIDENCE: 'addResidence',
   ADD_SOCIAL: 'addSocial',
   ADD_INCOME: 'addIncome',
-  ADD_SMOKE: 'addSmoke'
+  ADD_SMOKE: 'addSmoke',
+  TOGGLE_PICKER: 'togglePicker',
+  TOGGLE_KEYBOARD: 'toggleKeyboard'
 }

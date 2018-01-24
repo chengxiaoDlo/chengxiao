@@ -69,18 +69,12 @@
           this.addSocial({data: this.memberList})
           this.$emit('fill-height', document.getElementById('options').offsetHeight)
           setTimeout(() => {
-            if (this.progress === 5) {
-              this.next({data: 6})
-            } else {
-              this.next({data: 5})
-            }
+            this.next({data: 6})
           }, 3000)
           setTimeout(() => {
-            this.next({data: 6})
-          }, 3200)
-          setTimeout(() => {
             this.setIndex({data: this.index + 1})
-            window.scrollTo(0, document.getElementById('que5').offsetTop + document.getElementById('que5').offsetHeight)
+            this.$emit('scroll-to', document.getElementById('que5').offsetTop + document.getElementById('que5').offsetHeight)
+//            window.scrollTo(0, document.getElementById('que5').offsetTop + document.getElementById('que5').offsetHeight)
           }, 3500)
         },
         hasSecurity (has, member) {
@@ -123,21 +117,23 @@
               })
             }
           }
+        },
+        init () {
+          let family = this.info.family.filter(item => {
+            return item.labelName.indexOf('狗') === -1
+          })
+          this.memberList = [{
+            class: this.info.sex === 'M' ? 'male' : 'female',
+            labelName: '本人',
+            socialSecurity: true
+          }, ...this.getList(family)]
         }
       },
       mounted () {
         this.$emit('change-height', document.documentElement.clientHeight - document.getElementById('que5').offsetHeight)
-        // document.getElementById('que5').style.minHeight = document.documentElement.clientHeight + 'px'
       },
       created () {
-        let family = this.info.family.filter(item => {
-          return item.labelName.indexOf('狗') === -1
-        })
-        this.memberList = [{
-          class: this.info.sex === 'M' ? 'male' : 'female',
-          labelName: '本人',
-          socialSecurity: true
-        }, ...this.getList(family)]
+        this.init()
       }
     }
 </script>

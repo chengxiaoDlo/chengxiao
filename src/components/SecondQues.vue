@@ -204,17 +204,11 @@
           this.showAnswer = true
           this.$emit('fill-height', document.getElementById('options').offsetHeight)
           setTimeout(() => {
-            if (this.progress === 2) {
-              this.next({data: 3})
-            } else {
-              this.next({data: 2})
-            }
+            this.next({data: 3})
           }, 3000)
           setTimeout(() => {
-            this.next({data: 3})
-          }, 3200)
-          setTimeout(() => {
-            window.scrollTo(0, document.getElementById('que2').offsetTop + document.getElementById('que2').offsetHeight)
+            this.$emit('scroll-to', document.getElementById('que2').offsetTop + document.getElementById('que2').offsetHeight)
+//            window.scrollTo(0, document.getElementById('que2').offsetTop + document.getElementById('que2').offsetHeight)
             this.setIndex({data: this.index + 1})
           }, 3500)
         },
@@ -326,6 +320,23 @@
           })
           this.showAdd = false
           this.addMem = []
+        },
+        init () {
+          if (this.info.sex === 'M') {
+            this.memberList.forEach(item => {
+              if (item.labelName === '配偶') {
+                item.gender = 'F'
+                item.class = 'female'
+              }
+            })
+          } else {
+            this.memberList.forEach(item => {
+              if (item.labelName === '配偶') {
+                item.gender = 'M'
+                item.class = 'male'
+              }
+            })
+          }
         }
       },
       mounted () {
@@ -333,22 +344,7 @@
         this.$emit('change-height', document.documentElement.clientHeight - document.getElementById('que2').offsetHeight)
       },
       created () {
-        console.log(511, this.info)
-        if (this.info.sex === 'M') {
-          this.memberList.forEach(item => {
-            if (item.labelName === '配偶') {
-              item.gender = 'F'
-              item.class = 'female'
-            }
-          })
-        } else {
-          this.memberList.forEach(item => {
-            if (item.labelName === '配偶') {
-              item.gender = 'M'
-              item.class = 'male'
-            }
-          })
-        }
+        this.init()
       },
       watch: {
         'showAdd': {
@@ -360,6 +356,11 @@
                 item.labelName = item.labelName.replace(/[小二]/, '')
               })
             }
+          }
+        },
+        'info.sex': {
+          handler () {
+            this.init()
           }
         }
       }

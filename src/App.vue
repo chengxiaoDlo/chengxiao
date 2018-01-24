@@ -22,9 +22,21 @@ html {
 }
 html, body {
   width: 100%;
+  height: 100%;
 }
 div {
   -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
+}
+body:before {
+  content: ' ';
+  position: fixed;
+  z-index: -1;
+  top: 3rem;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background: url("./assets/images/bg.png") no-repeat;
+  background-size: 5rem 5.6rem;
 }
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
@@ -38,7 +50,6 @@ div {
   background-size: 5rem 5.6rem;
   background-position-y: 3rem;
   background-attachment: fixed;
-  overflow: scroll;
 }
   @media screen and (min-width: 320px) {
     html {
@@ -50,7 +61,7 @@ div {
       font-size: 28.5px;
     }
   }
-  @media screen and (min-width: 370px) {
+  @media screen and (min-width: 375px) {
     html {
       font-size: 30px;
     }

@@ -56,18 +56,11 @@
           this.showAnswer = true
           this.$emit('fill-height', document.getElementById('options').offsetHeight)
           setTimeout(() => {
-            if (this.progress === 1) {
-              this.next({data: 2})
-            } else {
-              this.next({data: 1})
-            }
+            this.next({data: 2})
           }, 3000)
           setTimeout(() => {
-            this.next({data: 2})
-          }, 3200)
-          setTimeout(() => {
-            this.setIndex({data: this.index + 1})
-            window.scrollTo(0, document.getElementById('que1').offsetTop + document.getElementById('que1').offsetHeight)
+            this.$emit('scroll-to', document.getElementById('que1').offsetTop + document.getElementById('que1').offsetHeight)
+//            window.scrollTo(0, document.getElementById('que1').offsetTop + document.getElementById('que1').offsetHeight)
           }, 3500)
         },
         modify () {

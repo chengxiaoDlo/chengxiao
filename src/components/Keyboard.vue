@@ -1,13 +1,36 @@
 <template>
     <div class="keyboard">
-      <!--<header>-->
-        <!--<span @click="quit">取消</span>-->
-        <!--<span @click="confirm">确定</span>-->
-      <!--</header>-->
+      <header>
+        <span @click="quit">取消</span>
+        <span @click="confirm">确定</span>
+      </header>
       <div class="keys">
-        <div v-for="number in numbers" class="key" @click="clickNum(number)">{{number}}</div>
-        <div class="key" @click="del">DEL</div>
-        <div class="key" @click="ok">OK</div>
+        <div class="num-line" >
+          <div class="key" :class="{'right': index === 2}" v-for="(number, index) in numbers.firstLine" @click="clickNum(number.num)">
+            <p class="num">{{number.num}}</p>
+            <p class="abc">{{number.abc}}</p>
+          </div>
+        </div>
+        <div class="num-line" >
+          <div class="key" :class="{'right': index === 2}" v-for="(number, index) in numbers.secondLine" @click="clickNum(number.num)">
+            <p class="num">{{number.num}}</p>
+            <p class="abc">{{number.abc}}</p>
+          </div>
+        </div>
+        <div class="num-line" >
+          <div class="key" :class="{'right': index === 2}" v-for="(number, index) in numbers.thirdLine" @click="clickNum(number.num)">
+            <p class="num">{{number.num}}</p>
+            <p class="abc">{{number.abc}}</p>
+          </div>
+        </div>
+        <div class="num-line last">
+          <div class="key" @click="clickNum(0)">
+            <p class="num sp">0</p>
+          </div>
+          <div class="key right del" @click="del">
+            <div class="icon"></div>
+          </div>
+        </div>
       </div>
     </div>
 </template>
@@ -17,13 +40,60 @@
       name: "keyboard",
       data () {
         return {
-          numbers: [],
+          numbers: {
+            firstLine: [
+              {
+                num: 1,
+                abc: ''
+              },
+              {
+                num: 2,
+                abc: 'ABC'
+              },
+              {
+                num: 3,
+                abc: 'DEF'
+              }
+            ],
+            secondLine: [
+              {
+                num: 4,
+                abc: 'GHI'
+              },
+              {
+                num: 5,
+                abc: 'JKL'
+              },
+              {
+                num: 6,
+                abc: 'MNO'
+              }
+            ],
+            thirdLine: [
+              {
+                num: 7,
+                abc: 'PQRS'
+              },
+              {
+                num: 8,
+                abc: 'TUV'
+              },
+              {
+                num: 9,
+                abc: 'WXYZ'
+              }
+            ]
+          },
           inputNumber: ''
         }
       },
       methods: {
-        quit () {},
-        confirm () {},
+        quit () {
+          this.$emit('quit')
+        },
+        confirm () {
+          this.$emit('ok')
+        },
         clickNum (num) {
           if (this.inputNumber.length < 3) {
             this.inputNumber += num
@@ -31,15 +101,12 @@
         },
         del () {
           this.inputNumber = this.inputNumber.substr(0, this.inputNumber.length - 1)
-        },
-        ok () {
-          this.$emit('ok')
         }
       },
       created () {
-        for(let i = 0; i < 10; i++) {
-          this.numbers.push(i)
-        }
+//        for(let i = 0; i < 10; i++) {
+//          this.numbers.push(i)
+//        }
       },
       watch: {
         'inputNumber': {
@@ -55,10 +122,10 @@
 <style type="text/scss" lang="scss" scoped>
 .keyboard {
   width: 100%;
-  height: 10rem;
+  height: 8.67rem;
   position: fixed;
   bottom: 0;
-  background: #ffffff;
+  background: rgba(210, 213, 219, 0.9);
   overflow: hidden;
   header {
     height: 1.5rem;
@@ -74,14 +141,50 @@
     }
   }
   .keys {
+    height: 7.17rem;
     display: flex;
-    flex-wrap: wrap;
-    .key {
-      flex-basis: 33.3%;
-      line-height: 2.5rem;
-      height: 2.5rem;
-      text-align: center;
-      background: aquamarine;
+    flex-direction: column;
+    justify-content: center;
+    .num-line {
+      display: flex;
+      justify-content: center;
+      margin-top: 0.2rem;
+      .key {
+        flex-basis: 3.9rem;
+        margin-left: 0.2rem;
+        height: 1.5rem;
+        text-align: center;
+        background: #ffffff;
+        border-radius: 10px;
+        .num {
+          font-size: 0.83rem;
+          line-height: 1rem;
+        }
+        .sp {
+          line-height: 1.5rem;
+        }
+        .abc {
+          font-size: 0.33rem;
+        }
+      }
+    }
+    .right {
+      margin-right: 0.2rem;
+    }
+    .last {
+      justify-content: flex-end;
+    }
+    .num-line .del {
+      background: rgba(210, 213, 219, 0.9);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      .icon {
+        height: 0.6rem;
+        width: 0.83rem;
+        background: url("../assets/images/del.png") no-repeat;
+        background-size: 100%;
+      }
     }
   }
 }

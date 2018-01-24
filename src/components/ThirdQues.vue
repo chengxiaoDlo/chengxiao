@@ -97,18 +97,12 @@ export default {
         this.addAge({data: this.memberList})
         this.$emit('fill-height', document.getElementById('options').offsetHeight)
         setTimeout(() => {
-          if (this.progress === 3) {
-            this.next({data: 4})
-          } else {
-            this.next({data: 3})
-          }
+          this.next({data: 4})
         }, 3000)
         setTimeout(() => {
-          this.next({data: 4})
-        }, 3200)
-        setTimeout(() => {
           this.setIndex({data: this.index + 1})
-          window.scrollTo(0, document.getElementById('que3').offsetTop + document.getElementById('que3').offsetHeight)
+          this.$emit('scroll-to', document.getElementById('que3').offsetTop + document.getElementById('que3').offsetHeight)
+//          window.scrollTo(0, document.getElementById('que3').offsetTop + document.getElementById('que3').offsetHeight)
         }, 3500)
       }
     },
@@ -180,6 +174,16 @@ export default {
           })
         }
       }
+    },
+    init () {
+      let family = this.info.family.filter(item => {
+        return item.labelName.indexOf('狗') === -1
+      })
+      this.memberList = [{
+        class: this.info.sex === 'M' ? 'male' : 'female',
+        labelName: '本人',
+        value: '选择年龄'
+      }, ...this.getList(family)]
     }
   },
   mounted () {
@@ -197,14 +201,15 @@ export default {
         value: i
       })
     }
-    let family = this.info.family.filter(item => {
-      return item.labelName.indexOf('狗') === -1
-    })
-    this.memberList = [{
-      class: this.info.sex === 'M' ? 'male' : 'female',
-      labelName: '本人',
-      value: '选择年龄'
-    }, ...this.getList(family)]
+    this.init()
+  },
+  watch: {
+    'info.family': {
+      handler () {
+        this.init()
+      },
+      deep: true
+    }
   }
 
 }

@@ -69,18 +69,12 @@
           this.addResidence({data: this.residence})
           this.$emit('fill-height', document.getElementById('options').offsetHeight)
           setTimeout(() => {
-            if (this.progress === 4) {
-              this.next({data: 5})
-            } else {
-              this.next({data: 4})
-            }
+            this.next({data: 5})
           }, 3000)
           setTimeout(() => {
-            this.next({data: 5})
-          }, 3200)
-          setTimeout(() => {
             this.setIndex({data: this.index + 1})
-            window.scrollTo(0, document.getElementById('que4').offsetTop + document.getElementById('que4').offsetHeight)
+            this.$emit('scroll-to', document.getElementById('que4').offsetTop + document.getElementById('que4').offsetHeight)
+//            window.scrollTo(0, document.getElementById('que4').offsetTop + document.getElementById('que4').offsetHeight)
           }, 3500)
         },
         cancel () {
@@ -106,11 +100,7 @@
         }
       },
       mounted () {
-        // document.getElementById('que4').style.minHeight = document.documentElement.clientHeight + 'px'
         this.$emit('change-height', document.documentElement.clientHeight - document.getElementById('que4').offsetHeight)
-      },
-      created () {
-        this.$emit('initHeight')
       }
     }
 </script>

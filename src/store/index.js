@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import actions from './actions'
 import mutations from './mutations'
+import getters from './getters'
 
 Vue.use(Vuex)
 
@@ -10,7 +11,8 @@ export default new Vuex.Store({
     goToStart: false,
     stopScroll: false,
     done: false,
-    index: 0,
+    showPicker: false,
+    showKeyBoard: false,
     progress: 0,
     info: {
       sex: '',
@@ -20,8 +22,10 @@ export default new Vuex.Store({
       income: '',
       familyDebt: '',
       family: []
-    }
+    },
+    ageList: []
   },
   actions,
-  mutations
+  mutations,
+  getters
 })
