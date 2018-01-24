@@ -21,9 +21,6 @@
         </transition>
       </div>
     </question>
-    <div class="picker" v-if="chooseAge">
-      <slide-picker :list="chooseList" :col="1" @quit="cancel" @confirm="selected" :default="defaultAge"></slide-picker>
-    </div>
     <transition enter-active-class="animated fadeInRight" leave-active-class="animated fadeOutRight">
       <answer v-if="showAnswer" :textList="answerText" @modify="modify" wrap></answer>
     </transition>
@@ -34,7 +31,7 @@
 import Question from '@/components/Question'
 import SlidePicker from '@/components/SlidePicker'
 import Answer from '@/components/Answer'
-import { mapState, mapMutations } from 'vuex'
+import { mapState, mapMutations, mapGetters } from 'vuex'
 
 export default {
   name: "third-ques",
@@ -57,15 +54,6 @@ export default {
     }
   },
   computed: {
-    youngList () {
-      return this.ageList.slice(18, 61)
-    },
-    childList () {
-      return this.ageList.slice(0, 31)
-    },
-    oldList () {
-      return this.ageList.slice(40, 81)
-    },
     answerText () {
      return this.memberList.map(item => {
        return item.labelName + ': ' + item.value + '岁'
@@ -76,19 +64,25 @@ export default {
         return item.value !== '选择年龄'
       })
     },
+    ...mapGetters({
+      youngList: 'youngList',
+      childList: 'childList',
+      oldList: 'oldList'
+    }),
     ...mapState([
       'index',
       'progress',
-      'info'
+      'info',
+      'selectedAge'
     ])
   },
   methods: {
     ...mapMutations({
       next: 'next',
-      setIndex: 'setIndex',
-      stopSwiper: 'stopSwiper',
-      useSwiper: 'useSwiper',
-      addAge: 'addAge'
+      addAge: 'addAge',
+      toggleAgePicker: 'toggleAgePicker',
+      setChooseList: 'setChooseList',
+      setDefaultAge: 'setDefaultAge'
     }),
     confirm () {
       if (this.btnAbled) {
@@ -97,49 +91,37 @@ export default {
         this.addAge({data: this.memberList})
         this.$emit('fill-height', document.getElementById('options').offsetHeight)
         setTimeout(() => {
-          this.next({data: 4})
+          if (this.progress === 3) {
+            this.next({data: 4})
+          } else {
+            this.next({data: 3})
+          }
         }, 3000)
         setTimeout(() => {
-          this.setIndex({data: this.index + 1})
+          this.next({data: 4})
+        }, 3200)
+        setTimeout(() => {
           this.$emit('scroll-to', document.getElementById('que3').offsetTop + document.getElementById('que3').offsetHeight)
 //          window.scrollTo(0, document.getElementById('que3').offsetTop + document.getElementById('que3').offsetHeight)
         }, 3500)
       }
     },
-    change (val) {
-      console.log(val)
-    },
     selectAge (member) {
       switch (member.labelName) {
         case '本人': case '配偶':
-          this.chooseList = this.youngList
-          this.defaultAge = '30'
+          this.setChooseList({data: this.youngList})
+          this.setDefaultAge({data: '30'})
           break
         case '儿子': case '女儿': case '小儿子': case '小女儿': case '大儿子': case '大女儿': case '二儿子': case '二女儿':
-          this.chooseList = this.childList
-          this.defaultAge = '5'
+          this.setChooseList({data: this.childList})
+          this.setDefaultAge({data: '5'})
           break
         case '爸爸': case '妈妈': case '配偶爸爸': case '配偶妈妈':
-          this.chooseList = this.oldList
-          this.defaultAge = '60'
+          this.setChooseList({data: this.oldList})
+          this.setDefaultAge({data: '60'})
       }
       this.who = member.labelName
-      this.chooseAge = true
-      this.stopSwiper()
-    },
-    cancel () {
-      this.chooseAge = false
-      this.useSwiper()
-    },
-    selected (val) {
-      console.log(999, val)
-      this.memberList.forEach(item => {
-        if (item.labelName === this.who) {
-          item.value = val.value[0]
-        }
-      })
-      this.chooseAge = false
-      this.useSwiper()
+      this.toggleAgePicker()
     },
     modify () {
       this.showAnswer = false
@@ -195,12 +177,6 @@ export default {
     }
   },
   created () {
-    for (let i = 0; i < 81; i++) {
-      this.ageList.push({
-        name: i,
-        value: i
-      })
-    }
     this.init()
   },
   watch: {
@@ -209,6 +185,15 @@ export default {
         this.init()
       },
       deep: true
+    },
+    'selectedAge': {
+      handler (newVal) {
+        this.memberList.forEach(item => {
+          if (item.labelName === this.who) {
+            item.value = newVal
+          }
+        })
+      }
     }
   }
 

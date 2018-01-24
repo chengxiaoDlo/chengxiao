@@ -204,8 +204,15 @@
           this.showAnswer = true
           this.$emit('fill-height', document.getElementById('options').offsetHeight)
           setTimeout(() => {
-            this.next({data: 3})
+            if (this.progress === 2) {
+              this.next({data: 3})
+            } else {
+              this.next({data: 2})
+            }
           }, 3000)
+          setTimeout(() => {
+            this.next({data: 3})
+          }, 3200)
           setTimeout(() => {
             this.$emit('scroll-to', document.getElementById('que2').offsetTop + document.getElementById('que2').offsetHeight)
 //            window.scrollTo(0, document.getElementById('que2').offsetTop + document.getElementById('que2').offsetHeight)

@@ -52,7 +52,6 @@
           })
         },
         ...mapState([
-          'index',
           'progress',
           'info'
         ])
@@ -60,7 +59,6 @@
       methods: {
         ...mapMutations({
           next: 'next',
-          setIndex: 'setIndex',
           addSocial: 'addSocial'
         }),
         confirm () {
@@ -69,10 +67,16 @@
           this.addSocial({data: this.memberList})
           this.$emit('fill-height', document.getElementById('options').offsetHeight)
           setTimeout(() => {
-            this.next({data: 6})
+            if (this.progress === 5) {
+              this.next({data: 6})
+            } else {
+              this.next({data: 5})
+            }
           }, 3000)
           setTimeout(() => {
-            this.setIndex({data: this.index + 1})
+            this.next({data: 6})
+          }, 3200)
+          setTimeout(() => {
             this.$emit('scroll-to', document.getElementById('que5').offsetTop + document.getElementById('que5').offsetHeight)
 //            window.scrollTo(0, document.getElementById('que5').offsetTop + document.getElementById('que5').offsetHeight)
           }, 3500)

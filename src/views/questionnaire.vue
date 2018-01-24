@@ -7,7 +7,7 @@
           <first-ques v-if="progress > 0" @change-height="changeHeight" @fill-height="fillHeight" @scroll-to="scroll"></first-ques>
           <second-ques v-if="progress > 1" @change-height="changeHeight" @fill-height="fillHeight" @scroll-to="scroll"></second-ques>
           <third-ques v-if="progress > 2" @change-height="changeHeight" @fill-height="fillHeight" @scroll-to="scroll"></third-ques>
-          <fourth-ques v-if="progress > 3" @change-height="changeHeight" @fill-height="fillHeight" @scroll-to="scroll"></fourth-ques>
+          <fourth-ques :residence="residence" :city="city" v-if="progress > 3" @change-height="changeHeight" @fill-height="fillHeight" @scroll-to="scroll"></fourth-ques>
           <fifth-ques v-if="progress > 4" @change-height="changeHeight" @fill-height="fillHeight" @scroll-to="scroll"></fifth-ques>
           <sixth-ques v-if="progress > 5" @change-height="changeHeight" @fill-height="fillHeight" @scroll-to="scroll"></sixth-ques>
           <seventh-ques v-if="progress > 6" @change-height="changeHeight" @fill-height="fillHeight" @scroll-to="scroll"></seventh-ques>
@@ -16,9 +16,10 @@
         </div>
       </scroller>
       <transition enter-active-class="animated slideInUp" leave-active-class="animated slideOutDown">
-        <keyboard v-if="showKeyBoard" @quit="cancel" @on-change="change" @ok="ok"></keyboard>
+        <keyboard v-if="showKeyBoard" @quit="cancelInput" @on-change="changeInput" @ok="ok"></keyboard>
       </transition>
-      <slide-picker v-if="showPicker" :list="chooseList" :col="1" @quit="cancel" @confirm="selected" :default="defaultAge"></slide-picker>
+      <slide-picker v-if="showAgePicker" :list="chooseList" :col="1" @quit="cancelAge" @confirm="selectedAge" :default="defaultAge"></slide-picker>
+      <slide-picker v-if="showCityPicker" :list="cityList" :col="2" @quit="cancelCity" @confirm="selectedCity" ></slide-picker>
     </div>
 </template>
 
@@ -36,7 +37,8 @@ import SeventhQues from '@/components/SeventhQues'
 import GenerateReport from '@/components/GenerateReport'
 import SlidePicker from '@/components/SlidePicker'
 import Keyboard from '@/components/Keyboard'
-import { mapState, mapMutations, mapGetters } from 'vuex'
+import { mapState, mapMutations } from 'vuex'
+import consts from '@/utils/consts'
 
 export default {
   name: 'questionnaire',
@@ -57,24 +59,30 @@ export default {
   },
   data () {
     return {
-      blockHeight: ''
+      blockHeight: '',
+      cityList: consts.cityList,
+      residence: '',
+      city: ''
     }
   },
   computed: {
     ...mapState({
       progress: 'progress',
-      showPicker: 'showPicker',
-      showKeyBoard: 'showKeyBoard'
-    }),
-    ...mapGetters({
-      youngList: 'youngList',
-      childList: 'childList',
-      oldList: 'oldList'
+      showAgePicker: 'showAgePicker',
+      showKeyBoard: 'showKeyBoard',
+      chooseList: 'chooseList',
+      defaultAge: 'defaultAge',
+      showCityPicker: 'showCityPicker'
     })
   },
   methods: {
     ...mapMutations({
-      initAgeList: 'initAgeList'
+      initAgeList: 'initAgeList',
+      toggleAgePicker: 'toggleAgePicker',
+      toggleCityPicker: 'toggleCityPicker',
+      toggleKeyboard: 'toggleKeyboard',
+      setAge: 'setAge',
+      setInputNumber: 'setInputNumber'
     }),
     changeHeight (val) {
       this.blockHeight = val
@@ -86,6 +94,32 @@ export default {
     scroll (val) {
       console.log(333, val)
       this.$refs.scroll.scrollTo(0, val, true)
+    },
+    cancelAge () {
+      this.toggleAgePicker()
+    },
+    cancelCity () {
+      this.toggleCityPicker()
+    },
+    cancelInput () {
+      this.toggleKeyboard()
+    },
+    selectedAge (val) {
+      console.log(val)
+      this.setAge({data: val.value[0]})
+      this.toggleAgePicker()
+    },
+    selectedCity (val) {
+      console.log(99, val)
+      this.residence = val.value[1]
+      this.city = val.label
+      this.toggleCityPicker()
+    },
+    changeInput (val) {
+      this.setInputNumber({data: val})
+    },
+    ok () {
+      this.toggleKeyboard()
     }
   },
   created () {
@@ -99,13 +133,5 @@ export default {
   .questionnaire {
     height: 100%;
   }
-  .scroll {
-    padding-top: 1rem;
-  }
-  .questionnaire .vux-slider {
-    overflow: inherit;
-  }
-  .questionnaire .vux-slider .vux-swiper {
-    overflow: inherit;
-  }
+
 </style>

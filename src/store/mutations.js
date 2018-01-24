@@ -28,8 +28,11 @@ export default {
   [types.TOGGLE_KEYBOARD] (state) {
     state.showKeyBoard = !state.showKeyBoard
   },
-  [types.TOGGLE_PICKER] (state) {
-    state.showPicker = !state.showPicker
+  [types.TOGGLE_AGE_PICKER] (state) {
+    state.showAgePicker = !state.showAgePicker
+  },
+  [types.TOGGLE_CITY_PICKER] (state) {
+    state.showCityPicker = !state.showCityPicker
   },
   [types.ADD_AGE] (state, payload) {
     payload.data.forEach(item1 => {
@@ -99,6 +102,18 @@ export default {
         value: i
       })
     }
+  },
+  [types.SET_CHOOSE_LIST] (state, payload) {
+    state.chooseList = payload.data
+  },
+  [types.SET_DEFAULT_AGE] (state, payload) {
+    state.defaultAge = payload.data
+  },
+  [types.SET_AGE] (state, payload) {
+    state.selectedAge = payload.data
+  },
+  [types.SET_INPUT_NUMBER] (state, payload) {
+    state.inputNumber = payload.data
   }
 }
 

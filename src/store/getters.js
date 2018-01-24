@@ -2,10 +2,10 @@ export default {
   youngList: state => {
     return state.ageList.slice(18, 61)
   },
-  childList: () => {
+  childList: state => {
     return state.ageList.slice(0, 31)
   },
-  oldList: () => {
+  oldList: state => {
     return state.ageList.slice(40, 81)
   }
 }

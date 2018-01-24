@@ -103,11 +103,6 @@
           this.inputNumber = this.inputNumber.substr(0, this.inputNumber.length - 1)
         }
       },
-      created () {
-//        for(let i = 0; i < 10; i++) {
-//          this.numbers.push(i)
-//        }
-      },
       watch: {
         'inputNumber': {
           handler (newVal) {

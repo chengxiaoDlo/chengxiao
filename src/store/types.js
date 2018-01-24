@@ -13,6 +13,11 @@ export default {
   ADD_SOCIAL: 'addSocial',
   ADD_INCOME: 'addIncome',
   ADD_SMOKE: 'addSmoke',
-  TOGGLE_PICKER: 'togglePicker',
-  TOGGLE_KEYBOARD: 'toggleKeyboard'
+  TOGGLE_AGE_PICKER: 'toggleAgePicker',
+  TOGGLE_CITY_PICKER: 'toggleCityPicker',
+  TOGGLE_KEYBOARD: 'toggleKeyboard',
+  SET_CHOOSE_LIST: 'setChooseList',
+  SET_DEFAULT_AGE: 'setDefaultAge',
+  SET_AGE: 'setAge',
+  SET_INPUT_NUMBER: 'setInputNumber'
 }

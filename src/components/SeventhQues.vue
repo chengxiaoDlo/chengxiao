@@ -63,7 +63,6 @@
           })
         },
         ...mapState([
-          'index',
           'progress',
           'info'
         ])
@@ -71,7 +70,6 @@
       methods: {
         ...mapMutations({
           next: 'next',
-          setIndex: 'setIndex',
           addSmoke: 'addSmoke'
         }),
         isSomker (is, member) {
@@ -90,7 +88,6 @@
             this.next({data: 8})
           }, 3000)
           setTimeout(() => {
-            this.setIndex({data: this.index + 1})
             this.$emit('scroll-to', document.getElementById('que7').offsetTop + document.getElementById('que7').offsetHeight)
 //            window.scrollTo(0, document.getElementById('que7').offsetTop + document.getElementById('que7').offsetHeight)
           }, 3500)

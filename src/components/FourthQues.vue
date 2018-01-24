@@ -18,9 +18,6 @@
           </transition>
         </div>
       </question>
-      <div class="picker" v-if="chooseCity">
-        <slide-picker :list="cityList" :col="2" @quit="cancel" @confirm="selected" ></slide-picker>
-      </div>
       <transition enter-active-class="animated fadeInRight" leave-active-class="animated fadeOutRight">
         <answer v-if="showAnswer" :text="city" @modify="modify"></answer>
       </transition>
@@ -43,12 +40,18 @@
       },
       data () {
         return {
-          chooseCity: false,
           showOption: true,
-          showAnswer: false,
-          city: '河北省石家庄市',
-          residence: '',
-          cityList: utils.cityList
+          showAnswer: false
+        }
+      },
+      props: {
+        residence: {
+          type: String,
+          default: ''
+        },
+        city: {
+          type: String,
+          default: '河北省石家庄市'
         }
       },
       computed: mapState([
@@ -58,9 +61,7 @@
       methods: {
         ...mapMutations({
           next: 'next',
-          setIndex: 'setIndex',
-          stopSwiper: 'stopSwiper',
-          useSwiper: 'useSwiper',
+          toggleCityPicker: 'toggleCityPicker',
           addResidence: 'addResidence'
         }),
         confirm () {
@@ -69,28 +70,22 @@
           this.addResidence({data: this.residence})
           this.$emit('fill-height', document.getElementById('options').offsetHeight)
           setTimeout(() => {
-            this.next({data: 5})
+            if (this.progress === 4) {
+              this.next({data: 5})
+            } else {
+              this.next({data: 4})
+            }
           }, 3000)
           setTimeout(() => {
-            this.setIndex({data: this.index + 1})
+            this.next({data: 5})
+          }, 3200)
+          setTimeout(() => {
             this.$emit('scroll-to', document.getElementById('que4').offsetTop + document.getElementById('que4').offsetHeight)
 //            window.scrollTo(0, document.getElementById('que4').offsetTop + document.getElementById('que4').offsetHeight)
           }, 3500)
         },
-        cancel () {
-          this.chooseCity = false
-          this.useSwiper()
-        },
-        selected (val) {
-          console.log(333, val)
-          this.city = val.label
-          this.residence = val.value[1]
-          this.chooseCity = false
-          this.useSwiper()
-        },
         selectCity () {
-          this.chooseCity = true
-          this.stopSwiper()
+          this.toggleCityPicker()
         },
         modify () {
           this.showAnswer = false

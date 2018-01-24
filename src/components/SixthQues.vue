@@ -26,9 +26,9 @@
           <answer v-if="showAnswer" :textList="answerText" @modify="modify" wrap></answer>
         </transition>
       </div>
-      <transition enter-active-class="animated slideInUp" leave-active-class="animated slideOutDown">
-        <keyboard v-if="inputMoney" @quit="cancel" @on-change="change" @ok="ok"></keyboard>
-      </transition>
+      <!--<transition enter-active-class="animated slideInUp" leave-active-class="animated slideOutDown">-->
+        <!--<keyboard v-if="inputMoney" @quit="cancel" @on-change="change" @ok="ok"></keyboard>-->
+      <!--</transition>-->
     </div>
 </template>
 
@@ -47,7 +47,6 @@
       },
       data () {
         return {
-          inputMoney: false,
           showOption: true,
           showAnswer: false,
           current: '',
@@ -73,7 +72,7 @@
           }) && !this.inputMoney
         },
         ...mapState([
-          'index',
+          'inputNumber',
           'progress',
           'info'
         ])
@@ -81,28 +80,12 @@
       methods: {
         ...mapMutations({
           next: 'next',
-          setIndex: 'setIndex',
-          stopSwiper: 'stopSwiper',
-          useSwiper: 'useSwiper',
+          toggleKeyboard: 'toggleKeyboard',
           addIncome: 'addIncome'
         }),
         input (member) {
           this.current = member.text
-          setTimeout(() => {
-            this.inputMoney = true
-            this.stopSwiper()
-          }, 100)
-        },
-        change (val) {
-          this.memberList.forEach(item => {
-            if (item.text === this.current) {
-              item.value = val
-            }
-          })
-        },
-        ok () {
-          this.inputMoney = false
-          this.useSwiper()
+          this.toggleKeyboard()
         },
         confirm () {
           if (this.btnAbled) {
@@ -111,10 +94,16 @@
             this.addIncome({data: this.memberList})
             this.$emit('fill-height', document.getElementById('options').offsetHeight)
             setTimeout(() => {
+              if (this.progress === 6) {
                 this.next({data: 7})
+              } else {
+                this.next({data: 6})
+              }
             }, 3000)
             setTimeout(() => {
-              this.setIndex({data: this.index + 1})
+              this.next({data: 7})
+            }, 3200)
+            setTimeout(() => {
 //              window.scrollTo(0, document.getElementById('que6').offsetTop + document.getElementById('que6').offsetHeight)
               this.$emit('scroll-to', document.getElementById('que6').offsetTop + document.getElementById('que6').offsetHeight)
             }, 3500)
@@ -125,21 +114,6 @@
           setTimeout(() => {
             this.showOption = true
           }, 1000)
-        },
-        cancel () {
-          if (this.inputMoney) {
-            this.inputMoney = false
-            this.useSwiper()
-            this.memberList.forEach(item => {
-              if (item.text === this.current) {
-                if (this.current === '家庭贷款') {
-                  item.value = '房贷、车贷等'
-                } else {
-                  item.value = '税前收入'
-                }
-              }
-            })
-          }
         }
       },
       mounted () {
@@ -190,6 +164,25 @@
               unit: '万元'
             }
           ]
+        }
+      },
+      watch: {
+        'inputNumber': {
+          handler (newVal) {
+            this.memberList.forEach(item => {
+              if (!newVal) {
+                if (this.current === '家庭贷款') {
+                  item.value = '房贷、车贷等'
+                } else {
+                  item.value = '税前收入'
+                }
+              } else {
+                if (item.text === this.current) {
+                  item.value = newVal
+                }
+              }
+            })
+          }
         }
       }
     }
