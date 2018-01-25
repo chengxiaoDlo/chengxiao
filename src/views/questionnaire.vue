@@ -9,14 +9,14 @@
           <third-ques v-if="progress > 2" @change-height="changeHeight" @fill-height="fillHeight" @scroll-to="scroll"></third-ques>
           <fourth-ques :residence="residence" :city="city" v-if="progress > 3" @change-height="changeHeight" @fill-height="fillHeight" @scroll-to="scroll"></fourth-ques>
           <fifth-ques v-if="progress > 4" @change-height="changeHeight" @fill-height="fillHeight" @scroll-to="scroll"></fifth-ques>
-          <sixth-ques v-if="progress > 5" @focus="focus" @change-height="changeHeight" @fill-height="fillHeight" @scroll-to="scroll"></sixth-ques>
+          <sixth-ques v-if="progress > 5" @change-height="changeHeight" @fill-height="fillHeight" @scroll-to="scroll"></sixth-ques>
           <seventh-ques v-if="progress > 6" @change-height="changeHeight" @fill-height="fillHeight" @scroll-to="scroll"></seventh-ques>
           <generate-report v-if="progress > 7" @change-height="changeHeight" @fill-height="fillHeight"></generate-report>
           <div style="width: 100%;" id="block"></div>
         </div>
       </scroller>
       <transition enter-active-class="animated slideInUp" leave-active-class="animated slideOutDown">
-        <keyboard :value="inputValue" v-if="showKeyBoard" @quit="cancelInput" @on-change="changeInput" @ok="ok"></keyboard>
+        <keyboard v-if="showKeyBoard" @quit="cancelInput" @ok="ok"></keyboard>
       </transition>
       <slide-picker v-if="showAgePicker" :list="chooseList" :col="1" @quit="cancelAge" @confirm="selectedAge" :default="defaultAge"></slide-picker>
       <slide-picker v-if="showCityPicker" :list="cityList" :col="2" @quit="cancelCity" @confirm="selectedCity" ></slide-picker>
@@ -62,8 +62,7 @@ export default {
       blockHeight: '',
       cityList: consts.cityList,
       residence: '',
-      city: '',
-      inputValue: ''
+      city: '河北省石家庄市'
     }
   },
   computed: {
@@ -83,7 +82,6 @@ export default {
       toggleCityPicker: 'toggleCityPicker',
       toggleKeyboard: 'toggleKeyboard',
       setAge: 'setAge',
-      setInputNumber: 'setInputNumber',
       clear: 'clear'
     }),
     changeHeight (val) {
@@ -120,16 +118,10 @@ export default {
       this.city = val.label
       this.toggleCityPicker()
     },
-    changeInput (val) {
-      this.setInputNumber({data: val})
-    },
     ok (val) {
       console.log(33, val)
       this.toggleKeyboard()
-    },
-    focus (val) {
-      this.inputValue = val
-    },
+    }
   },
   created () {
     this.initAgeList()

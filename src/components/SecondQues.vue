@@ -1,5 +1,5 @@
 <template>
-    <div class="second-ques" :class="{'hidden': isModify}" id="que2">
+    <div class="second-ques" :class="{'hidden': isModify && progress <= 2}" id="que2">
       <div v-transfer-dom>
         <x-dialog v-model="showAdd" hide-on-blur>
           <div class="card">
@@ -219,8 +219,8 @@
               this.toggleModify()
             }, 3000)
             setTimeout(() => {
-              this.toggleModify()
               this.$emit('scroll-to', document.getElementById('que2').offsetTop + document.getElementById('que2').offsetHeight)
+              this.toggleModify()
             }, 3500)
           }
 

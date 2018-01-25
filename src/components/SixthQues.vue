@@ -1,5 +1,5 @@
 <template>
-    <div style="overflow: hidden;" id="que6" :class="{'hidden': isModify}">
+    <div style="overflow: hidden;" id="que6" :class="{'hidden': isModify && progress <= 6}">
       <div>
         <question question="玉盘珍馐值万钱，你家收支多少钱？" sub="我们会基于家庭收入及贷款来为您规划合理的保额及保费预" class="animated fadeInLeft">
           <div slot="options">
@@ -80,12 +80,15 @@
           next: 'next',
           toggleKeyboard: 'toggleKeyboard',
           addIncome: 'addIncome',
-          toggleModify: 'toggleModify'
+          toggleModify: 'toggleModify',
+          setInputNumber: 'setInputNumber'
         }),
         input (member) {
           this.current = member.text
           if (member.value !== '税前收入' && member.value !== '房贷、车贷等') {
-            this.$emit('focus', member.value)
+            this.setInputNumber({data: member.value} )
+          } else {
+            this.setInputNumber({data: ''})
           }
           this.toggleKeyboard()
         },

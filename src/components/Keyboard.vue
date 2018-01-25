@@ -36,6 +36,7 @@
 </template>
 
 <script>
+  import { mapState, mapMutations } from 'vuex'
     export default {
       name: "keyboard",
       data () {
@@ -84,40 +85,40 @@
               }
             ]
           },
-          inputNumber: ''
+          value: ''
         }
       },
-      props: {
-        value: {
-          type: String,
-          default: ''
-        }
-      },
+      computed: mapState([
+        'inputNumber'
+      ]),
       methods: {
+        ...mapMutations({
+          setInputNumber: 'setInputNumber'
+        }),
         quit () {
           this.$emit('quit')
         },
         confirm () {
-          this.$emit('ok', this.inputNumber)
+          this.$emit('ok', this.value)
         },
         clickNum (num) {
-          if (this.inputNumber.length < 3) {
-            this.inputNumber += num
+          if (this.value.length < 3) {
+            this.value += num
           }
         },
         del () {
-          console.log(909, this.inputNumber)
-          this.inputNumber = this.inputNumber.substr(0, this.inputNumber.length - 1)
+          console.log(909, this.value)
+          this.value = this.value.substr(0, this.value.length - 1)
         }
       },
       created () {
-        this.value && (this.inputNumber = this.value)
+        this.inputNumber && (this.value = this.inputNumber)
       },
       watch: {
-        'inputNumber': {
+        'value': {
           handler (newVal) {
             console.log(33, newVal)
-            this.$emit('on-change', newVal)
+            this.setInputNumber({data: newVal})
           }
         }
       }

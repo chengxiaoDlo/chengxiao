@@ -1,5 +1,5 @@
 <template>
-  <div id="que3" style="overflow: hidden" :class="{'hidden': isModify}">
+  <div id="que3" style="overflow: hidden" :class="{'hidden': isModify && progress <= 3}">
     <question question="对酒当歌，芳龄几何？" sub="年龄会关乎到保险方案和价格的准确性哦~" class="animated fadeInLeft">
       <div slot="options">
         <transition name="options">
