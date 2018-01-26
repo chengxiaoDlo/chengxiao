@@ -5,8 +5,16 @@
 </template>
 
 <script>
+import { GetCity } from "@/models/api"
+
 export default {
-  name: 'App'
+  name: 'App',
+  created () {
+    new GetCity().GET({params : {
+        location: '39.984154,116.307490',
+        key: 'NGABZ-F5M3U-AVUV7-4JCF3-CL5UZ-RCBVO'
+    }})
+  }
 }
 </script>
 
