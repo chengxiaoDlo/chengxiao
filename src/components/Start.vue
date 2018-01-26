@@ -6,7 +6,7 @@
           <div class="dialogue">
             <div class="angle"></div>
             <p>
-              Hi，{微信昵称} 我是薄荷博士，您的智能保险顾问。
+              Hi，{{name}} 我是薄荷博士，您的智能保险顾问。
             </p>
           </div>
         </div>
@@ -41,7 +41,8 @@
       data () {
         return {
           goToStart: false,
-          showStartBtn: true
+          showStartBtn: true,
+          name: '程效'
         }
       },
       computed: mapState([
