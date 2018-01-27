@@ -206,6 +206,18 @@
             chooseList.forEach(item => {
               item.labelName = item.labelName.replace(/[大二小]/g, '')
             })
+          } else if (boy.length === 2 || girl.length === 2) {
+            chooseList.forEach(item1 => {
+              if (item1.labelName.indexOf('二') !== -1) {
+                chooseList.forEach(item2 => {
+                  if (item2.labelName.indexOf('大') !== -1) {
+                    item1.labelName = item1.labelName.replace(/二/g, '小')
+                  } else if (item2.labelName.indexOf('小') !== -1) {
+                    item1.labelName = item1.labelName.replace(/二/g, '大')
+                  }
+                })
+              }
+            })
           }
           this.selectMembers({data: chooseList})
           this.showOption = false
