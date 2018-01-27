@@ -200,6 +200,13 @@
           let chooseList = this.memberList.filter(item => {
             return item.picked === true
           })
+          let boy = chooseList.filter(item => {return item.label === 'boy'})
+          let girl = chooseList.filter(item => {return item.label === 'girl'})
+          if (boy.length === 1 || girl.length === 1) {
+            chooseList.forEach(item => {
+              item.labelName = item.labelName.replace(/[大二小]/g, '')
+            })
+          }
           this.selectMembers({data: chooseList})
           this.showOption = false
           this.showAnswer = true
@@ -242,7 +249,6 @@
             this.addMem.splice(this.addMem.indexOf(member), 1)
             member.picked = false
           }
-          console.log(444, this.addMem)
         },
         confirmAdd () {
           let sons = this.memberList.filter(item1 => {
