@@ -84,6 +84,7 @@
           this.showAnswer = true
           this.showOption = false
           this.addSmoke({data: this.memberList})
+          console.log(444, this.info)
           this.$emit('fill-height', document.getElementById('options').offsetHeight)
           setTimeout(() => {
             this.next({data: 8})

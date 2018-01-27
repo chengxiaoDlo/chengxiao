@@ -26,6 +26,7 @@ export default new Vuex.Store({
       smoke: false,
       socialSecurity: true,
       income: '',
+      familyIncome: 0,
       familyDebt: '',
       family: []
     },

@@ -1,11 +1,12 @@
+
+
 export default {
   getLocation () {
     let config
     let wechatSignApi = ''
     let [lat, lon] = ['', '']
-    let scriptElement = document.createElement('script')
-    scriptElement.setAttribute('src', 'http://res.wx.qq.com/open/js/jweixin-1.2.0.js')
-    scriptElement.onload = function () {
+
+
       let xhr = new XMLHttpRequest()
       xhr.open('post', wechatSignApi)
       xhr.setRequestHeader('Content-Type', 'application/json')
@@ -17,8 +18,7 @@ export default {
             wx.ready(function () {
               wx.checkJsApi({
                 jsApiList: [
-                  'getLocation',
-                  'openLocation'
+                  'getLocation'
                 ],
                 success: function (res) {
                   if (!res.checkResult.getLocation) {
@@ -40,6 +40,5 @@ export default {
       }
       xhr.send()
       return {lat, lon}
-    }
   }
 }

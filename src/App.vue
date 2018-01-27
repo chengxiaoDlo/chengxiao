@@ -9,11 +9,23 @@ import { GetCity } from "@/models/api"
 
 export default {
   name: 'App',
+  methods: {
+    initWx () {
+      wx.config()
+      wx.ready()
+    }
+  },
   created () {
-    new GetCity().GET({params : {
-        location: '39.984154,116.307490',
-        key: 'NGABZ-F5M3U-AVUV7-4JCF3-CL5UZ-RCBVO'
-    }})
+    console.log(990, wx)
+    this.$jsonp('http://apis.map.qq.com/ws/geocoder/v1/', {
+      output: 'jsonp',
+      location: '39.984154,116.307490',
+      key: 'NGABZ-F5M3U-AVUV7-4JCF3-CL5UZ-RCBVO'
+    }).then(data => {
+      console.log(44444, data)
+    }).catch(err => {
+      console.log(err)
+    })
   }
 }
 </script>

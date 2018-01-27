@@ -27,13 +27,14 @@
         </div>
       </div>
       <question question="完成！立即开启风险测评报告！" v-if="percent3 === 100" class="animated fadeInLeft"></question>
-      <div class="btn animated fadeIn" v-if="showBtn"></div>
+      <div class="btn animated fadeIn" v-if="showBtn" @click="submit"></div>
     </div>
 </template>
 
 <script>
   import Question from '@/components/Question'
   import { XProgress, XCircle } from 'vux'
+  import { mapState } from 'vuex'
     export default {
       name: "generate-report",
       components: {
@@ -46,19 +47,65 @@
           percent1: 0,
           percent2: 0,
           percent3: 0,
-          showBtn: false
+          showBtn: false,
+          json: {}
         }
       },
       computed: {
         percent () {
           return (this.percent1 + this.percent2 + this.percent3) / 3
         },
+        ...mapState([
+          'info'
+        ])
+      },
+      methods: {
+        formatJson () {
+          this.json.familyDebt = this.info.familyDebt
+          this.json.familyIncome = this.info.familyIncome
+          this.json.members = [{
+            age: this.info.age,
+            gender: this.info.sex,
+            hasSocialInsurance: this.info.socialSecurity ? 1 : 0,
+            income: this.info.income,
+            label: 'self',
+            labelName: '本人',
+            memberType: 1,
+            residence: this.info.residence,
+            isSmoking: this.info.isSmoking
+          }]
+          this.info.family.forEach(item => {
+            if (item.label !== 'dog') {
+              this.json.members.push({
+                age: item.age ? item.age : '',
+                gender: item.gender,
+                hasSocialInsurance: item.hasSocialInsurance ? item.hasSocialInsurance : '',
+                income: item.income ? item.income : '',
+                label: item.label,
+                labelName: item.labelName,
+                memberType: item.memberType,
+                residence: item.residence,
+                isSmoking: item.isSmoking ? item.isSmoking : ''
+              })
+            } else {
+              this.json.members.push({
+                label: item.label,
+                labelName: item.labelName,
+                memberType: item.memberType
+              })
+            }
+          })
+        },
+        submit () {
+          console.log(555, this.json)
+        }
       },
       mounted () {
         // document.getElementById('ge').style.minHeight = document.documentElement.clientHeight + 'px'
         this.$emit('change-height', document.documentElement.clientHeight - document.getElementById('que7').offsetHeight)
       },
       created () {
+        this.formatJson()
         let t1 = setInterval(() => {
           this.percent1++
           if (this.percent1 === 100) {

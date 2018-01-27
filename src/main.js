@@ -6,7 +6,10 @@ import router from './router'
 import store from './store'
 import 'animate.css'
 import VueScroller from 'vue-scroller'
+import VueJsonp from 'vue-jsonp'
+
 Vue.use(VueScroller)
+Vue.use(VueJsonp)
 
 Vue.config.productionTip = false
 
@@ -18,4 +21,5 @@ new Vue({
   components: { App },
   template: '<App/>'
 })
+
 

@@ -68,19 +68,24 @@ export default {
   [types.ADD_INCOME] (state, payload) {
     payload.data.forEach(item1 => {
       if (item1.tag === 'debt') {
-        state.info.familyDebt = item1.value === '房贷、车贷等' ? 0 : item1.value
+        state.info.familyDebt = item1.value === '房贷、车贷等' ? 0 : parseInt(item1.value)
       } else if (item1.tag === 'me') {
-        state.info.income = item1.value
-        state.info.familyIncome += item1.value
+        state.info.income = parseInt(item1.value)
       } else if (item1.tag === 'spouse') {
         state.info.family.forEach(item2 => {
           if (item2.labelName === '配偶') {
-            item2.income = item1.value
-            state.info.familyIncome += item2.value
+            item2.income = parseInt(item1.value)
           }
         })
       }
     })
+    let familyIncome = 0
+    payload.data.filter(item => {
+      return item.value !== '房贷、车贷等'
+    }).forEach(item => {
+      familyIncome += parseInt(item.value)
+    })
+    state.info.familyIncome = familyIncome
   },
   [types.ADD_SMOKE] (state, payload) {
     payload.data.forEach(item1 => {
