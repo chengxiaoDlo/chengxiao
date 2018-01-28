@@ -140,7 +140,7 @@ export default {
           return item.labelName
         })
         if ((members.indexOf('爸爸') !== -1 || members.indexOf('妈妈') !== -1 || members.indexOf('配偶妈妈') !== -1 || members.indexOf('配偶爸爸') !== -1) &&
-          (members.indexOf('儿子') !== -1 || members.indexOf('女儿') !== -1)) {
+          (members.some(item => { return /\w*[儿子|女儿]/.test(item)}) )) {
           let arr = origin.filter(item => {
             return (item.labelName !== '爸爸' && item.labelName !== '妈妈' && item.labelName !== '配偶爸爸' && item.labelName !== '配偶妈妈')
           })
