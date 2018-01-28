@@ -15,6 +15,15 @@ const webpackConfig = {
   entry: {
     app: './src/main.js'
   },
+  externals: {
+    vue: 'Vue',
+    'vue-router': 'VueRouter',
+    // 'element-ui': 'ElementUI',
+    'mint-ui': 'MINT',
+    axios:'axios',
+    echarts:'echarts',
+    jquery:'jQuery'
+  },
   output: {
     path: config.build.assetsRoot,
     filename: '[name].js',

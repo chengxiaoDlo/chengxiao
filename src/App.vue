@@ -71,29 +71,29 @@ body:before {
   background-position-y: 3rem;
   background-attachment: fixed;
 }
-  @media screen and (min-width: 320px) {
-    html {
-      font-size: 25.6px;
-    }
-  }
-  @media screen and (min-width: 360px) {
-    html {
-      font-size: 28.5px;
-    }
-  }
-  @media screen and (min-width: 375px) {
-    html {
-      font-size: 30px;
-    }
-  }
-  @media screen and (min-width: 410px) {
-    html {
-      font-size: 32px;
-    }
-  }
-  @media screen and (min-width: 480px) {
-    html {
-      font-size: 38.4px;
-    };
-  }
+  /*@media screen and (min-width: 320px) {*/
+    /*html {*/
+      /*font-size: 25.6px;*/
+    /*}*/
+  /*}*/
+  /*@media screen and (min-width: 360px) {*/
+    /*html {*/
+      /*font-size: 28.5px;*/
+    /*}*/
+  /*}*/
+  /*@media screen and (min-width: 375px) {*/
+    /*html {*/
+      /*font-size: 30px !important;*/
+    /*}*/
+  /*}*/
+  /*@media screen and (min-width: 410px) {*/
+    /*html {*/
+      /*font-size: 32px;*/
+    /*}*/
+  /*}*/
+  /*@media screen and (min-width: 480px) {*/
+    /*html {*/
+      /*font-size: 38.4px;*/
+    /*};*/
+  /*}*/
 </style>

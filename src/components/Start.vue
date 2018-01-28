@@ -115,7 +115,7 @@
   .row-without-avatar {
     margin-top: 0.67rem;
     margin-left: 1.5rem;
-    animation-delay: 2s;
+    animation-delay: 3s;
     overflow: hidden;
     .dialogue {
       background: #ffffff;

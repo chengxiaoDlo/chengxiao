@@ -61,6 +61,7 @@
       methods: {
         submit () {
           console.log(555, this.json)
+          this.$router.push('baogao')
         }
       },
       mounted () {

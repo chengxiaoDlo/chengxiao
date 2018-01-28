@@ -131,6 +131,8 @@ export default {
 </script>
 
 <style type="text/scss" lang="scss">
+  @import "../styles/common";
+  @import "../../static/css/font.css";
   .questionnaire {
     height: 100%;
   }
