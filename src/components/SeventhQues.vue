@@ -53,7 +53,8 @@
               class: 'wife',
               smoke: false
             }
-          ]
+          ],
+          json: {}
         }
       },
       computed: {
@@ -73,6 +74,42 @@
           next: 'next',
           addSmoke: 'addSmoke'
         }),
+        formatJson () {
+          this.json.familyDebt = this.info.familyDebt
+          this.json.familyIncome = this.info.familyIncome
+          this.json.members = [{
+            age: this.info.age,
+            gender: this.info.sex,
+            hasSocialInsurance: this.info.socialSecurity ? 1 : 0,
+            income: this.info.income,
+            label: 'self',
+            labelName: '本人',
+            memberType: 1,
+            residence: this.info.residence,
+            isSmoking: this.info.isSmoking
+          }]
+          this.info.family.forEach(item => {
+            if (item.label !== 'dog') {
+              this.json.members.push({
+                age: item.age ? item.age : '',
+                gender: item.gender,
+                hasSocialInsurance: item.hasSocialInsurance ? item.hasSocialInsurance : '',
+                income: item.income ? item.income : '',
+                label: item.label,
+                labelName: item.labelName,
+                memberType: item.memberType,
+                residence: item.residence,
+                isSmoking: item.isSmoking ? item.isSmoking : ''
+              })
+            } else {
+              this.json.members.push({
+                label: item.label,
+                labelName: item.labelName,
+                memberType: item.memberType
+              })
+            }
+          })
+        },
         isSomker (is, member) {
           if (is === 'y') {
             member.smoke = true
@@ -84,7 +121,8 @@
           this.showAnswer = true
           this.showOption = false
           this.addSmoke({data: this.memberList})
-          console.log(444, this.info)
+          this.formatJson()
+          console.log(444, this.json)
           this.$emit('fill-height', document.getElementById('options').offsetHeight)
           setTimeout(() => {
             this.next({data: 8})

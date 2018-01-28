@@ -9,19 +9,19 @@
           <div class="step">
             <div class="text">家庭成员分析</div>
             <div class="state" :class="{'animated fadeIn done': percent1 === 100}">
-              <x-circle :percent="percent1" :stroke-width="10" stroke-color="#04BE02" v-if="percent1 !== 100"></x-circle>
+              <x-circle :percent="percent1" :stroke-width="10" stroke-color="#F15D4C" v-if="percent1 !== 100"></x-circle>
             </div>
           </div>
           <div class="step">
             <div class="text">保险配置建模</div>
             <div class="state" :class="{'animated fadeIn done': percent2 === 100}">
-              <x-circle :percent="percent2" :stroke-width="10" stroke-color="#04BE02" v-if="percent2 !== 100"></x-circle>
+              <x-circle :percent="percent2" :stroke-width="10" stroke-color="#F15D4C" v-if="percent2 !== 100"></x-circle>
             </div>
           </div>
           <div class="step">
             <div class="text">条款费率筛选</div>
             <div class="state" :class="{'animated fadeIn done': percent3 === 100}">
-              <x-circle :percent="percent3" :stroke-width="10" stroke-color="#04BE02" v-if="percent3 !== 100"></x-circle>
+              <x-circle :percent="percent3" :stroke-width="10" stroke-color="#F15D4C" v-if="percent3 !== 100"></x-circle>
             </div>
           </div>
         </div>
@@ -48,7 +48,6 @@
           percent2: 0,
           percent3: 0,
           showBtn: false,
-          json: {}
         }
       },
       computed: {
@@ -60,42 +59,6 @@
         ])
       },
       methods: {
-        formatJson () {
-          this.json.familyDebt = this.info.familyDebt
-          this.json.familyIncome = this.info.familyIncome
-          this.json.members = [{
-            age: this.info.age,
-            gender: this.info.sex,
-            hasSocialInsurance: this.info.socialSecurity ? 1 : 0,
-            income: this.info.income,
-            label: 'self',
-            labelName: '本人',
-            memberType: 1,
-            residence: this.info.residence,
-            isSmoking: this.info.isSmoking
-          }]
-          this.info.family.forEach(item => {
-            if (item.label !== 'dog') {
-              this.json.members.push({
-                age: item.age ? item.age : '',
-                gender: item.gender,
-                hasSocialInsurance: item.hasSocialInsurance ? item.hasSocialInsurance : '',
-                income: item.income ? item.income : '',
-                label: item.label,
-                labelName: item.labelName,
-                memberType: item.memberType,
-                residence: item.residence,
-                isSmoking: item.isSmoking ? item.isSmoking : ''
-              })
-            } else {
-              this.json.members.push({
-                label: item.label,
-                labelName: item.labelName,
-                memberType: item.memberType
-              })
-            }
-          })
-        },
         submit () {
           console.log(555, this.json)
         }
@@ -105,7 +68,6 @@
         this.$emit('change-height', document.documentElement.clientHeight - document.getElementById('que7').offsetHeight)
       },
       created () {
-        this.formatJson()
         let t1 = setInterval(() => {
           this.percent1++
           if (this.percent1 === 100) {
