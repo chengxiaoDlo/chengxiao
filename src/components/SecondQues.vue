@@ -16,7 +16,7 @@
           </div>
         </x-dialog>
       </div>
-      <question question="但愿人长久，家里有几口？" sub="我们会基于您的家庭结构和成员情况，考虑每个人的保障~" class="animated fadeInLeft">
+      <question question="但愿人长久，家里有几口？" sub="我们会基于你的家庭结构和成员情况，考虑每个人的保障~" class="animated fadeInLeft">
         <div slot="options" >
           <transition name="options">
             <div v-if="showOption" id="options">
@@ -44,7 +44,7 @@
         </div>
       </question>
       <transition enter-active-class="animated fadeInRight" leave-active-class="animated fadeOutRight">
-        <answer :text="answerText" v-if="showAnswer" @modify="modify" modifiable></answer>
+        <answer :textList="answerText" v-if="showAnswer" @modify="modify" modifiable wrap></answer>
       </transition>
     </div>
 </template>
@@ -153,14 +153,12 @@
       },
       computed: {
         answerText () {
-          let labelName = '本人'
           let choosed = this.memberList.filter(item => {
             return item.picked === true
           })
-          choosed.forEach(item => {
-              labelName += '、' + item.labelName
-          })
-          return labelName
+          return ['本人', ...choosed.map(item => {
+            return item.labelName
+          })]
         },
         ...mapState([
           'progress',
@@ -408,23 +406,23 @@
 .que2 {
   display: flex;
   flex-wrap: wrap;
-  padding-bottom: 2.5rem;
+  padding-bottom: 150px;
   .option {
     flex-basis: 33.3%;
     .family {
-      width: 2rem;
-      height: 2rem;
+      width: 120px;
+      height: 120px;
       border-radius: 50%;
-      margin: 0.1rem auto;
+      margin: 6px auto;
       position: relative;
       .pick {
-        width: 1rem;
-        height: 1rem;
+        width: 60px;
+        height: 60px;
         background: url("../assets/images/pick.png") no-repeat;
         background-size: 100%;
         position: absolute;
         bottom: 0;
-        right: -0.4rem;
+        right: -24px;
       }
     }
     .add {
@@ -434,24 +432,24 @@
     .confirm {
       background: url("../assets/images/confirm-btn.png") no-repeat;
       background-size: 100%;
-      width: 5rem;
-      height: 3rem;
-      margin-top: -2rem;
-      margin-left: 4.5rem;
+      width: 300px;
+      height: 180px;
+      margin-top: -120px;
+      margin-left: 4.300px;
     }
     .member {
       text-align: center;
-      font-size: 0.5rem;
+      font-size: 30px;
     }
   }
 }
 .confirm {
   background: url("../assets/images/confirm-btn.png") no-repeat;
   background-size: 100%;
-  width: 5rem;
-  height: 3rem;
-  margin-top: -2rem;
-  margin-left: 4.5rem;
+  width: 300px;
+  height: 180px;
+  margin-top: -120px;
+  margin-left: 270px;
 }
   .options-enter-active {
     -webkit-animation: fade 2s reverse;
@@ -476,53 +474,53 @@
   }
 .card {
   background: #ffffff;
-  width: 9.27rem;
+  width: 556px;
   margin: 0 auto;
-  border-radius: 5px;
-  padding-top: 1.23rem;
-  padding-bottom: 3rem;
+  border-radius: 10px;
+  padding-top: 73.8px;
+  padding-bottom: 180px;
   .title {
-    font-size: 0.5rem;
+    font-size: 30px;
     width: 100%;
     text-align: center;
   }
   .add-options {
     display: flex;
     flex-wrap: wrap;
-    margin-top: 1rem;
+    margin-top: 60px;
     .option {
       flex-basis: 50%;
-      margin-bottom: 0.5rem;
-      font-size: 0.5rem;
+      margin-bottom: 30px;
+      font-size: 30px;
       .family {
-        width: 2rem;
-        height: 2rem;
+        width: 120px;
+        height: 120px;
         border-radius: 50%;
-        margin: 0.1rem auto;
+        margin: 6px auto;
         position: relative;
         .pick {
-          width: 1rem;
-          height: 1rem;
+          width: 60px;
+          height: 60px;
           background: url("../assets/images/pick.png") no-repeat;
           background-size: 100%;
           position: absolute;
           bottom: 0;
-          right: -0.4rem;
+          right: -24px;
         }
       }
       .member {
         text-align: center;
-        font-size: 0.5rem;
+        font-size: 30px;
       }
     }
   }
   .btn {
-    width: 5rem;
-    height: 2.73rem;
+    width: 300px;
+    height: 164px;
     background: url("../assets/images/confirm-btn.png") no-repeat;
     background-size: 100%;
-    margin-bottom: -3.8rem;
-    margin-left: 2.3rem;
+    margin-bottom: -288px;
+    margin-left: 138px;
   }
 }
 

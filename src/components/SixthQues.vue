@@ -1,7 +1,7 @@
 <template>
     <div style="overflow: hidden;" id="que6" :class="{'hidden': isModify && progress <= 6}">
-      <div>
-        <question question="玉盘珍馐值万钱，你家收支多少钱？" sub="我们会基于家庭收入及贷款来为您规划合理的保额及保费预" class="animated fadeInLeft">
+      <div @click="cancel">
+        <question question="玉盘珍馐值万钱，你家收支多少钱？" sub="我们会基于家庭收入及贷款来为你规划合理的保额及保费预算" class="animated fadeInLeft">
           <div slot="options">
             <transition name="options">
               <div v-if="showOption" id="options">
@@ -72,7 +72,8 @@
           'inputNumber',
           'progress',
           'info',
-          'isModify'
+          'isModify',
+          'showKeyBoard'
         ])
       },
       methods: {
@@ -81,7 +82,7 @@
           toggleKeyboard: 'toggleKeyboard',
           addIncome: 'addIncome',
           toggleModify: 'toggleModify',
-          setInputNumber: 'setInputNumber'
+          setInputNumber: 'setInputNumber',
         }),
         input (member) {
           this.current = member.text
@@ -90,7 +91,9 @@
           } else {
             this.setInputNumber({data: ''})
           }
-          this.toggleKeyboard()
+          setTimeout(() => {
+            this.toggleKeyboard()
+          }, 200)
         },
         confirm () {
           if (this.btnAbled) {
@@ -123,6 +126,10 @@
           setTimeout(() => {
             this.showOption = true
           }, 1000)
+        },
+        cancel () {
+          console.log('cancel')
+          this.showKeyBoard && (this.toggleKeyboard())
         }
       },
       mounted () {
@@ -203,22 +210,22 @@
   @import "../styles/common";
   @import "../styles/animation";
   .que3 {
-    padding-top: 0.5rem;
-    padding-bottom: 2.5rem;
+    padding-top: 30px;
+    padding-bottom: 150px;
     .age {
       display: flex;
       justify-content: flex-start;
       align-content: center;
       width: 100%;
-      padding-left: 1rem;
-      margin-bottom: 0.6rem;
+      padding-left: 60px;
+      margin-bottom: 36px;
       .avatar {
-        flex-basis: 2.7rem;
+        flex-basis: 162px;
         text-align: center;
       }
       .member {
-        width: 1.53rem;
-        height: 1.53rem;
+        width: 92px;
+        height: 92px;
         margin: 0 auto;
       }
       .me {
@@ -234,24 +241,24 @@
         background-size: 100%;
       }
       .member-age {
-        width: 3.67rem;
-        height: 1rem;
+        width: 220px;
+        height: 60px;
         border-radius: 30px;
-        border:solid 1px;
-        font-size: 0.47rem;
+        border:solid 2px;
+        font-size: 28px;
         text-align: center;
-        line-height: 1rem;
-        margin-top: 0.15rem;
+        line-height: 60px;
+        margin-top: 9px;
         color: rgb(126, 126, 126);
       }
       .member-text {
-        font-size: 0.5rem;
-        padding-left: 0.25rem;
+        font-size: 30px;
+        padding-left: 15px;
       }
       .unit {
-        font-size: 0.47rem;
-        margin-top: 0.37rem;
-        margin-left: 0.2rem;
+        font-size: 28px;
+        margin-top: 22px;
+        margin-left: 12px;
       }
     }
   }

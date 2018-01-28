@@ -125,6 +125,11 @@ export default {
   },
   [types.CLEAR] (state) {
     state.selectedAge = ''
+  },
+  [types.SET_CITY] (state, payload) {
+    console.log('city', payload)
+    state.city.name = payload.data.name
+    state.city.value = payload.data.value
   }
 }
 

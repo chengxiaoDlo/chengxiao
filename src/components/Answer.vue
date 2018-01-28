@@ -1,9 +1,9 @@
 <template>
-  <div class="answer">
+  <div class="answer" :class="{'need-padding': wrap}">
     <div class="modify" @click="modify" v-if="modifiable"></div>
-    <p v-if="!wrap">{{text}}</p>
+    <p class="unwrap" v-if="!wrap">{{text}}</p>
     <div v-if="wrap" v-for="row in textList">
-      <p>{{row}}</p>
+      <p class="wrap">{{row}}</p>
     </div>
     <div class="angle"></div>
   </div>
@@ -42,32 +42,42 @@
   background: linear-gradient(left, rgb(246, 225, 90), rgb(244, 208, 70));
   background: -webkit-gradient(linear, left top, right top, from(#f6e15a), to(#f4d046));
   float: right;
-  line-height: 1.6rem;
-  max-width: 6rem;
-  padding: 0 0.67rem;
-  margin-right: 0.82rem;
+  max-width: 360px;
+  padding: 0 40px;
+  margin-right: 49.2px;
   color: rgb(122, 103, 90);
-  margin-top: 1rem;
+  margin-top: 60px;
   position: relative;
-  border-radius: 5px;
+  border-radius: 10px;
   border-top-right-radius: 0;
+  .unwrap {
+    line-height: 96px;
+  }
+  .wrap {
+    line-height: 67.5px;
+  }
   .modify {
-    width: 1.3rem;
-    height: 1.3rem;
+    width: 78px;
+    height: 78px;
     background: url("../assets/images/modify.png") no-repeat;
     background-size: 100%;
     position: absolute;
-    top: -0.4rem;
-    left: -0.7rem;
+    top: -24px;
+    left: -42px;
   }
   .angle {
     background: url("../assets/images/ans-angle.png") no-repeat;
     background-size: 100%;
-    width: 0.4rem;
-    height: 1rem;
+    width: 24px;
+    height: 60px;
     position: absolute;
     top: 0;
-    right: -0.4rem;
+    right: -24px;
   }
 }
+  .need-padding {
+    padding-top: 22.5px;
+    padding-bottom: 22.5px;
+  }
+
 </style>

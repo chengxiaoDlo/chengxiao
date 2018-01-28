@@ -59,44 +59,44 @@
 
 <style type="text/scss" lang="scss" scoped>
 .question {
-  margin-top: 1rem;
-  margin-left: 0.27rem;
+  margin-top: 60px;
+  margin-left: 16px;
   .first-line {
     display: flex;
     .avatar {
-      height: 1.5rem;
-      width: 1.5rem;
+      height: 90px;
+      width: 90px;
       background: url("../assets/images/avatar.png") no-repeat;
       background-size: 100%;
-      margin-top: 0.1rem;
+      margin-top: 0.60px;
     }
     .dialogue {
-      width: 10.34rem;
+      width: 620px;
       box-sizing: border-box;
       position: relative;
       background: #ffffff;
-      padding: 0.3rem 1rem;
-      padding-right: 0.5rem;
+      padding: 18px 60px;
+      padding-right: 30px;
       word-wrap: break-word;
       border-radius: 0;
-      border-top-right-radius: 5px;
+      border-top-right-radius: 10px;
       .angle {
         background: url("../assets/images/ques-angle.png") no-repeat;
         background-size: 100%;
-        width: 0.4rem;
-        height: 1rem;
+        width: 24px;
+        height: 60px;
         position: absolute;
         top: 0;
-        left: -0.4rem;
+        left: -24px;
       }
       .subtitle {
-        font-size: 0.47rem;
+        font-size: 28px;
         color: #c3c3c3;
       }
     }
     .done {
-      border-bottom-left-radius: 5px;
-      border-bottom-right-radius: 5px;
+      border-bottom-left-radius: 10px;
+      border-bottom-right-radius: 10px;
     }
   }
 }

@@ -31,8 +31,9 @@
   import Question from '@/components/Question'
   import Answer from '@/components/Answer'
   import { mapState, mapMutations } from 'vuex'
+  import { Submit } from '@/models/api'
 
-    export default {
+  export default {
       name: "seventh-ques",
       components: {
         Question,
@@ -78,7 +79,7 @@
           this.json.familyDebt = this.info.familyDebt
           this.json.familyIncome = this.info.familyIncome
           this.json.members = [{
-            age: this.info.age,
+            age: parseInt(this.info.age),
             gender: this.info.sex,
             hasSocialInsurance: this.info.socialSecurity ? 1 : 0,
             income: this.info.income,
@@ -86,20 +87,20 @@
             labelName: '本人',
             memberType: 1,
             residence: this.info.residence,
-            isSmoking: this.info.isSmoking
+            isSmoking: this.info.isSmoking ? 1: 0
           }]
           this.info.family.forEach(item => {
             if (item.label !== 'dog') {
               this.json.members.push({
-                age: item.age ? item.age : '',
+                age: item.age ? parseInt(item.age ) : '',
                 gender: item.gender,
-                hasSocialInsurance: item.hasSocialInsurance ? item.hasSocialInsurance : '',
+                hasSocialInsurance: item.hasSocialInsurance ? 1 : 0,
                 income: item.income ? item.income : '',
                 label: item.label,
                 labelName: item.labelName,
                 memberType: item.memberType,
                 residence: item.residence,
-                isSmoking: item.isSmoking ? item.isSmoking : ''
+                isSmoking: item.isSmoking ? 1 : 0
               })
             } else {
               this.json.members.push({
@@ -123,6 +124,13 @@
           this.addSmoke({data: this.memberList})
           this.formatJson()
           console.log(444, this.json)
+          new Submit().POST({data: this.json})
+            .then((res) => {
+              console.log(555, res)
+            })
+            .catch(err => {
+              console.log(666, err)
+            })
           this.$emit('fill-height', document.getElementById('options').offsetHeight)
           setTimeout(() => {
             this.next({data: 8})
@@ -177,18 +185,18 @@
   @import "../styles/animation";
   @import "../styles/common";
   .que7 {
-    padding-top: 0.5rem;
-    padding-bottom: 2.5rem;
+    padding-top: 30px;
+    padding-bottom: 150px;
     .age {
       display: flex;
       justify-content: center;
       align-content: center;
       width: 100%;
-      margin-bottom: 0.6rem;
+      margin-bottom: 36px;
       .member {
-        width: 1.53rem;
-        height: 1.53rem;
-        margin-right: 0.8rem;
+        width: 92px;
+        height: 92px;
+        margin-right: 48px;
       }
       .me {
         background: url("../assets/images/dad.png") no-repeat;
@@ -203,15 +211,15 @@
         background-size: 100%;
       }
       .member-security {
-        width: 2.5rem;
-        height: 1rem;
+        width: 150px;
+        height: 60px;
         border-radius: 30px;
-        border:solid 1px;
-        font-size: 0.5rem;
+        border:solid 2px;
+        font-size: 30px;
         text-align: center;
-        line-height: 1rem;
-        margin-top: 0.15rem;
-        margin-right: 0.3rem;
+        line-height: 60px;
+        margin-top: 9px;
+        margin-right: 18px;
         color: rgb(126, 126, 126);
       }
       .qicked {
@@ -219,8 +227,8 @@
         color: rgb(252, 216, 75);
       }
       .member-text {
-        font-size: 0.5rem;
-        padding-left: 0.25rem;
+        font-size: 30px;
+        padding-left: 15px;
       }
     }
   }

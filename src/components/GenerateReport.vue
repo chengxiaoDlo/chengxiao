@@ -7,19 +7,19 @@
         </div>
         <div class="list">
           <div class="step">
-            <div class="text">家庭成员分析</div>
+            <div class="text">分析家庭成员</div>
             <div class="state" :class="{'animated fadeIn done': percent1 === 100}">
               <x-circle :percent="percent1" :stroke-width="10" stroke-color="#F15D4C" v-if="percent1 !== 100"></x-circle>
             </div>
           </div>
           <div class="step">
-            <div class="text">保险配置建模</div>
+            <div class="text">生成保险配置</div>
             <div class="state" :class="{'animated fadeIn done': percent2 === 100}">
               <x-circle :percent="percent2" :stroke-width="10" stroke-color="#F15D4C" v-if="percent2 !== 100"></x-circle>
             </div>
           </div>
           <div class="step">
-            <div class="text">条款费率筛选</div>
+            <div class="text">筛选条款费率</div>
             <div class="state" :class="{'animated fadeIn done': percent3 === 100}">
               <x-circle :percent="percent3" :stroke-width="10" stroke-color="#F15D4C" v-if="percent3 !== 100"></x-circle>
             </div>
@@ -97,34 +97,34 @@
 <style type="text/scss" lang="scss" scoped>
 .generate {
   .card {
-    width: 11.5rem;
+    width: 690px;
     background: #ffffff;
-    margin: 1rem auto;
-    padding-top: 0.8rem;
+    margin: 60px auto;
+    padding-top: 48px;
     border-radius: 5px;
-    padding-bottom: 1.4rem;
+    padding-bottom: 84px;
     .title {
       width: 100%;
       text-align: center;
-      font-size: 0.57rem;
+      font-size: 34px;
     }
     .flow {
-      margin: 1rem auto;
-      width: 9.6rem;
+      margin: 60px auto;
+      width: 576px;
     }
     .list {
-      padding-left: 1rem;
-      padding-right: 1rem;
+      padding-left: 60px;
+      padding-right: 60px;
       .step {
-        font-size: 0.5rem;
-        margin-bottom: 0.5rem;
+        font-size: 30px;
+        margin-bottom: 30px;
         display: flex;
         align-items: center;
         justify-content: space-between;
       }
       .state {
-        width: 0.67rem;
-        height: 0.67rem;
+        width: 40px;
+        height: 40px;
       }
       .done {
         background: url("../assets/images/pick.png") no-repeat;
@@ -133,11 +133,11 @@
     }
   }
   .btn {
-    width: 6.87rem;
-    height: 2.73rem;
+    width: 412px;
+    height: 164px;
     background: url("../assets/images/get-report.png") no-repeat;
     background-size: 100%;
-    margin: 1rem auto;
+    margin: 60px auto;
   }
   .fadeInLeft {
     animation-delay: 1s;

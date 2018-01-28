@@ -102,7 +102,7 @@
           this.$emit('ok', this.value)
         },
         clickNum (num) {
-          if (this.value.length < 3) {
+          if (this.value.length < 4) {
             this.value += num
           }
         },
@@ -128,54 +128,54 @@
 <style type="text/scss" lang="scss" scoped>
 .keyboard {
   width: 100%;
-  height: 8.67rem;
+  height: 520px;
   position: fixed;
   bottom: 0;
   background: rgba(210, 213, 219, 0.9);
   overflow: hidden;
   header {
-    height: 1.5rem;
-    line-height: 1.5rem;
-    padding: 0 0.5rem;
+    height: 90px;
+    line-height: 90px;
+    padding: 0 30px;
     display: flex;
     justify-content: space-between;
     background: linear-gradient(left, rgb(250, 234, 124), rgb(244, 208, 70));
     background: -webkit-gradient(linear, left top, right top, from(#f6e15a), to(#f4d046));
     span {
-      font-size: 0.5rem;
+      font-size: 30px;
       color: rgb(122, 103, 90)
     }
   }
   .keys {
-    height: 7.17rem;
+    height: 430px;
     display: flex;
     flex-direction: column;
     justify-content: center;
     .num-line {
       display: flex;
       justify-content: center;
-      margin-top: 0.2rem;
+      margin-top: 12px;
       .key {
-        flex-basis: 3.9rem;
-        margin-left: 0.2rem;
-        height: 1.5rem;
+        flex-basis: 234px;
+        margin-left: 12px;
+        height: 90px;
         text-align: center;
         background: #ffffff;
         border-radius: 10px;
         .num {
-          font-size: 0.83rem;
-          line-height: 1rem;
+          font-size: 40px;
+          line-height: 60px;
         }
         .sp {
-          line-height: 1.5rem;
+          line-height: 90px;
         }
         .abc {
-          font-size: 0.33rem;
+          font-size: 20px;
         }
       }
     }
     .right {
-      margin-right: 0.2rem;
+      margin-right: 12px;
     }
     .last {
       justify-content: flex-end;
@@ -186,8 +186,8 @@
       justify-content: center;
       align-items: center;
       .icon {
-        height: 0.6rem;
-        width: 0.83rem;
+        height: 36px;
+        width: 40px;
         background: url("../assets/images/del.png") no-repeat;
         background-size: 100%;
       }

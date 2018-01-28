@@ -20,6 +20,7 @@ export default {
   SET_DEFAULT_AGE: 'setDefaultAge',
   SET_AGE: 'setAge',
   SET_INPUT_NUMBER: 'setInputNumber',
+  SET_CITY: 'setCity',
   TOGGLE_MODIFY: 'toggleModify',
   CLEAR: 'clear'
 }

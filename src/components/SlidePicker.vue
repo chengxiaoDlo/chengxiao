@@ -52,22 +52,22 @@
 <style type="text/scss" lang="scss" scoped>
   .picker {
     width: 100%;
-    height: 8rem;
+    height: 480px;
     position: fixed;
     background: #ffffff;
     bottom: 0;
     overflow: hidden;
     z-index: 100;
     header {
-      height: 1.5rem;
-      line-height: 1.5rem;
-      padding: 0 0.5rem;
+      height: 90px;
+      line-height: 90px;
+      padding: 0 30px;
       display: flex;
       justify-content: space-between;
       background: linear-gradient(left, rgb(250, 234, 124), rgb(244, 208, 70));
       background: -webkit-gradient(linear, left top, right top, from(#f6e15a), to(#f4d046));
       span {
-        font-size: 0.5rem;
+        font-size: 30px;
         color: rgb(122, 103, 90)
       }
     }

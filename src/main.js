@@ -13,9 +13,9 @@ import Bus from './bus'
 import echarts from 'echarts'
 import Picker from 'mint-ui'
 import ElementUI from 'element-ui'
-// import 'lib-flexible/flexible.js'
+import 'lib-flexible/flexible.js'
 import 'element-ui/lib/theme-chalk/index.css'
-import domain from './domain.js';
+import domain from './domain.js'
 import '../static/index.css'
 
 
@@ -152,7 +152,7 @@ Vue.prototype.auth = function() {
   if(userId == undefined && codeisOn<0){
     //  console.info("来到了第一步");
     var redirectUrl = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx8b581378855cb9ba&redirect_uri=https%3a%2f%2fweixin.mintbao.com"+docUrl.replace("#","%23").replace(new RegExp("/","gm"),"%2f")+"&response_type=code&scope=snsapi_userinfo#wechat_redirect";
-    window.location.href = redirectUrl;
+    // window.location.href = redirectUrl;
   }
   // userId不存在、code存在，则说明已经获取了用户授权，需要提交后台登录换取token
   else if(userId == undefined&&codeisOn>=0){
@@ -192,4 +192,69 @@ Vue.prototype.auth = function() {
     });
   }
 }
+
+var config
+var wechatSignApi = 'https://eva.mintbao.com/wechat/jsapi/getSignature?url=https://weixin.mintbao.com/#/'
+
+function getToken (name) {
+  var arr;
+  var reg=new RegExp("(^| )"+name+"=([^;]*)(;|$)");
+  if(arr=document.cookie.match(reg)){
+    return arr[2];
+  } else {
+    return null;
+  }
+}
+var xhr = new XMLHttpRequest()
+xhr.open('GET', wechatSignApi, true)
+xhr.setRequestHeader('Content-Type', 'application/json')
+xhr.setRequestHeader("token", getToken('token'))
+xhr.onload = function(e) {
+  if(this.status == 200||this.status == 304){
+    var obj = JSON.parse(this.responseText);
+    var result = obj.result;
+    console.log(result);
+
+    wx.config({
+      debug: false,
+      appId: result.appId,
+      timestamp: result.timestamp,
+      nonceStr: result.nonceStr,
+      signature: result.signature,
+      jsApiList: ['checkJsApi','getLocation']
+    });
+
+    wx.ready(function () {
+      wx.getLocation({
+        success: function (res) {
+          console.log('location', JSON.stringify(res));
+          Vue.jsonp('https://apis.map.qq.com/ws/geocoder/v1/', {
+            output: 'jsonp',
+            location: res.latitude + ',' + res.longitude,
+            key: 'NGABZ-F5M3U-AVUV7-4JCF3-CL5UZ-RCBVO'
+          }).then(data => {
+            console.log('cityInfo', data)
+            store.commit('setCity', {
+              data: {
+                name: data.result.address_component.province + ' ' + data.result.address_component.city,
+                value: data.result.ad_info.adcode.substr(0, 4) + '00'
+              }
+            })
+          }).catch(err => {
+            console.log(err)
+          })
+        },
+        cancel: function (res) {
+          alert('用户拒绝授权获取地理位置');
+        }
+      });
+    });
+
+    wx.error(function (res) {
+      alert(res.errMsg);
+    });
+  }
+};
+xhr.send();
+
 

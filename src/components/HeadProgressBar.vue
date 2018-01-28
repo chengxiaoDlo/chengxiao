@@ -40,7 +40,7 @@ $step: 1;
   position: fixed;
   top: 0;
   left: 0;
-  height: 0.1rem;
+  height: 6px;
   background: linear-gradient(left, rgb(255, 241, 153), rgb(254, 222, 96));
   background: -webkit-gradient(linear, left top, right top, from(#f6e15a), to(#f4d046));
 }

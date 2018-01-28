@@ -102,19 +102,19 @@
   .que1 {
     display: flex;
     justify-content: center;
-    width: 10.34rem;
-    border-bottom-left-radius: 5px;
-    border-bottom-right-radius: 5px;
+    width: 620px;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
     overflow: hidden;
     .sex {
-      width: 2rem;
-      height: 2rem;
+      width: 120px;
+      height: 120px;
       border-radius: 50%;
-      margin: 0 0.6rem;
+      margin: 0 36px;
     }
     .sex-name {
       text-align: center;
-      font-size: 0.5rem;
+      font-size: 30px;
     }
   }
   .fadeInLeft {

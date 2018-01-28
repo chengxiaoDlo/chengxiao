@@ -211,42 +211,42 @@ export default {
 @import "../styles/common";
 @import "../styles/animation";
 .que3 {
-  padding-top: 0.5rem;
-  padding-bottom: 2.5rem;
+  padding-top: 30px;
+  padding-bottom: 150px;
   .age {
     display: flex;
     justify-content: center;
     align-content: center;
     width: 100%;
-    margin-bottom: 0.6rem;
+    margin-bottom: 36px;
     .avatar {
       text-align: center;
-      flex-basis: 2.5rem;
-      margin-right: 0.5rem;
+      flex-basis: 150px;
+      margin-right: 30px;
     }
     .member {
-      width: 1.53rem;
-      height: 1.53rem;
+      width: 92px;
+      height: 92px;
       margin: 0 auto;
     }
     .member-age {
-      width: 4.73rem;
-      height: 1rem;
+      width: 284px;
+      height: 60px;
       border-radius: 30px;
-      border:solid 1px;
-      font-size: 0.47rem;
+      border:solid 2px;
+      font-size: 28px;
       text-align: center;
-      line-height: 1rem;
+      line-height: 60px;
       color: rgb(141, 137, 137);
-      margin-top: 0.15rem;
+      margin-top: 9px;
     }
     .member-text {
-      font-size: 0.5rem;
+      font-size: 30px;
     }
     .unit {
-      font-size: 0.47rem;
-      margin-top: 0.37rem;
-      margin-left: 0.2rem;
+      font-size: 28px;
+      margin-top: 22.2px;
+      margin-left: 12px;
     }
   }
 }

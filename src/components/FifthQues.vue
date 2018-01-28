@@ -152,18 +152,18 @@
   @import "../styles/common";
   @import "../styles/animation";
   .que5 {
-    padding-top: 0.5rem;
-    padding-bottom: 2.5rem;
+    padding-top: 30px;
+    padding-bottom: 150px;
     .age {
       display: flex;
       justify-content: center;
       align-content: center;
       width: 100%;
-      margin-bottom: 0.6rem;
+      margin-bottom: 36px;
       .member {
-        width: 1.53rem;
-        height: 1.53rem;
-        margin-right: 0.8rem;
+        width: 92px;
+        height: 92px;
+        margin-right: 48px;
       }
       .me {
         background: url("../assets/images/dad.png") no-repeat;
@@ -178,15 +178,15 @@
         background-size: 100%;
       }
       .member-security {
-        width: 2.5rem;
-        height: 1rem;
+        width: 150px;
+        height: 60px;
         border-radius: 30px;
-        border:solid 1px;
-        font-size: 0.5rem;
+        border:solid 2px;
+        font-size: 30px;
         text-align: center;
-        line-height: 1rem;
-        margin-top: 0.15rem;
-        margin-right: 0.3rem;
+        line-height: 60px;
+        margin-top: 9px;
+        margin-right: 18px;
         color: rgb(126, 126, 126);
       }
       .qicked {
@@ -194,8 +194,8 @@
         color: rgb(252, 216, 75);
       }
       .member-labelName {
-        font-size: 0.5rem;
-        padding-left: 0.25rem;
+        font-size: 30px;
+        padding-left: 15px;
       }
     }
   }

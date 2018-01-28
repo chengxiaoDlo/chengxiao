@@ -7,7 +7,7 @@
           <first-ques v-if="progress > 0" @change-height="changeHeight" @fill-height="fillHeight" @scroll-to="scroll"></first-ques>
           <second-ques v-if="progress > 1" @change-height="changeHeight" @fill-height="fillHeight" @scroll-to="scroll"></second-ques>
           <third-ques v-if="progress > 2" @change-height="changeHeight" @fill-height="fillHeight" @scroll-to="scroll"></third-ques>
-          <fourth-ques :residence="residence" :city="city" v-if="progress > 3" @change-height="changeHeight" @fill-height="fillHeight" @scroll-to="scroll"></fourth-ques>
+          <fourth-ques :residence="city.value" :city="city.name" v-if="progress > 3" @change-height="changeHeight" @fill-height="fillHeight" @scroll-to="scroll"></fourth-ques>
           <fifth-ques v-if="progress > 4" @change-height="changeHeight" @fill-height="fillHeight" @scroll-to="scroll"></fifth-ques>
           <sixth-ques v-if="progress > 5" @change-height="changeHeight" @fill-height="fillHeight" @scroll-to="scroll"></sixth-ques>
           <seventh-ques v-if="progress > 6" @change-height="changeHeight" @fill-height="fillHeight" @scroll-to="scroll"></seventh-ques>
@@ -60,9 +60,7 @@ export default {
   data () {
     return {
       blockHeight: '',
-      cityList: consts.cityList,
-      residence: '',
-      city: '河北省石家庄市'
+      cityList: consts.cityList
     }
   },
   computed: {
@@ -72,7 +70,8 @@ export default {
       showKeyBoard: 'showKeyBoard',
       chooseList: 'chooseList',
       defaultAge: 'defaultAge',
-      showCityPicker: 'showCityPicker'
+      showCityPicker: 'showCityPicker',
+      city: 'city'
     })
   },
   methods: {
@@ -82,7 +81,8 @@ export default {
       toggleCityPicker: 'toggleCityPicker',
       toggleKeyboard: 'toggleKeyboard',
       setAge: 'setAge',
-      clear: 'clear'
+      clear: 'clear',
+      setCity: 'setCity'
     }),
     changeHeight (val) {
       this.blockHeight = val
@@ -114,8 +114,10 @@ export default {
     },
     selectedCity (val) {
       console.log(99, val)
-      this.residence = val.value[1]
-      this.city = val.label
+      this.setCity({data: {
+          name: val.label,
+          value: val.value[1]
+        }})
       this.toggleCityPicker()
     },
     ok (val) {
@@ -125,14 +127,13 @@ export default {
   },
   created () {
     this.initAgeList()
-    console.log(55, this.youngList)
+    console.log(55, this.city)
   }
 }
 </script>
 
 <style type="text/scss" lang="scss">
   @import "../styles/common";
-  @import "../../static/css/font.css";
   .questionnaire {
     height: 100%;
   }

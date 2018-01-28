@@ -2,18 +2,18 @@
 .options {
   background: #fff;
   box-sizing: border-box;
-  padding-bottom: 1rem;
-  width: 10.34rem;
-  margin-left: 1.5rem;
+  padding-bottom: 60px;
+  width: 620px;
+  margin-left: 90px;
 }
 .hidden {
   visibility: hidden;
 }
 .confirm {
-  width: 5rem;
-  height: 3rem;
-  margin-top: -2rem;
-  margin-left: 4.5rem;
+  width: 300px;
+  height: 180px;
+  margin-top: -120px;
+  margin-left: 270px;
   -webkit-appearance: none;
 }
 .btn-able {
@@ -59,13 +59,13 @@
   animation-delay: 2s;
 }
 .options-enter-active {
-  -webkit-animation: fade 2s reverse;
-  -o-animation: fade 2s reverse;
-  animation: fade 2s reverse;
+  -webkit-animation: fade 1s reverse;
+  -o-animation: fade 1s reverse;
+  animation: fade 1s reverse;
 }
 .options-leave-active {
-  -webkit-animation: fade 2s;
-  -o-animation: fade 2s;
-  animation: fade 2s;
+  -webkit-animation: fade 1s;
+  -o-animation: fade 1s;
+  animation: fade 1s;
 }
 

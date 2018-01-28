@@ -50,8 +50,7 @@
           default: ''
         },
         city: {
-          type: String,
-          default: '河北省石家庄市'
+          type: String
         }
       },
       computed: mapState([
@@ -109,37 +108,37 @@
   @import "../styles/common";
   @import "../styles/animation";
 .que4{
-  padding-top: 0.5rem;
-  padding-bottom: 2.5rem;
+  padding-top: 30px;
+  padding-bottom: 150px;
   .location {
     display: flex;
     justify-content: center;
     align-content: center;
     width: 100%;
-    margin-bottom: 0.6rem;
+    margin-bottom: 36px;
     .me {
       background: url("../assets/images/dad.png") no-repeat;
       background-size: 100%;
-      width: 1.5rem;
-      height: 1.5rem;
-      margin-right: 0.8rem;
+      width: 90px;
+      height: 90px;
+      margin-right: 48px;
     }
     .member-text {
-      font-size: 0.5rem;
-      padding-left: 0.25rem;
+      font-size: 30px;
+      padding-left: 15px;
     }
     .member-city {
-      width: 5rem;
-      height: 1rem;
+      width: 300px;
+      height: 60px;
       border-radius: 30px;
-      border:solid 1px;
-      font-size: 0.5rem;
+      border:solid 2px;
+      font-size: 30px;
       text-align: center;
-      line-height: 1rem;
-      margin-top: 0.15rem;
+      line-height: 60px;
+      margin-top: 9px;
       overflow: hidden;
       text-overflow: ellipsis;
-      padding: 0 0.2rem;
+      padding: 0 12px;
       white-space: nowrap;
       color: rgb(126, 126, 126);
     }
@@ -148,9 +147,9 @@
 .confirm {
   background: url("../assets/images/confirm-btn.png") no-repeat;
   background-size: 100%;
-  width: 5rem;
-  height: 3rem;
-  margin-top: -2rem;
-  margin-left: 4.5rem;
+  width: 300px;
+  height: 180px;
+  margin-top: -120px;
+  margin-left: 270px;
 }
 </style>
