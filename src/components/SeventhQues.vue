@@ -1,6 +1,6 @@
 <template>
     <div style="overflow: hidden;" id="que7" :class="{'hidden': isModify && progress <= 7}">
-      <question question="蓝田日暖玉生烟，日常能抽几支烟？" sub="部分寿险产品会为非吸烟体用户提供高性价比产品，我们也会全面考虑哦~" class="animated fadeInLeft">
+      <question question="蓝田日暖玉生烟，日常能抽几支烟？" sub="部分寿险产品会为非吸烟体用户提供高性价比产品，我们也会全面考虑哦~" class="animated slideInLeft">
         <div slot="options">
           <transition name="options">
             <div v-if="showOption" id="options">
@@ -21,7 +21,7 @@
           </transition>
         </div>
       </question>
-      <transition enter-active-class="animated fadeInRight" leave-active-class="animated fadeOutRight">
+      <transition enter-active-class="animated slideInRight" leave-active-class="animated fadeOutRight">
         <answer v-if="showAnswer" :textList="answerText" @modify="modify" wrap></answer>
       </transition>
     </div>

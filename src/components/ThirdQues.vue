@@ -1,6 +1,6 @@
 <template>
   <div id="que3" style="overflow: hidden" :class="{'hidden': isModify && progress <= 3}">
-    <question question="对酒当歌，芳龄几何？" sub="年龄会关乎到保险方案和价格的准确性哦~" class="animated fadeInLeft">
+    <question question="对酒当歌，芳龄几何？" sub="年龄会关乎到保险方案和价格的准确性哦~" class="animated slideInLeft">
       <div slot="options">
         <transition name="options">
           <div v-if="showOption" id="options">
@@ -11,7 +11,7 @@
                     <div class="member" :class="member.class"></div>
                     <p class="member-text">{{member.labelName}}</p>
                   </div>
-                  <div class="member-age" @click="selectAge(member)">{{member.value}}</div>
+                  <div class="member-age" :class="{'picked': member.focus}" @click="selectAge(member)">{{member.value}}</div>
                   <div class="unit">岁</div>
                 </div>
               </div>
@@ -21,7 +21,7 @@
         </transition>
       </div>
     </question>
-    <transition enter-active-class="animated fadeInRight" leave-active-class="animated fadeOutRight">
+    <transition enter-active-class="animated slideInRight" leave-active-class="animated fadeOutRight">
       <answer v-if="showAnswer" :textList="answerText" @modify="modify" wrap></answer>
     </transition>
   </div>
@@ -73,7 +73,8 @@ export default {
       'isModify',
       'progress',
       'info',
-      'selectedAge'
+      'selectedAge',
+      'showAgePicker'
     ])
   },
   methods: {
@@ -148,6 +149,7 @@ export default {
             return {
               class: item.class,
               labelName: item.labelName,
+              focus: false,
               value: '选择年龄'
             }
           })
@@ -156,6 +158,7 @@ export default {
             return {
               class: item.class,
               labelName: item.labelName,
+              focus: false,
               value: '选择年龄'
             }
           })
@@ -169,6 +172,7 @@ export default {
       this.memberList = [{
         class: this.info.sex === 'M' ? 'male' : 'female',
         labelName: '本人',
+        focus: false,
         value: '选择年龄'
       }, ...this.getList(family)]
     }
@@ -200,6 +204,16 @@ export default {
             }
           })
         }
+      }
+    },
+    'showAgePicker': {
+      handler (newVal) {
+        console.log('new', newVal)
+        this.memberList.forEach(item => {
+          if (item.labelName === this.who) {
+            item.focus = !item.focus
+          }
+        })
       }
     }
   }
@@ -239,6 +253,9 @@ export default {
       line-height: 60px;
       color: rgb(141, 137, 137);
       margin-top: 9px;
+    }
+    .picked {
+      border-color: rgb(252, 216, 75);
     }
     .member-text {
       font-size: 30px;

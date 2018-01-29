@@ -19,7 +19,7 @@
         <keyboard v-if="showKeyBoard" @quit="cancelInput" @ok="ok"></keyboard>
       </transition>
       <slide-picker v-if="showAgePicker" :list="chooseList" :col="1" @quit="cancelAge" @confirm="selectedAge" :default="defaultAge"></slide-picker>
-      <slide-picker v-if="showCityPicker" :list="cityList" :col="2" @quit="cancelCity" @confirm="selectedCity" ></slide-picker>
+      <slide-picker v-if="showCityPicker" :list="cityList" :col="2" @quit="cancelCity" @confirm="selectedCity" :default="['110000', '110100']"></slide-picker>
     </div>
 </template>
 

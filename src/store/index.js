@@ -16,7 +16,7 @@ export default new Vuex.Store({
     showKeyBoard: false,
     isModify: false,
     city: {
-      name: '',
+      name: '请选择',
       value: ''
     },
     chooseList: [],

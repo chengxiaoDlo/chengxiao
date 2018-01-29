@@ -1,7 +1,7 @@
 <template>
     <div style="overflow: hidden;" id="que6" :class="{'hidden': isModify && progress <= 6}">
       <div @click="cancel">
-        <question question="玉盘珍馐值万钱，你家收支多少钱？" sub="我们会基于家庭收入及贷款来为你规划合理的保额及保费预算" class="animated fadeInLeft">
+        <question question="玉盘珍馐值万钱，你家收支多少钱？" sub="我们会基于家庭收入及贷款来为你规划合理的保额及保费预算" class="animated slideInLeft">
           <div slot="options">
             <transition name="options">
               <div v-if="showOption" id="options">
@@ -12,7 +12,7 @@
                         <div class="member" :class="member.class"></div>
                         <p class="member-text">{{member.text}}</p>
                       </div>
-                      <div class="member-age" @click="input(member)">{{member.value}}</div>
+                      <div class="member-age" :class="{'picked': member.focus}" @click="input(member)">{{member.value}}</div>
                       <div class="unit">{{member.unit}}</div>
                     </div>
                   </div>
@@ -22,7 +22,7 @@
             </transition>
           </div>
         </question>
-        <transition enter-active-class="animated fadeInRight" leave-active-class="animated fadeOutRight">
+        <transition enter-active-class="animated slideInRight" leave-active-class="animated fadeOutRight">
           <answer v-if="showAnswer" :textList="answerText" @modify="modify" wrap></answer>
         </transition>
       </div>
@@ -143,21 +143,24 @@
           this.memberList = [
             {
               class: this.info.sex === 'M' ? 'male' : 'female',
-              text: this.info.sex === 'M' ? '爸爸收入' : '妈妈收入',
+              text:  '本人收入',
               value: '税前收入',
+              focus: false,
               tag: 'me',
               unit: '万元/年'
             },
             {
               class: this.info.sex === 'M' ? 'female' : 'male',
-              text: this.info.sex === 'M' ? '妈妈收入' : '爸爸收入',
+              text: '配偶收入',
               value: '税前收入',
+              focus: false,
               tag: 'spouse',
               unit: '万元/年'
             },
             {
-              class: 'son',
+              class: 'loan',
               text: '家庭贷款',
+              focus: false,
               value: '房贷、车贷等',
               tag: 'debt',
               unit: '万元'
@@ -169,13 +172,15 @@
               class: this.info.sex === 'M' ? 'male' : 'female',
               text: '本人收入',
               value: '税前收入',
+              focus: false,
               tag: 'me',
               unit: '万元/年'
             },
             {
-              class: 'son',
+              class: 'loan',
               text: '家庭贷款',
               value: '房贷、车贷等',
+              focus: false,
               tag: 'debt',
               unit: '万元'
             }
@@ -197,6 +202,19 @@
               } else {
                 if (item.text === this.current) {
                   item.value = newVal
+                }
+              }
+            })
+          }
+        },
+        'showKeyBoard': {
+          handler (newVal) {
+            this.memberList.forEach(item => {
+              if (item.text === this.current) {
+                if (newVal) {
+                  item.focus = true
+                } else {
+                  item.focus = false
                 }
               }
             })
@@ -250,6 +268,9 @@
         line-height: 60px;
         margin-top: 9px;
         color: rgb(126, 126, 126);
+      }
+      .picked {
+        border-color: rgb(252, 216, 75);
       }
       .member-text {
         font-size: 30px;

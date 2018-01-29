@@ -1,6 +1,6 @@
 <template>
     <div class="start">
-      <div class="row-with-avatar animated fadeInLeft">
+      <div class="row-with-avatar">
         <div class="first-line  ">
           <div class="avatar"></div>
           <div class="dialogue">
@@ -11,7 +11,7 @@
           </div>
         </div>
       </div>
-      <div class="row-without-avatar animated fadeInLeft">
+      <div class="row-without-avatar">
         <div class="dialogue" :class="{'done': goToStart}">
           <div class="angle"></div>
           <p>让我来为你规划专属的家庭保险方案吧~</p>
@@ -74,12 +74,15 @@
 
 <style type="text/scss" lang="scss" scoped>
 @import "../styles/animation";
+@include keyframes(slideLeft1, -740px, 0);
+@include keyframes(slideLeft2, -660px, 90px);
 .start {
   margin-left: 16px;
   .row-with-avatar {
     position: relative;
-    animation-duration: 2s;
-
+    -webkit-animation: slideLeft1 1.5s ease-out;
+    -o-animation: slideLeft1 1.5s ease-out;
+    animation: slideLeft1 1.5s ease-out;
     .first-line {
       display: flex;
 
@@ -114,8 +117,12 @@
   }
   .row-without-avatar {
     margin-top: 40px;
-    margin-left: 90px;
-    animation-delay: 3s;
+    margin-left: -660px;
+    -webkit-animation: slideLeft2 1.5s ease-out;
+    -o-animation: slideLeft2 1.5s ease-out;
+    animation: slideLeft2 1.5s ease-out;
+    animation-fill-mode: forwards;
+    animation-delay: 2s;
     overflow: hidden;
     .dialogue {
       background: #ffffff;
@@ -153,15 +160,9 @@
       height: 180px;
       background: url('../assets/images/start-btn.png') no-repeat;
       background-size: 100%;
-      margin: 0 auto;
+      margin-left: 170px;
       margin-top: -108px;
     }
-  }
-  .start-leave-active {
-    animation: fade 2s;
-  }
-  .fadeInRight {
-    animation-delay: 2s;
   }
 }
 

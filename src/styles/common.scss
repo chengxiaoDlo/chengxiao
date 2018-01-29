@@ -52,10 +52,14 @@
   background: url("../assets/images/dog.png") no-repeat;
   background-size: 100%;
 }
-.fadeInLeft {
+.loan {
+  background: url("../assets/images/loan.png") no-repeat;
+  background-size: 100%;
+}
+.slideInLeft {
   animation-delay: 1.5s;
 }
-.fadeInRight {
+.slideInRight {
   animation-delay: 2s;
 }
 .options-enter-active {

@@ -198,7 +198,7 @@ router.beforeEach((to, from, next) => {
   if(userId == undefined && codeisOn<0){
     console.info("来到了第一步");
     var redirectUrl = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx8b581378855cb9ba&redirect_uri=https%3a%2f%2fweixin.mintbao.com"+docUrl.replace("#","%23").replace(new RegExp("/","gm"),"%2f")+"&response_type=code&scope=snsapi_userinfo#wechat_redirect";
-    window.location.href = redirectUrl;
+    // window.location.href = redirectUrl;
   }
 // userId不存在、code存在，则说明已经获取了用户授权，需要提交后台登录换取token
   else if(userId == undefined&&codeisOn>=0){

@@ -16,7 +16,7 @@
           </div>
         </x-dialog>
       </div>
-      <question question="但愿人长久，家里有几口？" sub="我们会基于你的家庭结构和成员情况，考虑每个人的保障~" class="animated fadeInLeft">
+      <question question="但愿人长久，家里有几口？" sub="我们会基于你的家庭结构和成员情况，考虑每个人的保障~" class="animated slideInLeft">
         <div slot="options" >
           <transition name="options">
             <div v-if="showOption" id="options">
@@ -43,7 +43,7 @@
           </transition>
         </div>
       </question>
-      <transition enter-active-class="animated fadeInRight" leave-active-class="animated fadeOutRight">
+      <transition enter-active-class="animated slideInRight" leave-active-class="animated fadeOutRight">
         <answer :textList="answerText" v-if="showAnswer" @modify="modify" modifiable wrap></answer>
       </transition>
     </div>
@@ -200,11 +200,20 @@
           })
           let boy = chooseList.filter(item => {return item.label === 'boy'})
           let girl = chooseList.filter(item => {return item.label === 'girl'})
-          if (boy.length === 1 || girl.length === 1) {
+          if (boy.length === 1) {
             chooseList.forEach(item => {
-              item.labelName = item.labelName.replace(/[大二小]/g, '')
+              if (item.label === 'boy') {
+                item.labelName = item.labelName.replace(/[大二小]/g, '')
+              }
             })
-          } else if (boy.length === 2 || girl.length === 2) {
+          } else if (girl.length === 1) {
+            chooseList.forEach(item => {
+              if (item.label === 'girl') {
+                item.labelName = item.labelName.replace(/[大二小]/g, '')
+              }
+            })
+          }
+          if (boy.length === 2 || girl.length === 2) {
             chooseList.forEach(item1 => {
               if (item1.labelName.indexOf('二') !== -1) {
                 chooseList.forEach(item2 => {

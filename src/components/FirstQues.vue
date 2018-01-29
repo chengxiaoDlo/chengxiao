@@ -1,22 +1,26 @@
 <template>
     <div class="ques" id="que1">
-      <question question="江上往来人，敢问是何人？" class="animated fadeInLeft">
+      <question question="江上往来人，敢问是何人？" class="animated slideInLeft">
           <div slot="options" >
             <transition name="fade" >
               <div v-if="showOption" class="options que1" id="options">
                 <div @click="selectSex('M')">
-                  <div class="sex male" ></div>
-                  <p class="sex-name">壮士</p>
+                  <div class="sex male" >
+                    <div class="pick" v-if="sex === '先生'"></div>
+                  </div>
+                  <p class="sex-name">先生</p>
                 </div>
                 <div @click="selectSex('F')">
-                  <div class="sex female" ></div>
-                  <p class="sex-name">女子</p>
+                  <div class="sex female" >
+                    <div class="pick" v-if="sex === '女士' "></div>
+                  </div>
+                  <p class="sex-name">女士</p>
                 </div>
               </div>
             </transition>
           </div>
       </question>
-      <transition enter-active-class="animated fadeInRight" leave-active-class="animated fadeOutRight">
+      <transition enter-active-class="animated slideInRight" leave-active-class="animated slideOutRight">
         <answer :text="sex" v-if="showAnswer" @modify="modify"></answer>
       </transition>
     </div>
@@ -51,7 +55,7 @@
           clear: 'clear'
         }),
         selectSex (sex) {
-          this.sex = sex === 'M' ? '壮士' : '女子'
+          this.sex = sex === 'M' ? '先生' : '女士'
           this.chooseSex({data: sex})
           this.showOption = false
           this.showAnswer = true
@@ -111,6 +115,16 @@
       height: 120px;
       border-radius: 50%;
       margin: 0 36px;
+      position: relative;
+      .pick {
+        width: 60px;
+        height: 60px;
+        background: url("../assets/images/pick.png") no-repeat;
+        background-size: 100%;
+        position: absolute;
+        bottom: 0;
+        right: -24px;
+      }
     }
     .sex-name {
       text-align: center;

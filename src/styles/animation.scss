@@ -11,4 +11,13 @@
   }
 }
 
-
+@mixin keyframes ($a, $start, $end) {
+  @-webkit-keyframes #{$a} {
+    from { margin-left: $start; }
+    to { margin-left: $end; }
+  }
+  @keyframes #{$a} {
+    from { margin-left: $start; }
+    to { margin-left: $end; }
+  }
+}

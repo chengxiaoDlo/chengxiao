@@ -1,13 +1,13 @@
 <template>
     <div style="overflow: hidden" id="que4" :class="{'hidden': isModify && progress <= 4}">
-      <question question="青春作伴好还乡，而今哪里是家乡？" sub="我们会考虑当地的社保政策、产品区域限制、消费水平等因素哒~" class="animated fadeInLeft">
+      <question question="青春作伴好还乡，而今哪里是家乡？" sub="我们会考虑当地的社保政策、产品区域限制、消费水平等因素哒~" class="animated slideInLeft">
         <div slot="options">
           <transition name="options">
             <div v-if="showOption" id="options">
               <div class="options que4" >
                 <div class="location" >
                   <div>
-                    <div class="member me"></div>
+                    <div class="member me" :class="info.sex === 'M' ? 'male' : 'female' "></div>
                     <p class="member-text">本人</p>
                   </div>
                   <div class="member-city" @click="selectCity">{{city}}</div>
@@ -18,7 +18,7 @@
           </transition>
         </div>
       </question>
-      <transition enter-active-class="animated fadeInRight" leave-active-class="animated fadeOutRight">
+      <transition enter-active-class="animated slideInRight" leave-active-class="animated fadeOutRight">
         <answer v-if="showAnswer" :text="city" @modify="modify"></answer>
       </transition>
     </div>
@@ -55,6 +55,7 @@
       },
       computed: mapState([
         'isModify',
+        'info',
         'progress'
       ]),
       methods: {
@@ -117,8 +118,6 @@
     width: 100%;
     margin-bottom: 36px;
     .me {
-      background: url("../assets/images/dad.png") no-repeat;
-      background-size: 100%;
       width: 90px;
       height: 90px;
       margin-right: 48px;

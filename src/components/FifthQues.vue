@@ -1,6 +1,6 @@
 <template>
     <div style="overflow: hidden" id="que5" :class="{'hidden': isModify && progress <= 5}">
-      <question question="劝君更尽一杯酒，全家社保上全否？" sub="这会关系到家人医疗险的配置" class="animated fadeInLeft">
+      <question question="劝君更尽一杯酒，全家社保上全否？" sub="这会关系到家人医疗险的配置" class="animated slideInLeft">
         <div slot="options">
           <transition name="options">
             <div v-if="showOption" id="options">
@@ -21,7 +21,7 @@
           </transition>
         </div>
       </question>
-      <transition enter-active-class="animated fadeInRight" leave-active-class="animated fadeOutRight">
+      <transition enter-active-class="animated slideInRight" leave-active-class="animated fadeOutRight">
         <answer v-if="showAnswer" :textList="answerlabelName" @modify="modify" wrap></answer>
       </transition>
     </div>
