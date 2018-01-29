@@ -66,7 +66,7 @@
               labelName: '配偶',
               label: 'spouse',
               gender: '',
-              memberType: 2,
+              memberType: 1,
               picked: false,
               class: 'female'
             },
@@ -342,7 +342,10 @@
                 this.memberList.push({
                   labelName: item.labelName,
                   picked: true,
-                  class: item.class
+                  class: item.class,
+                  label: item.label,
+                  gender: item.gender,
+                  memberType: item.memberType
                 })
               }
             }
@@ -519,7 +522,7 @@
     height: 164px;
     background: url("../assets/images/confirm-btn.png") no-repeat;
     background-size: 100%;
-    margin-bottom: -288px;
+    margin-bottom: -225px;
     margin-left: 138px;
   }
 }

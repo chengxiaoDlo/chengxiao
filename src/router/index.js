@@ -192,7 +192,7 @@ router.beforeEach((to, from, next) => {
   var nb = location.href;//当前页面地址
   var codeisOn = nb.indexOf("code=");//返回一个索引值，不存在返回-1
   console.info("codeisOn是否存在 "+codeisOn)
-
+  console.info('userId', userId)
 
 // userId、code都不存在说明是首次进入该页面，则进行是否已登录校验
   if(userId == undefined && codeisOn<0){
@@ -220,12 +220,12 @@ router.beforeEach((to, from, next) => {
       success: data => {
         console.info("获取openid，对其进行cookies设置和所有页面覆盖")
         console.info(data);
+        alert(JSON.stringify(data))
         //设置网站全局cookies
         document.cookie="token="+data.result.token+";"+"expire="+date.toGMTString()+"; path=/";
         document.code = "code="+codedata+';'+"expire="+date.toGMTString()+";path=/";
         // 获取用户昵称
         var usernickname = data.result.nickName;
-
         // 去掉url里的code
         var codeIndex = thisUrl.indexOf("code=");
         var checkChar = thisUrl.slice(codeIndex-1, codeIndex);
