@@ -240,6 +240,9 @@ xhr.onload = function(e) {
                 value: data.result.ad_info.adcode.substr(0, 4) + '00'
               }
             })
+            store.commit('setDefaultCity', {
+              data: [data.result.ad_info.adcode.substr(0, 2) + '0000', data.result.ad_info.adcode.substr(0, 4) + '00']
+            })
           }).catch(err => {
             console.log(err)
           })

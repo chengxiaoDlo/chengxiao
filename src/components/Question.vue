@@ -16,18 +16,6 @@
   import { mapState } from 'vuex'
     export default {
       name: 'question',
-      data () {
-        return {
-          hi: false,
-          firstQues: false,
-          secondQues: false,
-          slide: false,
-          showAnswer: false
-        }
-      },
-      computed: mapState([
-        'next'
-      ]),
       props: {
         question: {
           type: String,
@@ -37,22 +25,6 @@
           type: String,
           default: ''
         }
-      },
-      methods: {
-        start () {
-          this.slide = true
-          setTimeout(() => {
-            this.showAnswer = true
-          }, 3000)
-          setTimeout(() => {
-            this.firstQues = true
-          }, 4000)
-        }
-      },
-      created () {
-        setTimeout(() => {
-          this.hi = true
-        }, 2000)
       }
     }
 </script>

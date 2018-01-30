@@ -2,23 +2,21 @@
     <div style="overflow: hidden" id="que4" :class="{'hidden': isModify && progress <= 4}">
       <question question="青春作伴好还乡，而今哪里是家乡？" sub="我们会考虑当地的社保政策、产品区域限制、消费水平等因素哒~" class="animated slideInLeft">
         <div slot="options">
-          <transition name="options">
-            <div v-if="showOption" id="options">
-              <div class="options que4" >
-                <div class="location" >
-                  <div>
-                    <div class="member me" :class="info.sex === 'M' ? 'male' : 'female' "></div>
-                    <p class="member-text">本人</p>
-                  </div>
-                  <div class="member-city" @click="selectCity">{{city}}</div>
+          <div v-if="showOption" id="options">
+            <div class="options que4" >
+              <div class="location" >
+                <div>
+                  <div class="member me" :class="info.sex === 'M' ? 'male' : 'female' "></div>
+                  <p class="member-text">本人</p>
                 </div>
+                <div class="member-city" @click="selectCity">{{city}}</div>
               </div>
-              <div class="confirm btn-able" @click="confirm"></div>
             </div>
-          </transition>
+            <div class="confirm btn-able" @click="confirm"></div>
+          </div>
         </div>
       </question>
-      <transition enter-active-class="animated slideInRight" leave-active-class="animated fadeOutRight">
+      <transition name="answer">
         <answer v-if="showAnswer" :text="city" @modify="modify"></answer>
       </transition>
     </div>
@@ -73,20 +71,20 @@
           if (this.progress === 4) {
             setTimeout(() => {
               this.next({data: 5})
-            }, 3000)
+            }, 1500)
             setTimeout(() => {
               this.$emit('scroll-to', document.getElementById('que4').offsetTop + document.getElementById('que4').offsetHeight)
-            }, 3500)
+            }, 2000)
           } else {
             this.next({data: 4})
             setTimeout(() => {
               this.next({data: 5})
               this.toggleModify()
-            }, 3000)
+            }, 1500)
             setTimeout(() => {
               this.toggleModify()
               this.$emit('scroll-to', document.getElementById('que4').offsetTop + document.getElementById('que4').offsetHeight)
-            }, 3500)
+            }, 2000)
           }
         },
         selectCity () {
@@ -108,6 +106,7 @@
 <style type="text/scss" lang="scss" scoped>
   @import "../styles/common";
   @import "../styles/animation";
+  @include keyframesAnswer(slideRight, -400px, 49.2px);
 .que4{
   padding-top: 30px;
   padding-bottom: 150px;
@@ -151,4 +150,13 @@
   margin-top: -120px;
   margin-left: 270px;
 }
+  .answer-enter-active {
+    animation: slideRight 1s;
+    -webkit-animation: slideRight 1s;
+  }
+  .answer-leave-active {
+    -webkit-animation: slideRight 1s reverse;
+    -o-animation: slideRight 1s reverse;
+    animation: slideRight 1s reverse;
+  }
 </style>

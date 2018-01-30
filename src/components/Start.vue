@@ -22,9 +22,7 @@
             <div class="start-btn" @click="start"></div>
           </div>
         </transition>
-        <transition name="start" enter-active-class="animated fadeInRight">
-          <answer text="开始" v-if="goToStart" :modifiable="false"></answer>
-        </transition>
+        <answer class="answer" text="开始" v-if="goToStart" :modifiable="false"></answer>
       </div>
     </div>
 </template>
@@ -61,12 +59,12 @@
             if (this.progress === 0) {
               this.next({data: 1})
             }
-          }, 3000)
+          }, 1500)
           setTimeout(() => {
             this.$emit('scroll-to', document.getElementsByClassName('start')[0].offsetTop + document.getElementsByClassName('start')[0].offsetHeight)
 //            window.scrollTo(0, document.getElementsByClassName('start')[0].offsetTop + document.getElementsByClassName('start')[0].offsetHeight)
             this.setIndex({data: this.index + 1})
-          }, 3500)
+          }, 2000)
         }
       }
     }
@@ -76,13 +74,14 @@
 @import "../styles/animation";
 @include keyframes(slideLeft1, -740px, 0);
 @include keyframes(slideLeft2, -660px, 90px);
+@include keyframesAnswer(slideRight, -200px, 49.2px)
 .start {
   margin-left: 16px;
   .row-with-avatar {
     position: relative;
-    -webkit-animation: slideLeft1 1.5s ease-out;
-    -o-animation: slideLeft1 1.5s ease-out;
-    animation: slideLeft1 1.5s ease-out;
+    -webkit-animation: slideLeft1 1s ease-out;
+    -o-animation: slideLeft1 1s ease-out;
+    animation: slideLeft1 1s ease-out;
     .first-line {
       display: flex;
 
@@ -118,11 +117,11 @@
   .row-without-avatar {
     margin-top: 40px;
     margin-left: -660px;
-    -webkit-animation: slideLeft2 1.5s ease-out;
-    -o-animation: slideLeft2 1.5s ease-out;
-    animation: slideLeft2 1.5s ease-out;
+    -webkit-animation: slideLeft2 1s ease-out;
+    -o-animation: slideLeft2 1s ease-out;
+    animation: slideLeft2 1s ease-out;
     animation-fill-mode: forwards;
-    animation-delay: 2s;
+    animation-delay: 1.5s;
     overflow: hidden;
     .dialogue {
       background: #ffffff;
@@ -163,6 +162,13 @@
       margin-left: 170px;
       margin-top: -108px;
     }
+  }
+  .answer {
+    margin-right: -200px;
+    -webkit-animation: slideRight 1s ease-out;
+    -o-animation: slideRight 1s ease-out;
+    animation: slideRight 1s ease-out;
+    animation-fill-mode: forwards;
   }
 }
 

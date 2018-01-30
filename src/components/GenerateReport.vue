@@ -1,6 +1,6 @@
 <template>
     <div class="generate" id="ge">
-      <div class="card animated slideInLeft">
+      <div class="card">
         <div class="title">开始分析你的家庭数据</div>
         <div class="flow">
           <x-progress :percent="percent"></x-progress>
@@ -95,11 +95,20 @@
 </script>
 
 <style type="text/scss" lang="scss" scoped>
+  @import "../styles/animation";
+  @include keyframes(fadeLeft, -700px, 30px);
 .generate {
   .card {
     width: 690px;
     background: #ffffff;
-    margin: 60px auto;
+    margin-top: 60px;
+    margin-bottom: 60px;
+    margin-left: -700px;
+    -webkit-animation: fadeLeft 1s ease-out;
+    -o-animation: fadeLeft 1s ease-out;
+    animation: fadeLeft 1s ease-out;
+    animation-fill-mode: forwards;
+    animation-delay: 1s;
     padding-top: 48px;
     border-radius: 5px;
     padding-bottom: 84px;

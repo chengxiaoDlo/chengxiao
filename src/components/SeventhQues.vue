@@ -2,26 +2,24 @@
     <div style="overflow: hidden;" id="que7" :class="{'hidden': isModify && progress <= 7}">
       <question question="蓝田日暖玉生烟，日常能抽几支烟？" sub="部分寿险产品会为非吸烟体用户提供高性价比产品，我们也会全面考虑哦~" class="animated slideInLeft">
         <div slot="options">
-          <transition name="options">
-            <div v-if="showOption" id="options">
-              <div class="options que7" >
-                <div v-for="member in memberList">
-                  <div class="age" >
-                    <div>
-                      <div class="member" :class="member.class"></div>
-                      <p class="member-text">{{member.text}}</p>
-                    </div>
-                    <div class="member-security" :class="{'qicked': member.smoke === true}" @click="isSomker('y', member)">抽烟</div>
-                    <div class="member-security" :class="{'qicked': member.smoke === false}" @click="isSomker('n', member)">不抽烟</div>
+          <div v-if="showOption" id="options">
+            <div class="options que7" >
+              <div v-for="member in memberList">
+                <div class="age" >
+                  <div>
+                    <div class="member" :class="member.class"></div>
+                    <p class="member-text">{{member.text}}</p>
                   </div>
+                  <div class="member-security" :class="{'qicked': member.smoke === true}" @click="isSomker('y', member)">抽烟</div>
+                  <div class="member-security" :class="{'qicked': member.smoke === false}" @click="isSomker('n', member)">不抽烟</div>
                 </div>
               </div>
-              <div class="confirm btn-able" @click="confirm"></div>
             </div>
-          </transition>
+            <div class="confirm btn-able" @click="confirm"></div>
+          </div>
         </div>
       </question>
-      <transition enter-active-class="animated slideInRight" leave-active-class="animated fadeOutRight">
+      <transition name="answer">
         <answer v-if="showAnswer" :textList="answerText" @modify="modify" wrap></answer>
       </transition>
     </div>
@@ -76,8 +74,8 @@
           addSmoke: 'addSmoke'
         }),
         formatJson () {
-          this.json.familyDebt = this.info.familyDebt
-          this.json.familyIncome = this.info.familyIncome
+          this.json.familyDebt = parseInt(this.info.familyDebt + '0000')
+          this.json.familyIncome = parseInt(this.info.familyIncome + '0000')
           this.json.members = [{
             age: parseInt(this.info.age),
             gender: this.info.sex,
@@ -95,7 +93,7 @@
                 age: item.age ? parseInt(item.age ) : '',
                 gender: item.gender,
                 hasSocialInsurance: item.hasSocialInsurance ? 1 : 0,
-                income: item.income ? item.income : '',
+                income: item.income ? parseInt(item.income + '0000') : '',
                 label: item.label,
                 labelName: item.labelName,
                 memberType: item.memberType,
@@ -134,11 +132,11 @@
           this.$emit('fill-height', document.getElementById('options').offsetHeight)
           setTimeout(() => {
             this.next({data: 8})
-          }, 3000)
+          }, 1500)
           setTimeout(() => {
             this.$emit('scroll-to', document.getElementById('que7').offsetTop + document.getElementById('que7').offsetHeight)
 //            window.scrollTo(0, document.getElementById('que7').offsetTop + document.getElementById('que7').offsetHeight)
-          }, 3500)
+          }, 2000)
         },
         modify () {
           this.showAnswer = false
@@ -184,6 +182,7 @@
 <style type="text/scss" lang="scss" scoped>
   @import "../styles/animation";
   @import "../styles/common";
+  @include keyframesAnswer(slideRight, -400px, 49.2px);
   .que7 {
     padding-top: 30px;
     padding-bottom: 150px;
@@ -231,5 +230,14 @@
         padding-left: 15px;
       }
     }
+  }
+  .answer-enter-active {
+    animation: slideRight 1s;
+    -webkit-animation: slideRight 1s;
+  }
+  .answer-leave-active {
+    -webkit-animation: slideRight 1s reverse;
+    -o-animation: slideRight 1s reverse;
+    animation: slideRight 1s reverse;
   }
 </style>

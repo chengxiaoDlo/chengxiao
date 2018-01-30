@@ -19,8 +19,9 @@ export default new Vuex.Store({
       name: '请选择',
       value: ''
     },
-    chooseList: [],
-    defaultAge: '',
+    chooseList: null,
+    defaultAge: [],
+    defaultCity: [],
     selectedAge: '',
     inputNumber: '',
     progress: 0,

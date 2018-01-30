@@ -2,26 +2,24 @@
   <div id="que3" style="overflow: hidden" :class="{'hidden': isModify && progress <= 3}">
     <question question="对酒当歌，芳龄几何？" sub="年龄会关乎到保险方案和价格的准确性哦~" class="animated slideInLeft">
       <div slot="options">
-        <transition name="options">
-          <div v-if="showOption" id="options">
-            <div class="options que3" >
-              <div v-for="member in memberList">
-                <div class="age" >
-                  <div class="avatar">
-                    <div class="member" :class="member.class"></div>
-                    <p class="member-text">{{member.labelName}}</p>
-                  </div>
-                  <div class="member-age" :class="{'picked': member.focus}" @click="selectAge(member)">{{member.value}}</div>
-                  <div class="unit">岁</div>
+        <div v-if="showOption" id="options">
+          <div class="options que3" >
+            <div v-for="member in memberList">
+              <div class="age" >
+                <div class="avatar">
+                  <div class="member" :class="member.class"></div>
+                  <p class="member-text">{{member.labelName}}</p>
                 </div>
+                <div class="member-age" :class="{'picked': member.focus}" @click="selectAge(member)">{{member.value}}</div>
+                <div class="unit">岁</div>
               </div>
             </div>
-            <div class="confirm" :class="btnAbled ? 'btn-able' : 'btn-disable' " @click="confirm"></div>
           </div>
-        </transition>
+          <div class="confirm" :class="btnAbled ? 'btn-able' : 'btn-disable' " @click="confirm"></div>
+        </div>
       </div>
     </question>
-    <transition enter-active-class="animated slideInRight" leave-active-class="animated fadeOutRight">
+    <transition name="answer">
       <answer v-if="showAnswer" :textList="answerText" @modify="modify" wrap></answer>
     </transition>
   </div>
@@ -74,7 +72,8 @@ export default {
       'progress',
       'info',
       'selectedAge',
-      'showAgePicker'
+      'showAgePicker',
+      'chooseList'
     ])
   },
   methods: {
@@ -95,20 +94,20 @@ export default {
         if (this.progress === 3) {
           setTimeout(() => {
             this.next({data: 4})
-          }, 3000)
+          }, 1500)
           setTimeout(() => {
             this.$emit('scroll-to', document.getElementById('que3').offsetTop + document.getElementById('que3').offsetHeight)
-          }, 3500)
+          }, 2000)
         } else {
           this.next({data: 3})
           setTimeout(() => {
             this.next({data: 4})
             this.toggleModify()
-          }, 3000)
+          }, 1500)
           setTimeout(() => {
             this.toggleModify()
             this.$emit('scroll-to', document.getElementById('que3').offsetTop + document.getElementById('que3').offsetHeight)
-          }, 3500)
+          }, 2000)
         }
       }
     },
@@ -116,15 +115,45 @@ export default {
       switch (member.labelName) {
         case '本人': case '配偶':
           this.setChooseList({data: this.youngList})
-          this.setDefaultAge({data: '30'})
+          this.setDefaultAge({data: ['30']})
+          console.log(90909, this.chooseList)
           break
-        case '儿子': case '女儿': case '小儿子': case '小女儿': case '大儿子': case '大女儿': case '二儿子': case '二女儿':
+        case '儿子': case '女儿': case '大儿子': case '大女儿':
           this.setChooseList({data: this.childList})
-          this.setDefaultAge({data: '5'})
+          this.setDefaultAge({data: ['5']})
+          break
+        case '二女儿': case '二儿子':
+          this.memberList.forEach(item => {
+            if (item.labelName === '大女儿' || item.labelName === '大儿子') {
+              let list = this.childList.slice(0, parseInt(item.value) + 1)
+              this.setChooseList({data: list})
+            }
+          })
+          break
+        case '小女儿': case '小儿子':
+          let labelList = this.memberList.map(item => {
+            return item.labelName
+          })
+          console.log('listr', labelList)
+          if (labelList.indexOf('二儿子') !== -1 || labelList.indexOf('二女儿') !== -1) {
+            this.memberList.forEach(item => {
+              if (item.labelName === '二女儿' || item.labelName === '二儿子') {
+                console.log(555, this.childList.slice(0, parseInt(item.value) + 1))
+                this.setChooseList({data: this.childList.slice(0, parseInt(item.value) + 1)})
+              }
+            })
+          } else if (labelList.indexOf('大儿子') !== -1 || labelList.indexOf('大女儿') !== -1) {
+            this.memberList.forEach(item => {
+              if (item.labelName === '大女儿' || item.labelName === '大儿子') {
+                console.log(555, this.childList.slice(0, parseInt(item.value) + 1))
+                this.setChooseList({data: this.childList.slice(0, parseInt(item.value) + 1)})
+              }
+            })
+          }
           break
         case '爸爸': case '妈妈': case '配偶爸爸': case '配偶妈妈':
           this.setChooseList({data: this.oldList})
-          this.setDefaultAge({data: '60'})
+          this.setDefaultAge({data: ['60']})
       }
       this.who = member.labelName
       this.toggleAgePicker()
@@ -224,6 +253,7 @@ export default {
 <style type="text/scss" lang="scss" scoped>
 @import "../styles/common";
 @import "../styles/animation";
+@include keyframesAnswer(slideRight, -300px, 49.2px);
 .que3 {
   padding-top: 30px;
   padding-bottom: 150px;
@@ -266,6 +296,15 @@ export default {
       margin-left: 12px;
     }
   }
+}
+.answer-enter-active {
+  animation: slideRight 1s;
+  -webkit-animation: slideRight 1s;
+}
+.answer-leave-active {
+  -webkit-animation: slideRight 1s reverse;
+  -o-animation: slideRight 1s reverse;
+  animation: slideRight 1s reverse;
 }
 
 </style>

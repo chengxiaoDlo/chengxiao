@@ -18,32 +18,30 @@
       </div>
       <question question="但愿人长久，家里有几口？" sub="我们会基于你的家庭结构和成员情况，考虑每个人的保障~" class="animated slideInLeft">
         <div slot="options" >
-          <transition name="options">
-            <div v-if="showOption" id="options">
-              <div class="options que2">
-                <div class="option">
-                  <div class="family" :class="info.sex === 'M' ? 'male' : 'female'">
-                    <div class="pick"></div>
-                  </div>
-                  <p class="member">本人</p>
+          <div v-if="showOption" id="options">
+            <div class="options que2">
+              <div class="option">
+                <div class="family" :class="info.sex === 'M' ? 'male' : 'female'">
+                  <div class="pick"></div>
                 </div>
-                <div class="option" v-for="member in memberList" @click="chooseMember(member)">
-                  <div class="family" :class="member.class">
-                    <div class="pick" v-if="member.picked"></div>
-                  </div>
-                  <p class="member">{{member.labelName}}</p>
-                </div>
-                <div class="option" @click="addMembers">
-                  <div class="family add"></div>
-                  <p class="member">添加</p>
-                </div>
+                <p class="member">本人</p>
               </div>
-              <div class="confirm btn-able" @click="confirm"></div>
+              <div class="option" v-for="member in memberList" @click="chooseMember(member)">
+                <div class="family" :class="member.class">
+                  <div class="pick" v-if="member.picked"></div>
+                </div>
+                <p class="member">{{member.labelName}}</p>
+              </div>
+              <div class="option" @click="addMembers">
+                <div class="family add"></div>
+                <p class="member">添加</p>
+              </div>
             </div>
-          </transition>
+            <div class="confirm btn-able" @click="confirm"></div>
+          </div>
         </div>
       </question>
-      <transition enter-active-class="animated slideInRight" leave-active-class="animated fadeOutRight">
+      <transition name="answer">
         <answer :textList="answerText" v-if="showAnswer" @modify="modify" modifiable wrap></answer>
       </transition>
     </div>
@@ -233,21 +231,21 @@
           if (this.progress === 2) {
             setTimeout(() => {
               this.next({data: 3})
-            }, 3000)
+            }, 1500)
             setTimeout(() => {
               this.$emit('scroll-to', document.getElementById('que2').offsetTop + document.getElementById('que2').offsetHeight)
-            }, 3500)
+            }, 2000)
           } else {
             this.clear()
             this.next({data: 2})
             setTimeout(() => {
               this.next({data: 3})
               this.toggleModify()
-            }, 3000)
+            }, 1500)
             setTimeout(() => {
               this.$emit('scroll-to', document.getElementById('que2').offsetTop + document.getElementById('que2').offsetHeight)
               this.toggleModify()
-            }, 3500)
+            }, 2000)
           }
 
         },
@@ -411,6 +409,7 @@
 <style type="text/scss" lang="scss" scoped>
 @import "../styles/common";
 @import "../styles/animation";
+@include keyframesAnswer(slideRight, -200px, 49.2px);
 .second-ques {
   overflow: hidden;
   height: 100%;
@@ -534,6 +533,15 @@
     margin-bottom: -225px;
     margin-left: 138px;
   }
+}
+.answer-enter-active {
+  animation: slideRight 1s;
+  -webkit-animation: slideRight 1s;
+}
+.answer-leave-active {
+  -webkit-animation: slideRight 1s reverse;
+  -o-animation: slideRight 1s reverse;
+  animation: slideRight 1s reverse;
 }
 
 </style>

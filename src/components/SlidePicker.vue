@@ -19,7 +19,7 @@
       },
       data () {
         return {
-          value: [this.default]
+          value: this.default
         }
       },
       props: {

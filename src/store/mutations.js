@@ -114,6 +114,9 @@ export default {
   [types.SET_DEFAULT_AGE] (state, payload) {
     state.defaultAge = payload.data
   },
+  [types.SET_DEFAULT_CITY] (state, payload) {
+    state.defaultCity = payload.data
+  },
   [types.SET_AGE] (state, payload) {
     state.selectedAge = payload.data
   },

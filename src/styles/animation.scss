@@ -21,3 +21,14 @@
     to { margin-left: $end; }
   }
 }
+
+@mixin keyframesAnswer ($a, $start, $end) {
+  @-webkit-keyframes #{$a} {
+    from { margin-right: $start; }
+    to { margin-right: $end; }
+  }
+  @keyframes #{$a} {
+    from { margin-right: $start; }
+    to { margin-right: $end; }
+  }
+}

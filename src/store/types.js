@@ -18,6 +18,7 @@ export default {
   TOGGLE_KEYBOARD: 'toggleKeyboard',
   SET_CHOOSE_LIST: 'setChooseList',
   SET_DEFAULT_AGE: 'setDefaultAge',
+  SET_DEFAULT_CITY: 'setDefaultCity',
   SET_AGE: 'setAge',
   SET_INPUT_NUMBER: 'setInputNumber',
   SET_CITY: 'setCity',

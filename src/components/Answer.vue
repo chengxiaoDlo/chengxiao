@@ -1,5 +1,5 @@
 <template>
-  <div class="answer" :class="{'need-padding': wrap}">
+  <div class="answer">
     <div class="modify" @click="modify" v-if="modifiable"></div>
     <p class="unwrap" v-if="!wrap">{{text}}</p>
     <div v-if="wrap" v-for="row in textList">
@@ -43,7 +43,7 @@
   background: -webkit-gradient(linear, left top, right top, from(#f6e15a), to(#f4d046));
   float: right;
   max-width: 360px;
-  padding: 0 40px;
+  padding: 18.5px 40px;
   margin-right: 49.2px;
   color: rgb(122, 103, 90);
   margin-top: 60px;
@@ -51,7 +51,7 @@
   border-radius: 10px;
   border-top-right-radius: 0;
   .unwrap {
-    line-height: 96px;
+    line-height: 67.5px;
   }
   .wrap {
     line-height: 67.5px;
@@ -75,9 +75,6 @@
     right: -24px;
   }
 }
-  .need-padding {
-    padding-top: 22.5px;
-    padding-bottom: 22.5px;
-  }
+
 
 </style>

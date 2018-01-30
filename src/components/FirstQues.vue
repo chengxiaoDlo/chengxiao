@@ -2,25 +2,23 @@
     <div class="ques" id="que1">
       <question question="江上往来人，敢问是何人？" class="animated slideInLeft">
           <div slot="options" >
-            <transition name="fade" >
-              <div v-if="showOption" class="options que1" id="options">
-                <div @click="selectSex('M')">
-                  <div class="sex male" >
-                    <div class="pick" v-if="sex === '先生'"></div>
-                  </div>
-                  <p class="sex-name">先生</p>
+            <div v-if="showOption" class="options que1" id="options">
+              <div @click="selectSex('M')">
+                <div class="sex male" >
+                  <div class="pick" v-if="sex === '先生'"></div>
                 </div>
-                <div @click="selectSex('F')">
-                  <div class="sex female" >
-                    <div class="pick" v-if="sex === '女士' "></div>
-                  </div>
-                  <p class="sex-name">女士</p>
-                </div>
+                <p class="sex-name">先生</p>
               </div>
-            </transition>
+              <div @click="selectSex('F')">
+                <div class="sex female" >
+                  <div class="pick" v-if="sex === '女士' "></div>
+                </div>
+                <p class="sex-name">女士</p>
+              </div>
+            </div>
           </div>
       </question>
-      <transition enter-active-class="animated slideInRight" leave-active-class="animated slideOutRight">
+      <transition name="answer">
         <answer :text="sex" v-if="showAnswer" @modify="modify"></answer>
       </transition>
     </div>
@@ -57,27 +55,29 @@
         selectSex (sex) {
           this.sex = sex === 'M' ? '先生' : '女士'
           this.chooseSex({data: sex})
-          this.showOption = false
-          this.showAnswer = true
+          setTimeout(() => {
+            this.showOption = false
+            this.showAnswer = true
+          }, 1000)
           this.$emit('fill-height', document.getElementById('options').offsetHeight)
           if (this.progress === 1) {
             setTimeout(() => {
               this.next({data: 2})
-            }, 3000)
+            }, 2000)
             setTimeout(() => {
               this.$emit('scroll-to', document.getElementById('que1').offsetTop + document.getElementById('que1').offsetHeight)
-            }, 3500)
+            }, 2500)
           } else {
             this.clear()
             this.next({data: 1})
             setTimeout(() => {
               this.next({data: 2})
               this.toggleModify()
-            }, 3000)
+            }, 2000)
             setTimeout(() => {
               this.toggleModify()
               this.$emit('scroll-to', document.getElementById('que1').offsetTop + document.getElementById('que1').offsetHeight)
-            }, 3500)
+            }, 2500)
           }
 
         },
@@ -99,6 +99,7 @@
 <style type="text/scss" lang="scss" scoped>
   @import "../styles/common";
   @import "../styles/animation";
+  @include keyframesAnswer(slideRight, -200px, 49.2px);
   .ques {
     overflow: hidden;
     min-height: 100%;
@@ -131,16 +132,14 @@
       font-size: 30px;
     }
   }
-  .fadeInLeft {
-    animation-delay: 1s;
+
+  .answer-enter-active {
+    animation: slideRight 1s;
+    -webkit-animation: slideRight 1s;
   }
-  .fade-enter-active {
-    animation: fade 2s reverse;
-    -webkit-animation: fade 2s reverse;
-  }
-  .fade-leave-active {
-    -webkit-animation: fade 2s;
-    -o-animation: fade 2s;
-    animation: fade 2s;
+  .answer-leave-active {
+    -webkit-animation: slideRight 1s reverse;
+    -o-animation: slideRight 1s reverse;
+    animation: slideRight 1s reverse;
   }
 </style>

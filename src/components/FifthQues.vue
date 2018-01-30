@@ -2,26 +2,24 @@
     <div style="overflow: hidden" id="que5" :class="{'hidden': isModify && progress <= 5}">
       <question question="劝君更尽一杯酒，全家社保上全否？" sub="这会关系到家人医疗险的配置" class="animated slideInLeft">
         <div slot="options">
-          <transition name="options">
-            <div v-if="showOption" id="options">
-              <div class="options que5" >
-                <div v-for="member in memberList">
-                  <div class="age" >
-                    <div>
-                      <div class="member" :class="member.class"></div>
-                      <p class="member-labelName">{{member.labelName}}</p>
-                    </div>
-                    <div class="member-security" :class="{'qicked': member.socialSecurity === true}" @click="hasSecurity('y', member)">有社保</div>
-                    <div class="member-security" :class="{'qicked': member.socialSecurity === false}" @click="hasSecurity('n', member)">无社保</div>
+          <div v-if="showOption" id="options">
+            <div class="options que5" >
+              <div v-for="member in memberList">
+                <div class="age" >
+                  <div>
+                    <div class="member" :class="member.class"></div>
+                    <p class="member-labelName">{{member.labelName}}</p>
                   </div>
+                  <div class="member-security" :class="{'qicked': member.socialSecurity === true}" @click="hasSecurity('y', member)">有社保</div>
+                  <div class="member-security" :class="{'qicked': member.socialSecurity === false}" @click="hasSecurity('n', member)">无社保</div>
                 </div>
               </div>
-              <div class="confirm btn-able" @click="confirm"></div>
             </div>
-          </transition>
+            <div class="confirm btn-able" @click="confirm"></div>
+          </div>
         </div>
       </question>
-      <transition enter-active-class="animated slideInRight" leave-active-class="animated fadeOutRight">
+      <transition name="answer">
         <answer v-if="showAnswer" :textList="answerlabelName" @modify="modify" wrap></answer>
       </transition>
     </div>
@@ -71,20 +69,20 @@
           if (this.progress === 5) {
             setTimeout(() => {
               this.next({data: 6})
-            }, 3000)
+            }, 1500)
             setTimeout(() => {
               this.$emit('scroll-to', document.getElementById('que5').offsetTop + document.getElementById('que5').offsetHeight)
-            }, 3500)
+            }, 2000)
           } else {
             this.next({data: 5})
             setTimeout(() => {
               this.next({data: 6})
               this.toggleModify()
-            }, 3000)
+            }, 1500)
             setTimeout(() => {
               this.toggleModify()
               this.$emit('scroll-to', document.getElementById('que5').offsetTop + document.getElementById('que5').offsetHeight)
-            }, 3500)
+            }, 2000)
           }
         },
         hasSecurity (has, member) {
@@ -151,6 +149,7 @@
 <style type="text/scss" lang="scss" scoped>
   @import "../styles/common";
   @import "../styles/animation";
+  @include keyframesAnswer(slideRight, -400px, 49.2px);
   .que5 {
     padding-top: 30px;
     padding-bottom: 150px;
@@ -198,6 +197,15 @@
         padding-left: 15px;
       }
     }
+  }
+  .answer-enter-active {
+    animation: slideRight 1s;
+    -webkit-animation: slideRight 1s;
+  }
+  .answer-leave-active {
+    -webkit-animation: slideRight 1s reverse;
+    -o-animation: slideRight 1s reverse;
+    animation: slideRight 1s reverse;
   }
 
 </style>
