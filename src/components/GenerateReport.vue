@@ -8,20 +8,20 @@
         <div class="list">
           <div class="step">
             <div class="text">分析家庭成员</div>
-            <div class="state" :class="{'animated slideIn done': percent1 === 100}">
-              <x-circle :percent="percent1" :stroke-width="10" stroke-color="#F15D4C" v-if="percent1 !== 100"></x-circle>
+            <div class="state" :class="{'animated fadeIn done': first}">
+              <x-circle :percent="percent1" :stroke-width="10" stroke-color="#F15D4C" v-show="!first"></x-circle>
             </div>
           </div>
           <div class="step">
             <div class="text">生成保险配置</div>
-            <div class="state" :class="{'animated slideIn done': percent2 === 100}">
-              <x-circle :percent="percent2" :stroke-width="10" stroke-color="#F15D4C" v-if="percent2 !== 100"></x-circle>
+            <div class="state" :class="{'animated fadeIn done': second}">
+              <x-circle :percent="percent2" :stroke-width="10" stroke-color="#F15D4C" v-if="!second"></x-circle>
             </div>
           </div>
           <div class="step">
             <div class="text">筛选条款费率</div>
-            <div class="state" :class="{'animated slideIn done': percent3 === 100}">
-              <x-circle :percent="percent3" :stroke-width="10" stroke-color="#F15D4C" v-if="percent3 !== 100"></x-circle>
+            <div class="state" :class="{'animated slideIn done': third}">
+              <x-circle :percent="percent3" :stroke-width="10" stroke-color="#F15D4C" v-if="!third"></x-circle>
             </div>
           </div>
         </div>
@@ -47,6 +47,9 @@
           percent1: 0,
           percent2: 0,
           percent3: 0,
+          first: false,
+          second: false,
+          third: false,
           showBtn: false,
         }
       },
@@ -73,23 +76,29 @@
           this.percent1++
           if (this.percent1 === 100) {
             clearInterval(t1)
-            let t2 = setInterval(() => {
-              this.percent2++
-              if (this.percent2 === 100) {
-                clearInterval(t2)
-                let t3 = setInterval(() => {
-                  this.percent3++
-                  if (this.percent3 === 100) {
-                    clearInterval(t3)
-                    setTimeout(() => {
-                      this.showBtn = true
-                    }, 2000)
-                  }
-                }, 60)
-              }
-            }, 60)
           }
-        }, 60)
+        }, 20)
+        setTimeout(() => {
+          this.first = true
+          let t2 = setInterval(() => {
+            this.percent2++
+            if (this.percent2 === 100) {
+              clearInterval(t2)
+            }
+          })
+        }, 2800)
+        setTimeout(() => {
+          this.second = true
+          let t3 = setInterval(() => {
+            this.percent3++
+            if (this.percent3 === 100) {
+              clearInterval(t3)
+            }
+          })
+        }, 4000)
+        setTimeout(() => {
+          this.third = true
+        }, 5000)
       }
     }
 </script>
@@ -134,6 +143,9 @@
       .state {
         width: 40px;
         height: 40px;
+        img {
+          width: 100%;
+        }
       }
       .done {
         background: url("../assets/images/pick.png") no-repeat;
