@@ -99,6 +99,9 @@
         setTimeout(() => {
           this.third = true
         }, 5000)
+        setTimeout(() => {
+          this.showBtn = true
+        }, 6500)
       }
     }
 </script>
