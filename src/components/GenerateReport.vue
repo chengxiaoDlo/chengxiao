@@ -26,8 +26,8 @@
           </div>
         </div>
       </div>
-      <question question="完成！立即开启风险测评报告！" v-if="percent3 === 100" class="animated slideInLeft"></question>
-      <div class="btn animated slideIn" v-if="showBtn" @click="submit"></div>
+      <question question="完成！立即开启风险测评报告！" v-if="percent3 === 100" class="go"></question>
+      <div class="btn animated fadeIn" v-if="showBtn" @click="submit"></div>
     </div>
 </template>
 
@@ -86,41 +86,46 @@
               clearInterval(t2)
             }
           })
+          setTimeout(() => {
+            this.second = true
+            let t3 = setInterval(() => {
+              this.percent3++
+              if (this.percent3 === 100) {
+                clearInterval(t3)
+              }
+            })
+            setTimeout(() => {
+              this.third = true
+              setTimeout(() => {
+                this.showBtn = true
+              }, 1500)
+            }, 1000)
+          }, 1200)
         }, 2800)
-        setTimeout(() => {
-          this.second = true
-          let t3 = setInterval(() => {
-            this.percent3++
-            if (this.percent3 === 100) {
-              clearInterval(t3)
-            }
-          })
-        }, 4000)
-        setTimeout(() => {
-          this.third = true
-        }, 5000)
-        setTimeout(() => {
-          this.showBtn = true
-        }, 6500)
       }
     }
 </script>
 
 <style type="text/scss" lang="scss" scoped>
   @import "../styles/animation";
-  @include keyframes(fadeLeft, -700px, 30px);
+  @include keyframes(slideLeft1, -740px, 0);
 .generate {
+  transform: translateX(-740px);
+  -webkit-transform: translateX(-740px);
+  -webkit-animation: slideLeft1 1s ease-out;
+  -o-animation: slideLeft1 1s ease-out;
+  animation: slideLeft1 1s ease-out;
+  animation-fill-mode: forwards;
+  animation-delay: 1s;
+  -webkit-animation-delay: 1s;
+
   .card {
     width: 690px;
     background: #ffffff;
-    margin-top: 60px;
-    margin-bottom: 60px;
-    margin-left: -700px;
-    -webkit-animation: fadeLeft 1s ease-out;
-    -o-animation: fadeLeft 1s ease-out;
-    animation: fadeLeft 1s ease-out;
+    margin: 60px auto;
     animation-fill-mode: forwards;
     animation-delay: 1s;
+    -webkit-animation-delay: 1s;
     padding-top: 48px;
     border-radius: 5px;
     padding-bottom: 84px;
@@ -156,6 +161,16 @@
       }
     }
   }
+  .go {
+    transform: translateX(-740px);
+    -webkit-transform: translateX(-740px);
+    -webkit-animation: slideLeft1 1s ease-out;
+    -o-animation: slideLeft1 1s ease-out;
+    animation: slideLeft1 1s ease-out;
+    animation-fill-mode: forwards;
+    animation-delay: 1s;
+    -webkit-animation-delay: 1s;
+  }
   .btn {
     width: 412px;
     height: 164px;
@@ -165,6 +180,7 @@
   }
   .slideInLeft {
     animation-delay: 1s;
+    -webkit-animation-delay: 1s;
   }
 }
 </style>

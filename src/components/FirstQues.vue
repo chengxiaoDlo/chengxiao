@@ -1,6 +1,6 @@
 <template>
     <div class="ques" id="que1">
-      <question question="江上往来人，敢问是何人？" class="animated slideInLeft">
+      <question question="江上往来人，敢问是何人？" class="question1">
           <div slot="options" >
             <div v-if="showOption" class="options que1" id="options">
               <div @click="selectSex('M')">
@@ -18,7 +18,7 @@
             </div>
           </div>
       </question>
-      <transition name="answer">
+      <transition name="answer" @after-enter="toNext">
         <answer :text="sex" v-if="showAnswer" @modify="modify"></answer>
       </transition>
     </div>
@@ -60,26 +60,6 @@
             this.showAnswer = true
           }, 1000)
           this.$emit('fill-height', document.getElementById('options').offsetHeight)
-          if (this.progress === 1) {
-            setTimeout(() => {
-              this.next({data: 2})
-            }, 2000)
-            setTimeout(() => {
-              this.$emit('scroll-to', document.getElementById('que1').offsetTop + document.getElementById('que1').offsetHeight)
-            }, 2500)
-          } else {
-            this.clear()
-            this.next({data: 1})
-            setTimeout(() => {
-              this.next({data: 2})
-              this.toggleModify()
-            }, 2000)
-            setTimeout(() => {
-              this.toggleModify()
-              this.$emit('scroll-to', document.getElementById('que1').offsetTop + document.getElementById('que1').offsetHeight)
-            }, 2500)
-          }
-
         },
         modify () {
           console.log(333)
@@ -87,11 +67,31 @@
           setTimeout(() => {
             this.showOption = true
           }, 1000)
+        },
+        toNext () {
+          if (this.progress === 1) {
+            setTimeout(() => {
+              this.next({data: 2})
+              setTimeout(() => {
+                this.$emit('scroll-to', document.getElementById('que1').offsetTop + document.getElementById('que1').offsetHeight)
+              }, 500)
+            }, 500)
+          } else {
+            this.clear()
+            this.next({data: 1})
+            setTimeout(() => {
+              this.next({data: 2})
+              this.toggleModify()
+              setTimeout(() => {
+                this.toggleModify()
+                this.$emit('scroll-to', document.getElementById('que1').offsetTop + document.getElementById('que1').offsetHeight)
+              }, 500)
+            }, 500)
+          }
         }
       },
       mounted () {
         this.$emit('change-height', document.documentElement.clientHeight - document.getElementById('que1').offsetHeight)
-        // document.getElementById('que1').style.minHeight = document.documentElement.clientHeight + 'px'
       }
     }
 </script>
@@ -99,10 +99,21 @@
 <style type="text/scss" lang="scss" scoped>
   @import "../styles/common";
   @import "../styles/animation";
-  @include keyframesAnswer(slideRight, -200px, 49.2px);
+  @include keyframes(slideLeft1, -740px, 0);
+  @include keyframes(slideRight, 100%, 0);
   .ques {
     overflow: hidden;
     min-height: 100%;
+  }
+  .question1 {
+    transform: translateX(-740px);
+    -webkit-transform: translateX(-740px);
+    -webkit-animation: slideLeft1 1s ease-out;
+    -o-animation: slideLeft1 1s ease-out;
+    animation: slideLeft1 1s ease-out;
+    animation-fill-mode: forwards;
+    animation-delay: 1s;
+    -webkit-animation-delay: 1s;
   }
   .que1 {
     display: flex;

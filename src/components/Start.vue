@@ -1,6 +1,6 @@
 <template>
     <div class="start">
-      <div class="row-with-avatar">
+      <div class="row-with-avatar" @animationend="firstEnd">
         <div class="first-line  ">
           <div class="avatar"></div>
           <div class="dialogue">
@@ -11,19 +11,19 @@
           </div>
         </div>
       </div>
-      <div class="row-without-avatar">
+      <div class="row-without-avatar" v-if="firstDone">
         <div class="dialogue" :class="{'done': goToStart}">
           <div class="angle"></div>
           <p>让我来为你规划专属的家庭保险方案吧~</p>
         </div>
-        <transition name="start">
-          <div v-if="!goToStart">
-            <div class="content"></div>
-            <div class="start-btn" @click="start"></div>
-          </div>
-        </transition>
-        <answer class="answer" text="开始" v-if="goToStart" :modifiable="false"></answer>
+        <div v-if="!goToStart">
+          <div class="content"></div>
+          <div class="start-btn" @click="start"></div>
+        </div>
       </div>
+      <transition name="answer" @after-enter="toNext">
+        <answer text="开始" :modifiable="false"  v-if="goToStart"></answer>
+      </transition>
     </div>
 </template>
 
@@ -39,6 +39,7 @@
       data () {
         return {
           goToStart: false,
+          firstDone: false,
           showStartBtn: true,
           name: '程效'
         }
@@ -53,18 +54,21 @@
           setIndex: 'setIndex'
         }),
         start () {
-          console.log(44454, document.getElementById('questionnaire'))
           this.goToStart = true
+        },
+        firstEnd () {
+          this.firstDone = true
+        },
+        toNext () {
           setTimeout(() => {
             if (this.progress === 0) {
               this.next({data: 1})
+              setTimeout(() => {
+                this.$emit('scroll-to', document.getElementsByClassName('start')[0].offsetTop + document.getElementsByClassName('start')[0].offsetHeight)
+                this.setIndex({data: this.index + 1})
+              }, 500)
             }
-          }, 1500)
-          setTimeout(() => {
-            this.$emit('scroll-to', document.getElementsByClassName('start')[0].offsetTop + document.getElementsByClassName('start')[0].offsetHeight)
-//            window.scrollTo(0, document.getElementsByClassName('start')[0].offsetTop + document.getElementsByClassName('start')[0].offsetHeight)
-            this.setIndex({data: this.index + 1})
-          }, 2000)
+          }, 500)
         }
       }
     }
@@ -73,10 +77,10 @@
 <style type="text/scss" lang="scss" scoped>
 @import "../styles/animation";
 @include keyframes(slideLeft1, -740px, 0);
-@include keyframes(slideLeft2, -660px, 90px);
-@include keyframesAnswer(slideRight, -200px, 49.2px)
+@include keyframes(slideRight, 100%, 0);
 .start {
   margin-left: 16px;
+  overflow: hidden;
   .row-with-avatar {
     position: relative;
     -webkit-animation: slideLeft1 1s ease-out;
@@ -84,7 +88,6 @@
     animation: slideLeft1 1s ease-out;
     .first-line {
       display: flex;
-
       .avatar {
         height: 90px;
         width: 90px;
@@ -93,7 +96,6 @@
         margin-top: 6px;
         margin-right: 6px;
       }
-
       .dialogue {
         width: 620px;
         box-sizing: border-box;
@@ -116,12 +118,13 @@
   }
   .row-without-avatar {
     margin-top: 40px;
-    margin-left: -660px;
-    -webkit-animation: slideLeft2 1s ease-out;
-    -o-animation: slideLeft2 1s ease-out;
-    animation: slideLeft2 1s ease-out;
+    transform: translateX(-740px);
+    -webkit-transform: translateX(-740px);
+    -webkit-animation: slideLeft1 1s ease-out;
+    -o-animation: slideLeft1 1s ease-out;
+    animation: slideLeft1 1s ease-out;
+    margin-left: 90px;
     animation-fill-mode: forwards;
-    animation-delay: 1.5s;
     overflow: hidden;
     .dialogue {
       background: #ffffff;
@@ -163,12 +166,10 @@
       margin-top: -108px;
     }
   }
-  .answer {
-    margin-right: -200px;
+  .answer-enter-active {
     -webkit-animation: slideRight 1s ease-out;
     -o-animation: slideRight 1s ease-out;
     animation: slideRight 1s ease-out;
-    animation-fill-mode: forwards;
   }
 }
 

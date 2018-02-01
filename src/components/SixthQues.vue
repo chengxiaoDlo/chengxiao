@@ -1,7 +1,7 @@
 <template>
     <div style="overflow: hidden;" id="que6" :class="{'hidden': isModify && progress <= 6}">
       <div @click="cancel">
-        <question question="玉盘珍馐值万钱，你家收支多少钱？" sub="我们会基于家庭收入及贷款来为你规划合理的保额及保费预算" class="animated slideInLeft">
+        <question question="玉盘珍馐值万钱，你家收支多少钱？" sub="我们会基于家庭收入及贷款来为你规划合理的保额及保费预算" class="question6">
           <div slot="options">
             <div v-if="showOption" id="options">
               <div class="options que3" >
@@ -20,7 +20,7 @@
             </div>
           </div>
         </question>
-        <transition name="answer">
+        <transition name="answer" @after-enter="toNext">
           <answer v-if="showAnswer" :textList="answerText" @modify="modify" wrap></answer>
         </transition>
       </div>
@@ -99,24 +99,26 @@
             this.showOption = false
             this.addIncome({data: this.memberList})
             this.$emit('fill-height', document.getElementById('options').offsetHeight)
-            if (this.progress === 6) {
-              setTimeout(() => {
-                this.next({data: 7})
-              }, 1500)
+          }
+        },
+        toNext () {
+          if (this.progress === 6) {
+            setTimeout(() => {
+              this.next({data: 7})
               setTimeout(() => {
                 this.$emit('scroll-to', document.getElementById('que6').offsetTop + document.getElementById('que6').offsetHeight)
-              }, 2000)
-            } else {
-              this.next({data: 6})
-              setTimeout(() => {
-                this.next({data: 7})
-                this.toggleModify()
-              }, 1500)
+              }, 500)
+            }, 500)
+          } else {
+            this.next({data: 6})
+            setTimeout(() => {
+              this.next({data: 7})
+              this.toggleModify()
               setTimeout(() => {
                 this.toggleModify()
                 this.$emit('scroll-to', document.getElementById('que6').offsetTop + document.getElementById('que6').offsetHeight)
-              }, 2000)
-            }
+              }, 500)
+            }, 500)
           }
         },
         modify () {
@@ -225,7 +227,18 @@
 <style type="text/scss" lang="scss" scoped>
   @import "../styles/common";
   @import "../styles/animation";
-  @include keyframesAnswer(slideRight, -400px, 49.2px);
+  @include keyframes(slideRight, 100%, 0);
+  @include keyframes(slideLeft1, -740px, 0);
+  .question6 {
+    transform: translateX(-740px);
+    -webkit-transform: translateX(-740px);
+    -webkit-animation: slideLeft1 1s ease-out;
+    -o-animation: slideLeft1 1s ease-out;
+    animation: slideLeft1 1s ease-out;
+    animation-fill-mode: forwards;
+    animation-delay: 1s;
+    -webkit-animation-delay: 1s;
+  }
   .que3 {
     padding-top: 30px;
     padding-bottom: 150px;

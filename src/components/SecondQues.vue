@@ -16,7 +16,7 @@
           </div>
         </x-dialog>
       </div>
-      <question question="但愿人长久，家里有几口？" sub="我们会基于你的家庭结构和成员情况，考虑每个人的保障~" class="animated slideInLeft">
+      <question question="但愿人长久，家里有几口？" sub="我们会基于你的家庭结构和成员情况，考虑每个人的保障~" class="question2">
         <div slot="options" >
           <div v-if="showOption" id="options">
             <div class="options que2">
@@ -41,7 +41,7 @@
           </div>
         </div>
       </question>
-      <transition name="answer">
+      <transition name="answer" @after-enter="toNext">
         <answer :textList="answerText" v-if="showAnswer" @modify="modify" modifiable wrap></answer>
       </transition>
     </div>
@@ -228,26 +228,27 @@
           this.showOption = false
           this.showAnswer = true
           this.$emit('fill-height', document.getElementById('options').offsetHeight)
+        },
+        toNext () {
           if (this.progress === 2) {
             setTimeout(() => {
               this.next({data: 3})
-            }, 1500)
-            setTimeout(() => {
-              this.$emit('scroll-to', document.getElementById('que2').offsetTop + document.getElementById('que2').offsetHeight)
-            }, 2000)
+              setTimeout(() => {
+                this.$emit('scroll-to', document.getElementById('que2').offsetTop + document.getElementById('que2').offsetHeight)
+              }, 500)
+            }, 500)
           } else {
             this.clear()
             this.next({data: 2})
             setTimeout(() => {
               this.next({data: 3})
               this.toggleModify()
-            }, 1500)
-            setTimeout(() => {
-              this.$emit('scroll-to', document.getElementById('que2').offsetTop + document.getElementById('que2').offsetHeight)
-              this.toggleModify()
-            }, 2000)
+              setTimeout(() => {
+                this.$emit('scroll-to', document.getElementById('que2').offsetTop + document.getElementById('que2').offsetHeight)
+                this.toggleModify()
+              }, 500)
+            }, 500)
           }
-
         },
         modify () {
           this.showAnswer = false
@@ -409,10 +410,21 @@
 <style type="text/scss" lang="scss" scoped>
 @import "../styles/common";
 @import "../styles/animation";
-@include keyframesAnswer(slideRight, -200px, 49.2px);
+@include keyframes(slideRight, 100%, 0);
+@include keyframes(slideLeft1, -740px, 0);
 .second-ques {
   overflow: hidden;
   height: 100%;
+  .question2 {
+    transform: translateX(-740px);
+    -webkit-transform: translateX(-740px);
+    -webkit-animation: slideLeft1 1s ease-out;
+    -o-animation: slideLeft1 1s ease-out;
+    animation: slideLeft1 1s ease-out;
+    animation-fill-mode: forwards;
+    animation-delay: 1s;
+    -webkit-animation-delay: 1s;
+  }
 }
 .que2 {
   display: flex;
@@ -462,16 +474,6 @@
   margin-top: -120px;
   margin-left: 270px;
 }
-  .options-enter-active {
-    -webkit-animation: fade 2s reverse;
-    -o-animation: fade 2s reverse;
-    animation: fade 2s reverse;
-  }
-  .options-leave-active {
-    -webkit-animation: fade 2s;
-    -o-animation: fade 2s;
-    animation: fade 2s;
-  }
   .shadow {
     height: 100%;
     width: 100%;

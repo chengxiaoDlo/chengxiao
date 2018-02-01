@@ -56,20 +56,6 @@
   background: url("../assets/images/loan.png") no-repeat;
   background-size: 100%;
 }
-.slideInLeft {
-  animation-delay: 1.5s;
-}
-.slideInRight {
-  animation-delay: 2s;
-}
-.options-enter-active {
-  -webkit-animation: fade 1s reverse;
-  -o-animation: fade 1s reverse;
-  animation: fade 1s reverse;
-}
-.options-leave-active {
-  -webkit-animation: fade 1s;
-  -o-animation: fade 1s;
-  animation: fade 1s;
-}
+
+
 

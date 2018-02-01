@@ -15,7 +15,7 @@
           <div style="width: 100%;" id="block"></div>
         </div>
       </scroller>
-      <transition enter-active-class="animated slideInUp" leave-active-class="animated slideOutDown">
+      <transition name="keyboard">
         <keyboard v-if="showKeyBoard" @quit="cancelInput" @ok="ok"></keyboard>
       </transition>
       <slide-picker v-if="showAgePicker" :list="chooseList" :col="1" @quit="cancelAge" @confirm="selectedAge" :default="defaultAge"></slide-picker>
@@ -135,8 +135,19 @@ export default {
 
 <style type="text/scss" lang="scss">
   @import "../styles/common";
+  @import "../styles/animation";
+  @include keyboard(keyboard, 100%, 0);
   .questionnaire {
     height: 100%;
   }
-
+  .keyboard-enter-active {
+    -webkit-animation: keyboard 0.5s;
+    -o-animation: keyboard 0.5s;
+    animation: keyboard 0.5s;
+  }
+  .keyboard-leave-active {
+    -webkit-animation: keyboard 0.5s reverse;
+    -o-animation: keyboard 0.5s reverse;
+    animation: keyboard 0.5s reverse;
+  }
 </style>

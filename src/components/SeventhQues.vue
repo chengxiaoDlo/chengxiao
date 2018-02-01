@@ -1,6 +1,6 @@
 <template>
     <div style="overflow: hidden;" id="que7" :class="{'hidden': isModify && progress <= 7}">
-      <question question="蓝田日暖玉生烟，日常能抽几支烟？" sub="部分寿险产品会为非吸烟体用户提供高性价比产品，我们也会全面考虑哦~" class="animated slideInLeft">
+      <question question="蓝田日暖玉生烟，日常能抽几支烟？" sub="部分寿险产品会为非吸烟体用户提供高性价比产品，我们也会全面考虑哦~" class="question7">
         <div slot="options">
           <div v-if="showOption" id="options">
             <div class="options que7" >
@@ -19,7 +19,7 @@
           </div>
         </div>
       </question>
-      <transition name="answer">
+      <transition name="answer" @after-enter="toNext">
         <answer v-if="showAnswer" :textList="answerText" @modify="modify" wrap></answer>
       </transition>
     </div>
@@ -130,13 +130,14 @@
               console.log(666, err)
             })
           this.$emit('fill-height', document.getElementById('options').offsetHeight)
+        },
+        toNext () {
           setTimeout(() => {
             this.next({data: 8})
-          }, 1500)
-          setTimeout(() => {
-            this.$emit('scroll-to', document.getElementById('que7').offsetTop + document.getElementById('que7').offsetHeight)
-//            window.scrollTo(0, document.getElementById('que7').offsetTop + document.getElementById('que7').offsetHeight)
-          }, 2000)
+            setTimeout(() => {
+              this.$emit('scroll-to', document.getElementById('que7').offsetTop + document.getElementById('que7').offsetHeight)
+            }, 500)
+          }, 500)
         },
         modify () {
           this.showAnswer = false
@@ -147,7 +148,6 @@
         }
       },
       mounted () {
-        // document.getElementById('que7').style.minHeight = document.documentElement.clientHeight + 'px'
         this.$emit('change-height', document.documentElement.clientHeight - document.getElementById('que7').offsetHeight)
       },
       created () {
@@ -182,7 +182,18 @@
 <style type="text/scss" lang="scss" scoped>
   @import "../styles/animation";
   @import "../styles/common";
-  @include keyframesAnswer(slideRight, -400px, 49.2px);
+  @include keyframes(slideRight, 100%, 0);
+  @include keyframes(slideLeft1, -740px, 0);
+  .question7 {
+    transform: translateX(-740px);
+    -webkit-transform: translateX(-740px);
+    -webkit-animation: slideLeft1 1s ease-out;
+    -o-animation: slideLeft1 1s ease-out;
+    animation: slideLeft1 1s ease-out;
+    animation-fill-mode: forwards;
+    animation-delay: 1s;
+    -webkit-animation-delay: 1s;
+  }
   .que7 {
     padding-top: 30px;
     padding-bottom: 150px;

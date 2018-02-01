@@ -1,6 +1,6 @@
 <template>
   <div id="que3" style="overflow: hidden" :class="{'hidden': isModify && progress <= 3}">
-    <question question="对酒当歌，芳龄几何？" sub="年龄会关乎到保险方案和价格的准确性哦~" class="animated slideInLeft">
+    <question question="对酒当歌，芳龄几何？" sub="年龄会关乎到保险方案和价格的准确性哦~" class="question3">
       <div slot="options">
         <div v-if="showOption" id="options">
           <div class="options que3" >
@@ -19,7 +19,7 @@
         </div>
       </div>
     </question>
-    <transition name="answer">
+    <transition name="answer" @after-enter="toNext">
       <answer v-if="showAnswer" :textList="answerText" @modify="modify" wrap></answer>
     </transition>
   </div>
@@ -91,24 +91,26 @@ export default {
         this.showAnswer = true
         this.addAge({data: this.memberList})
         this.$emit('fill-height', document.getElementById('options').offsetHeight)
-        if (this.progress === 3) {
-          setTimeout(() => {
-            this.next({data: 4})
-          }, 1500)
+      }
+    },
+    toNext () {
+      if (this.progress === 3) {
+        setTimeout(() => {
+          this.next({data: 4})
           setTimeout(() => {
             this.$emit('scroll-to', document.getElementById('que3').offsetTop + document.getElementById('que3').offsetHeight)
-          }, 2000)
-        } else {
-          this.next({data: 3})
-          setTimeout(() => {
-            this.next({data: 4})
-            this.toggleModify()
-          }, 1500)
+          }, 500)
+        }, 500)
+      } else {
+        this.next({data: 3})
+        setTimeout(() => {
+          this.next({data: 4})
+          this.toggleModify()
           setTimeout(() => {
             this.toggleModify()
             this.$emit('scroll-to', document.getElementById('que3').offsetTop + document.getElementById('que3').offsetHeight)
-          }, 2000)
-        }
+          }, 500)
+        }, 500)
       }
     },
     selectAge (member) {
@@ -253,7 +255,18 @@ export default {
 <style type="text/scss" lang="scss" scoped>
 @import "../styles/common";
 @import "../styles/animation";
-@include keyframesAnswer(slideRight, -300px, 49.2px);
+@include keyframes(slideRight, 100%, 0);
+@include keyframes(slideLeft1, -740px, 0);
+.question3 {
+  transform: translateX(-740px);
+  -webkit-transform: translateX(-740px);
+  -webkit-animation: slideLeft1 1s ease-out;
+  -o-animation: slideLeft1 1s ease-out;
+  animation: slideLeft1 1s ease-out;
+  animation-fill-mode: forwards;
+  animation-delay: 1s;
+  -webkit-animation-delay: 1s;
+}
 .que3 {
   padding-top: 30px;
   padding-bottom: 150px;

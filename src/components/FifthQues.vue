@@ -1,6 +1,6 @@
 <template>
     <div style="overflow: hidden" id="que5" :class="{'hidden': isModify && progress <= 5}">
-      <question question="劝君更尽一杯酒，全家社保上全否？" sub="这会关系到家人医疗险的配置" class="animated slideInLeft">
+      <question question="劝君更尽一杯酒，全家社保上全否？" sub="这会关系到家人医疗险的配置" class="question5">
         <div slot="options">
           <div v-if="showOption" id="options">
             <div class="options que5" >
@@ -19,7 +19,7 @@
           </div>
         </div>
       </question>
-      <transition name="answer">
+      <transition name="answer" @after-enter="toNext">
         <answer v-if="showAnswer" :textList="answerlabelName" @modify="modify" wrap></answer>
       </transition>
     </div>
@@ -66,23 +66,25 @@
           this.showAnswer = true
           this.addSocial({data: this.memberList})
           this.$emit('fill-height', document.getElementById('options').offsetHeight)
+        },
+        toNext () {
           if (this.progress === 5) {
             setTimeout(() => {
               this.next({data: 6})
-            }, 1500)
-            setTimeout(() => {
-              this.$emit('scroll-to', document.getElementById('que5').offsetTop + document.getElementById('que5').offsetHeight)
-            }, 2000)
+              setTimeout(() => {
+                this.$emit('scroll-to', document.getElementById('que5').offsetTop + document.getElementById('que5').offsetHeight)
+              }, 500)
+            }, 500)
           } else {
             this.next({data: 5})
             setTimeout(() => {
               this.next({data: 6})
               this.toggleModify()
-            }, 1500)
-            setTimeout(() => {
-              this.toggleModify()
-              this.$emit('scroll-to', document.getElementById('que5').offsetTop + document.getElementById('que5').offsetHeight)
-            }, 2000)
+              setTimeout(() => {
+                this.toggleModify()
+                this.$emit('scroll-to', document.getElementById('que5').offsetTop + document.getElementById('que5').offsetHeight)
+              }, 500)
+            }, 500)
           }
         },
         hasSecurity (has, member) {
@@ -149,7 +151,18 @@
 <style type="text/scss" lang="scss" scoped>
   @import "../styles/common";
   @import "../styles/animation";
-  @include keyframesAnswer(slideRight, -400px, 49.2px);
+  @include keyframes(slideRight, 100%, 0);
+  @include keyframes(slideLeft1, -740px, 0);
+  .question5 {
+    transform: translateX(-740px);
+    -webkit-transform: translateX(-740px);
+    -webkit-animation: slideLeft1 1s ease-out;
+    -o-animation: slideLeft1 1s ease-out;
+    animation: slideLeft1 1s ease-out;
+    animation-fill-mode: forwards;
+    animation-delay: 1s;
+    -webkit-animation-delay: 1s;
+  }
   .que5 {
     padding-top: 30px;
     padding-bottom: 150px;

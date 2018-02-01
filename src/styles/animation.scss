@@ -1,34 +1,47 @@
-@keyframes fade {
-  0% {
-    transform-origin: 0 0;
-    transform: scaleY(1);
-    opacity: 1;
-  }
-  100% {
-    transform-origin: 0 0;
-    transform: scaleY(0);
-    opacity: 0;
-  }
-}
-
 @mixin keyframes ($a, $start, $end) {
   @-webkit-keyframes #{$a} {
-    from { margin-left: $start; }
-    to { margin-left: $end; }
+    from {
+      transform: translateX($start);
+      -webkit-transform: translateX($start);
+    }
+    to {
+      transform: translateX($end);
+      -webkit-transform: translateX($end);
+    }
   }
   @keyframes #{$a} {
-    from { margin-left: $start; }
-    to { margin-left: $end; }
+    from {
+      transform: translateX($start);
+      -webkit-transform: translateX($start);
+    }
+    to {
+      transform: translateX($end);
+      -webkit-transform: translateX($end);
+    }
   }
 }
 
-@mixin keyframesAnswer ($a, $start, $end) {
+@mixin keyboard ($a, $start, $end) {
   @-webkit-keyframes #{$a} {
-    from { margin-right: $start; }
-    to { margin-right: $end; }
+    from {
+      transform: translateY($start);
+      -webkit-transform: translateY($start);
+    }
+    to {
+      transform: translateY($end);
+      -webkit-transform: translateY($end);
+    }
   }
   @keyframes #{$a} {
-    from { margin-right: $start; }
-    to { margin-right: $end; }
+    from {
+      transform: translateY($start);
+      -webkit-transform: translateY($start);
+    }
+    to {
+      transform: translateY($end);
+      -webkit-transform: translateY($end);
+    }
   }
 }
+
+

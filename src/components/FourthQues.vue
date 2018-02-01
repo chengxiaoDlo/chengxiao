@@ -1,6 +1,6 @@
 <template>
     <div style="overflow: hidden" id="que4" :class="{'hidden': isModify && progress <= 4}">
-      <question question="青春作伴好还乡，而今哪里是家乡？" sub="我们会考虑当地的社保政策、产品区域限制、消费水平等因素哒~" class="animated slideInLeft">
+      <question question="青春作伴好还乡，而今哪里是家乡？" sub="我们会考虑当地的社保政策、产品区域限制、消费水平等因素哒~" class="question4">
         <div slot="options">
           <div v-if="showOption" id="options">
             <div class="options que4" >
@@ -16,7 +16,7 @@
           </div>
         </div>
       </question>
-      <transition name="answer">
+      <transition name="answer" @after-enter="toNext">
         <answer v-if="showAnswer" :text="city" @modify="modify"></answer>
       </transition>
     </div>
@@ -68,23 +68,25 @@
           this.showAnswer = true
           this.addResidence({data: this.residence})
           this.$emit('fill-height', document.getElementById('options').offsetHeight)
+        },
+        toNext () {
           if (this.progress === 4) {
             setTimeout(() => {
               this.next({data: 5})
-            }, 1500)
-            setTimeout(() => {
-              this.$emit('scroll-to', document.getElementById('que4').offsetTop + document.getElementById('que4').offsetHeight)
-            }, 2000)
+              setTimeout(() => {
+                this.$emit('scroll-to', document.getElementById('que4').offsetTop + document.getElementById('que4').offsetHeight)
+              }, 500)
+            }, 500)
           } else {
             this.next({data: 4})
             setTimeout(() => {
               this.next({data: 5})
               this.toggleModify()
-            }, 1500)
-            setTimeout(() => {
-              this.toggleModify()
-              this.$emit('scroll-to', document.getElementById('que4').offsetTop + document.getElementById('que4').offsetHeight)
-            }, 2000)
+              setTimeout(() => {
+                this.toggleModify()
+                this.$emit('scroll-to', document.getElementById('que4').offsetTop + document.getElementById('que4').offsetHeight)
+              }, 500)
+            }, 500)
           }
         },
         selectCity () {
@@ -104,9 +106,20 @@
 </script>
 
 <style type="text/scss" lang="scss" scoped>
-  @import "../styles/common";
-  @import "../styles/animation";
-  @include keyframesAnswer(slideRight, -400px, 49.2px);
+@import "../styles/common";
+@import "../styles/animation";
+@include keyframes(slideRight, 100%, 0);
+@include keyframes(slideLeft1, -740px, 0);
+.question4 {
+  transform: translateX(-740px);
+  -webkit-transform: translateX(-740px);
+  -webkit-animation: slideLeft1 1s ease-out;
+  -o-animation: slideLeft1 1s ease-out;
+  animation: slideLeft1 1s ease-out;
+  animation-fill-mode: forwards;
+  animation-delay: 1s;
+  -webkit-animation-delay: 1s;
+}
 .que4{
   padding-top: 30px;
   padding-bottom: 150px;
