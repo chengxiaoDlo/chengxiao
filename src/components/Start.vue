@@ -83,9 +83,9 @@
   overflow: hidden;
   .row-with-avatar {
     position: relative;
-    -webkit-animation: slideLeft1 1s ease-out;
-    -o-animation: slideLeft1 1s ease-out;
-    animation: slideLeft1 1s ease-out;
+    -webkit-animation: slideLeft1 0.5s ease-out;
+    -o-animation: slideLeft1 0.5s ease-out;
+    animation: slideLeft1 0.5s ease-out;
     .first-line {
       display: flex;
       .avatar {
@@ -120,9 +120,9 @@
     margin-top: 40px;
     transform: translateX(-740px);
     -webkit-transform: translateX(-740px);
-    -webkit-animation: slideLeft1 1s ease-out;
-    -o-animation: slideLeft1 1s ease-out;
-    animation: slideLeft1 1s ease-out;
+    -webkit-animation: slideLeft1 0.5s ease-out;
+    -o-animation: slideLeft1 0.5s ease-out;
+    animation: slideLeft1 0.5s ease-out;
     margin-left: 90px;
     animation-fill-mode: forwards;
     overflow: hidden;
@@ -167,9 +167,9 @@
     }
   }
   .answer-enter-active {
-    -webkit-animation: slideRight 1s ease-out;
-    -o-animation: slideRight 1s ease-out;
-    animation: slideRight 1s ease-out;
+    -webkit-animation: slideRight 0.5s ease-out;
+    -o-animation: slideRight 0.5s ease-out;
+    animation: slideRight 0.5s ease-out;
   }
 }
 
