@@ -12,7 +12,7 @@
                 <div class="member-city" @click="selectCity">{{city}}</div>
               </div>
             </div>
-            <div class="confirm btn-able" @click="confirm"></div>
+            <div class="confirm" :class="btnAbled ? 'btn-able' : 'btn-disable'" @click="confirm"></div>
           </div>
         </div>
       </question>
@@ -51,11 +51,16 @@
           type: String
         }
       },
-      computed: mapState([
-        'isModify',
-        'info',
-        'progress'
-      ]),
+      computed: {
+        btnAbled () {
+          return this.city && this.city !== '请选择'
+        },
+        ...mapState([
+         'isModify',
+         'info',
+         'progress'
+        ])
+      },
       methods: {
         ...mapMutations({
           next: 'next',
@@ -64,10 +69,12 @@
           toggleModify: 'toggleModify'
         }),
         confirm () {
-          this.showOption = false
-          this.showAnswer = true
-          this.addResidence({data: this.residence})
-          this.$emit('fill-height', document.getElementById('options').offsetHeight)
+          if (this.btnAbled) {
+            this.showOption = false
+            this.showAnswer = true
+            this.addResidence({data: this.residence})
+            this.$emit('fill-height', document.getElementById('options').offsetHeight)
+          }
         },
         toNext () {
           if (this.progress === 4) {
@@ -101,6 +108,11 @@
       },
       mounted () {
         this.$emit('change-height', document.documentElement.clientHeight - document.getElementById('que4').offsetHeight)
+      },
+      created () {
+        if (this.city === '北京市 北京市') {
+          this.city = '北京市'
+        }
       }
     }
 </script>
@@ -156,7 +168,6 @@
   }
 }
 .confirm {
-  background: url("../assets/images/confirm-btn.png") no-repeat;
   background-size: 100%;
   width: 300px;
   height: 180px;

@@ -6,13 +6,13 @@ export default {
       parent: 0
     },
     {
-      name: '县',
-      value: '110200',
+      name: '市辖区',
+      value: '110100',
       parent: '110000'
     },
     {
-      name: '市辖区',
-      value: '110100',
+      name: '县',
+      value: '110200',
       parent: '110000'
     },
     {
