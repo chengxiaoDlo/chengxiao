@@ -130,8 +130,11 @@ export default {
     state.selectedAge = ''
   },
   [types.SET_CITY] (state, payload) {
-    console.log('city', payload)
-    state.city.name = payload.data.name
+    if (payload.data.name = '北京市 北京市') {
+      state.city.name = '北京市'
+    } else {
+      state.city.name = payload.data.name
+    }
     state.city.value = payload.data.value
   }
 }

@@ -108,11 +108,6 @@
       },
       mounted () {
         this.$emit('change-height', document.documentElement.clientHeight - document.getElementById('que4').offsetHeight)
-      },
-      created () {
-        if (this.city === '北京市 北京市') {
-          this.city = '北京市'
-        }
       }
     }
 </script>

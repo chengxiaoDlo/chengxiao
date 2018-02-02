@@ -100,7 +100,10 @@
                 residence: item.residence,
                 isSmoking: item.isSmoking ? 1 : 0
               })
-            } else {
+            }
+          })
+          this.info.family.forEach(item => {
+            if (item.label === 'dog') {
               this.json.members.push({
                 label: item.label,
                 labelName: item.labelName,
