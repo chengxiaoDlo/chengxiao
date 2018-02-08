@@ -81,7 +81,7 @@ export default {
     })
     let familyIncome = 0
     payload.data.filter(item => {
-      return item.value !== '房贷、车贷等'
+      return item.tag !== 'debt'
     }).forEach(item => {
       familyIncome += parseInt(item.value)
     })
@@ -136,6 +136,9 @@ export default {
       state.city.name = payload.data.name
     }
     state.city.value = payload.data.value
+  },
+  [types.SUCCEED] (state) {
+    state.isSuccess = true
   }
 }
 

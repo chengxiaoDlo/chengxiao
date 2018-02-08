@@ -71,7 +71,8 @@
       methods: {
         ...mapMutations({
           next: 'next',
-          addSmoke: 'addSmoke'
+          addSmoke: 'addSmoke',
+          succeed: 'succeed'
         }),
         formatJson () {
           this.json.familyDebt = parseInt(this.info.familyDebt + '0000')
@@ -128,6 +129,9 @@
           new Submit().POST({data: this.json})
             .then((res) => {
               console.log(555, res)
+              if (res.data.isSuccess) {
+                this.succeed()
+              }
             })
             .catch(err => {
               console.log(666, err)

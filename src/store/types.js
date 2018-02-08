@@ -23,5 +23,6 @@ export default {
   SET_INPUT_NUMBER: 'setInputNumber',
   SET_CITY: 'setCity',
   TOGGLE_MODIFY: 'toggleModify',
-  CLEAR: 'clear'
+  CLEAR: 'clear',
+  SUCCEED: 'succeed'
 }

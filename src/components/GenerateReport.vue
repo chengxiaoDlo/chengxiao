@@ -8,26 +8,26 @@
         <div class="list">
           <div class="step">
             <div class="text">分析家庭成员</div>
-            <div class="state" :class="{'animated fadeIn done': first}">
+            <div class="state" :class="{'done': first}">
               <x-circle :percent="percent1" :stroke-width="10" stroke-color="#F15D4C" v-show="!first"></x-circle>
             </div>
           </div>
           <div class="step">
             <div class="text">生成保险配置</div>
-            <div class="state" :class="{'animated fadeIn done': second}">
+            <div class="state" :class="{'done': second}">
               <x-circle :percent="percent2" :stroke-width="10" stroke-color="#F15D4C" v-if="!second"></x-circle>
             </div>
           </div>
           <div class="step">
             <div class="text">筛选条款费率</div>
-            <div class="state" :class="{'animated slideIn done': third}">
+            <div class="state" :class="{'done': third}">
               <x-circle :percent="percent3" :stroke-width="10" stroke-color="#F15D4C" v-if="!third"></x-circle>
             </div>
           </div>
         </div>
       </div>
       <question question="完成！立即开启风险测评报告！" v-if="percent3 === 100" class="go"></question>
-      <div class="btn animated fadeIn" v-if="showBtn" @click="submit"></div>
+      <div class="btn" v-if="showBtn" @click="submit"></div>
     </div>
 </template>
 
@@ -58,7 +58,8 @@
           return (this.percent1 + this.percent2 + this.percent3) / 3
         },
         ...mapState([
-          'info'
+          'info',
+          'isSuccess'
         ])
       },
       methods: {
@@ -177,10 +178,6 @@
     background: url("../assets/images/get-report.png") no-repeat;
     background-size: 100%;
     margin: 60px auto;
-  }
-  .slideInLeft {
-    animation-delay: 1s;
-    -webkit-animation-delay: 1s;
   }
 }
 </style>
